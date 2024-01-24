@@ -40,18 +40,6 @@ export const [state, setState] = createStore({
   menu: "Main" as Menu,
 });
 
-export const setAction = (action: Action) => {
-  setState("action", action);
-  switch (action) {
-    case "Cycle":
-      setState("tick", state.cycle.tickSpeed);
-      break;
-    case "Train":
-      setState("tick", state.train.tickSpeed);
-      break;
-  }
-};
-
 export const tickSpeed = () => {
   switch (state.action) {
     case "Cycle":
