@@ -1,9 +1,11 @@
 import { createSignal, type Component } from "solid-js";
 import styles from "./App.module.css";
 import { state, setState } from "./store";
+import Template from "./Template";
 
 const Main: Component = () => {
   return (
+    <Template>
     <div class={styles.container}>
       <div>
         <button onClick={() => setState("action", "Cycle")}>Cycle</button>
@@ -15,6 +17,7 @@ const Main: Component = () => {
       </p>
       <p> Your current action: {state.action} </p>
     </div>
+    </Template>
   );
 };
 
