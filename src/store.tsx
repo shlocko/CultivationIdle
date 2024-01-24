@@ -1,10 +1,3 @@
-import {
-  Accessor,
-  Setter,
-  createContext,
-  useContext,
-  createSignal,
-} from "solid-js";
 import { createStore } from "solid-js/store";
 
 type Action = "Cycle" | "Train";
@@ -35,7 +28,6 @@ export const [state, setState] = createStore({
   mana: 0.0,
   maxMana: 9.0,
   bar: 0.0,
-  tick: 1,
   action: "Cycle" as Action,
 });
 

@@ -3,10 +3,6 @@ import { createSignal, type Component, Show } from "solid-js";
 import styles from "./App.module.css";
 import { state, setState, tickSpeed, tick } from "./store";
 
-import Main from "./main";
-import Test from "./Test";
-import Nav from "./Nav";
-
 const App: Component = () => {
   const timer = setInterval(() => {
     setState("bar", (bar) => bar + 1.0 / tickSpeed());
