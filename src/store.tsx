@@ -32,7 +32,6 @@ export const [state, setState] = createStore({
   train: {
     tickSpeed: 0.5,
   },
-  init: false,
   mana: 0.0,
   maxMana: 9.0,
   bar: 0.0,
@@ -40,20 +39,6 @@ export const [state, setState] = createStore({
   action: "Cycle" as Action,
   menu: "Main" as Menu,
 });
-
-export const init = () => {
-  if (!state.init) {
-    const timer = setInterval(() => {
-      setState("bar", (bar) => bar + 1.0 / tickSpeed());
-      if (state.bar > 100) {
-        setState("bar", 0.0);
-        tick[state.action]();
-      }
-    }, 10);
-
-    setState("init", true);
-  }
-};
 
 export const tickSpeed = () => {
   switch (state.action) {

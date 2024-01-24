@@ -1,11 +1,24 @@
-import { type Component, children, JSXElement, onMount } from "solid-js";
+import {
+  type Component,
+  children,
+  JSXElement,
+  onMount,
+  onCleanup,
+} from "solid-js";
 import styles from "./App.module.css";
-import { state, setState, init } from "./store";
+import { state, setState, tick, tickSpeed } from "./store";
 import Nav from "./Nav";
 
 const Template: Component<{ children: JSXElement }> = (props) => {
-  onMount(() => {
-    init();
+  const timer = setInterval(() => {
+    setState("bar", (bar) => bar + 1.0 / tickSpeed());
+    if (state.bar > 100) {
+      setState("bar", 0.0);
+      tick[state.action]();
+    }
+  }, 10);
+  onCleanup(() => {
+    clearInterval(timer);
   });
   const c = children(() => props.children);
   return (
