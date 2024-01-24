@@ -1,16 +1,17 @@
 import { type Component } from "solid-js";
 import styles from "./App.module.css";
 import { state, setState } from "./store";
+import { A } from "@solidjs/router";
 
 export const Nav: Component = () => {
   return (
     <div class={styles.nav}>
-      <a class={styles.nav_item} href="/">
+      <A class={styles.nav_item} href="/">
         Main
-      </a>
-      <a class={styles.nav_item} href="/train">
+      </A>
+      <A class={styles.nav_item} href="/train">
         Test
-      </a>
+      </A>
     </div>
   );
 };
