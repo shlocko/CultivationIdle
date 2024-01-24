@@ -37,7 +37,6 @@ export const [state, setState] = createStore({
   bar: 0.0,
   tick: 1,
   action: "Cycle" as Action,
-  menu: "Main" as Menu,
 });
 
 export const tickSpeed = () => {
