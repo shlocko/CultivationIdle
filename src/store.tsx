@@ -1,7 +1,6 @@
 import { createStore } from "solid-js/store";
 
-type Action = "Cycle" | "Train";
-type Menu = "Main" | "Test";
+type Action = "Meditate" | "Train";
 
 type Rank =
   | "Foundation"
@@ -18,23 +17,31 @@ type Rank =
   | "HighImmortal"
   | "TrueImmortal";
 
+export const rankInfo = [
+  { name: "Foundation", advMana: 27 },
+  { name: "CoreFormation", advMana: 81 },
+  { name: "RedCore", advMana: 243 },
+  { name: "GreenCore", advMana: 729 },
+];
+
 export const [state, setState] = createStore({
-  cycle: {
-    tickSpeed: 1,
+  meditate: {
+    tickSpeed: 0.5,
   },
   train: {
-    tickSpeed: 0.5,
+    tickSpeed: 1,
   },
   mana: 0.0,
   maxMana: 9.0,
   bar: 0.0,
-  action: "Cycle" as Action,
+  action: "Meditate" as Action,
+  rank: 0,
 });
 
 export const tickSpeed = () => {
   switch (state.action) {
-    case "Cycle":
-      return state.cycle.tickSpeed;
+    case "Meditate":
+      return state.meditate.tickSpeed;
     case "Train":
       return state.train.tickSpeed;
   }
@@ -44,10 +51,12 @@ export const tick = {
   Train: () => {
     if (state.mana >= 1) {
       setState("mana", (mana) => mana - 1);
-      setState("maxMana", (max) => max + 0.1);
+      setState("maxMana", (max) => max + 1);
+    } else {
+      setState("action", "Meditate");
     }
   },
-  Cycle: () => {
+  Meditate: () => {
     if (state.mana < state.maxMana) {
       setState("mana", (mana) => mana + 1);
     }
@@ -55,4 +64,14 @@ export const tick = {
       setState("mana", state.maxMana);
     }
   },
+};
+
+export const canAdvance = () => {
+  return state.maxMana >= rankInfo[state.rank].advMana;
+};
+
+export const advance = () => {
+  if (canAdvance()) {
+    setState("rank", (rank) => rank + 1);
+  }
 };

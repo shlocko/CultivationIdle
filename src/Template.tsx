@@ -1,13 +1,8 @@
-import {
-  type Component,
-  children,
-  JSXElement,
-  onMount,
-  onCleanup,
-} from "solid-js";
+import { type Component, JSXElement, onCleanup } from "solid-js";
 import styles from "./App.module.css";
 import { state, setState, tick, tickSpeed } from "./store";
 import { Nav } from "./Nav";
+import { QuickInfo } from "./QuickInfo";
 
 export const Template: Component<{ children: JSXElement }> = (props) => {
   const timer = setInterval(() => {
@@ -22,11 +17,12 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
   });
   return (
     <div class={styles.App}>
-      <Nav />
+      <QuickInfo />
       <progress max="100" value={state.bar}>
         {state.bar}/100
       </progress>
       {props.children}
+      <Nav />
     </div>
   );
 };

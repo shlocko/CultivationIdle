@@ -4,7 +4,7 @@ import { Router, Route } from "@solidjs/router";
 
 import "./index.css";
 import { Main } from "./main";
-import { Test } from "./Test";
+import { Train } from "./Train";
 
 const root = document.getElementById("root");
 
@@ -18,7 +18,7 @@ render(
   () => (
     <Router>
       <Route path="/" component={Main} />
-      <Route path="/train" component={Test} />
+      <Route path="/train" component={Train} />
     </Router>
   ),
   root!,
