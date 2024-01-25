@@ -6,11 +6,12 @@ export const QuickInfo: Component = () => {
   return (
     <div class={styles.quickinfo}>
       <p>
-        {" "}
-        Mana: {state.mana.toFixed(1)} of {state.maxMana.toFixed(1)}{" "}
+        Mana: {state.mana.toFixed(1)} of {state.maxMana.toFixed(1)}
       </p>
-      <p> Your current rank is: {rankInfo[state.rank].name} </p>
-      <p> Your current action: {state.action} </p>
+      <p> Rank: {rankInfo[state.rank].name} </p>
+      <p> Action: {state.action} </p>
+      <p> Next Advancement: {rankInfo[state.rank].advMana} </p>
+      <p> Aspect: {state.aspect} </p>
     </div>
   );
 };

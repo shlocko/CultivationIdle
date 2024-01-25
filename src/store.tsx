@@ -24,6 +24,31 @@ export const rankInfo = [
   { name: "GreenCore", advMana: 729 },
 ];
 
+export type Aspect =
+  | "Fire"
+  | "Water"
+  | "Stone"
+  | "Wind"
+  | "Sword"
+  | "Pure"
+  | "Shadow";
+
+export type Technique = {
+  name: string;
+  aspect: Aspect;
+  baseCost: number;
+  minCost: number;
+};
+
+export const fireTechniqes: Technique[] = [
+  {
+    name: "test",
+    aspect: "Fire",
+    baseCost: 5,
+    minCost: 1,
+  },
+];
+
 export const [state, setState] = createStore({
   meditate: {
     tickSpeed: 0.5,
@@ -32,10 +57,13 @@ export const [state, setState] = createStore({
     tickSpeed: 1,
   },
   mana: 0.0,
-  maxMana: 9.0,
+  maxMana: 22.0,
   bar: 0.0,
   action: "Meditate" as Action,
   rank: 0,
+  aspect: "Pure" as Aspect,
+  aspectChosen: false,
+  techniques: [] as Technique[],
 });
 
 export const tickSpeed = () => {
