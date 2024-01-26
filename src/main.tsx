@@ -12,7 +12,7 @@ export const Main: Component = () => {
           Advance
         </button>
       </Show>
-      <Show when={!state.aspectChosen && state.rank === 1}>
+      <Show when={!state.aspect && state.rank >= 1}>
         <ChooseAspect />
       </Show>
       <button

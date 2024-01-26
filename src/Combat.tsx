@@ -42,7 +42,7 @@ export const Combat: Component = () => {
           <p class={utils.top_auto}> Opponent: {opponent.health} HP. </p>
           <p> Mana per turn: {tickMana()} </p>
           <For each={state.techniques}>
-            {(item, i): JSXElement => (
+            {(item, i) => (
               <button
                 classList={{
                   [utils.btn]: true,
@@ -61,6 +61,8 @@ export const Combat: Component = () => {
             onClick={() => {
               if (tickMana() <= state.mana) {
                 setPause(false);
+              } else {
+                alert("Not enough mana");
               }
             }}
           >

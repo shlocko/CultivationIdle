@@ -53,7 +53,3 @@ export const combatTick = () => {
     setState("combat", "tickSpeed", 0.0001);
   }
 };
-
-export const icombatTick = () => {
-  setPause(true);
-};

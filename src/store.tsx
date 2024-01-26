@@ -4,6 +4,7 @@ import { combatTick } from "./tickMethods";
 
 type Action = "Meditate" | "Train" | "Combat";
 
+// Old, here for reference to rank names until I finish rankInfo
 type Rank =
   | "Foundation"
   | "CoreFormation"
@@ -19,6 +20,7 @@ type Rank =
   | "HighImmortal"
   | "TrueImmortal";
 
+// Gamedata on the ranks of advancement
 export const rankInfo = [
   { name: "Foundation", advMana: 27 },
   { name: "CoreFormation", advMana: 81 },
@@ -26,6 +28,7 @@ export const rankInfo = [
   { name: "GreenCore", advMana: 729 },
 ];
 
+// Available aspects at CoreFormation rank
 export type Aspect =
   | "Fire"
   | "Water"
@@ -42,9 +45,9 @@ export type Technique = {
   aspect: Aspect;
   baseCost: number;
   minCost: number;
-  onGoing: boolean;
-  active: boolean;
-  effect: Function;
+  onGoing: boolean; // whether the technique is an ongoing effect vs a one time use
+  active: boolean; // Whether the technique is currently active
+  effect: Function; // Function to be called when technique is active and a tick occurs
 };
 
 export const fireTechniqes: Technique[] = [
@@ -85,12 +88,10 @@ export const [opponent, setOpponent] = createStore({
   damage: 3,
   respawn: 3,
 });
-export const [combatActions, setCombatActions] = createStore([
-  { name: "block", active: true },
-  { name: "heal", active: true },
-]);
 
+// Gamestate intended for persistence
 export const [state, setState] = createStore({
+  //Gamedata on the various actions
   meditate: {
     tickSpeed: 0.5,
   },
@@ -101,17 +102,25 @@ export const [state, setState] = createStore({
     tickSpeed: 0.0001,
     turn: 0,
   },
+  // Player's current mana
   mana: 0.0,
+  // Player's maximum mana
   maxMana: 22.0,
+  // Current % of tick bar
   bar: 0.0,
+  // Player's current action
   action: "Meditate" as Action,
+  // Player's current rank
   rank: 0,
-  aspect: "Pure" as Aspect,
-  aspectChosen: false,
+  // Player's magic aspect
+  aspect: undefined as Aspect | undefined,
+  // Player's known techniques
   techniques: [fireTechniqes[0], fireTechniqes[1]] as Technique[],
+  // Player's helth points for combat
   health: 20,
 });
 
+// Helper function for finding the current action's tickSpeed
 export const tickSpeed = () => {
   switch (state.action) {
     case "Meditate":
@@ -123,6 +132,7 @@ export const tickSpeed = () => {
   }
 };
 
+// Helper Function to call the tick method for the current action
 export const tick = {
   Train: () => {
     if (state.mana >= 1) {
@@ -155,6 +165,7 @@ export const advance = () => {
   }
 };
 
+// Memo for calculating mana per tick
 export const tickMana = createMemo(() => {
   let total = 0;
   state.techniques.forEach((e) => {
