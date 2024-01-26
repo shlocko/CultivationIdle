@@ -40,12 +40,6 @@ body,
   }
 }
 
-.test {
-  height: 3em;
-  flex-grow: 1;
-  border: 1px solid black;
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -73,7 +67,7 @@ body,
 }
 
 .quickinfo {
-  height: 7em;
+  min-height: 7em;
   background-color: lightgray;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -89,6 +83,10 @@ body,
   border-radius: 0.25rem;
   color: black;
   background-color: #d0d0d0;
+}
+
+.btn_active {
+  color: red;
 }
 
 .top_auto {

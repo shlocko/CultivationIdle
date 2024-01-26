@@ -1,7 +1,15 @@
-import { Show, type Component, Switch, Match } from "solid-js";
-import styles from "./App.module.css";
+import { Show, type Component, Switch, Match, For, JSXElement } from "solid-js";
+import utils from "./styles/utils.module.css";
 import { Template } from "./Template";
-import { opponent, setPause, setState, state } from "./store";
+import {
+  combatActions,
+  opponent,
+  setPause,
+  setState,
+  state,
+  tick,
+  tickMana,
+} from "./store";
 
 export const Combat: Component = () => {
   return (
@@ -10,22 +18,53 @@ export const Combat: Component = () => {
       <Switch>
         <Match when={state.action !== "Combat"}>
           <button
-            class={(styles.btn, styles.top_auto)}
+            class={(utils.btn, utils.top_auto)}
             onClick={() => setState("action", "Combat")}
           >
-            Fight
+            <p>Fight</p>
           </button>
         </Match>
-        <Match when={state.action === "Combat"}>
-          <p class={styles.top_auto}> Opponent: {opponent.health} HP. </p>
+        <Match when={state.combat.turn === 1}>
+          <h2> Opponent's Turn </h2>
+          <p class={utils.top_auto}> Opponent: {opponent.health} HP. </p>
+          <p> Mana per turn: {tickMana()} </p>
           <button
-            class={styles.btn}
+            class={utils.btn}
             onClick={() => {
               setPause(false);
             }}
           >
-            {" "}
-            Next{" "}
+            <p>Next</p>
+          </button>
+        </Match>
+        <Match when={state.combat.turn === 0}>
+          <h2> Your Turn </h2>
+          <p class={utils.top_auto}> Opponent: {opponent.health} HP. </p>
+          <p> Mana per turn: {tickMana()} </p>
+          <For each={state.techniques}>
+            {(item, i): JSXElement => (
+              <button
+                classList={{
+                  [utils.btn]: true,
+                  [utils.btn_active]: item.active,
+                }}
+                onClick={() => {
+                  setState("techniques", i(), "active", (a) => !a);
+                }}
+              >
+                {item.name}
+              </button>
+            )}
+          </For>
+          <button
+            class={utils.btn}
+            onClick={() => {
+              if (tickMana() <= state.mana) {
+                setPause(false);
+              }
+            }}
+          >
+            <p>Continue</p>{" "}
           </button>
         </Match>
       </Switch>

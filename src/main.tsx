@@ -1,5 +1,5 @@
 import { createSignal, type Component, Show } from "solid-js";
-import styles from "./App.module.css";
+import utils from "./styles/utils.module.css";
 import { state, setState, canAdvance, advance } from "./store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
@@ -8,7 +8,7 @@ export const Main: Component = () => {
   return (
     <Template>
       <Show when={canAdvance()}>
-        <button class={styles.btn} onClick={() => advance()}>
+        <button class={utils.btn} onClick={() => advance()}>
           Advance
         </button>
       </Show>
@@ -16,10 +16,10 @@ export const Main: Component = () => {
         <ChooseAspect />
       </Show>
       <button
-        class={(styles.btn, styles.top_auto)}
+        class={(utils.btn, utils.top_auto)}
         onClick={() => setState("action", "Meditate")}
       >
-        Meditate
+        <p>Meditate</p>
       </button>
     </Template>
   );

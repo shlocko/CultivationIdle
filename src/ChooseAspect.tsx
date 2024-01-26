@@ -1,13 +1,13 @@
 import { For, type Component } from "solid-js";
-import styles from "./App.module.css";
+import utils from "./styles/utils.module.css";
 import { setState } from "./store";
 
 export const ChooseAspect: Component = () => {
   return (
-    <div class={styles.container}>
+    <div class={utils.container}>
       <h3> Choose an aspect: </h3>
       <button
-        class={styles.btn}
+        class={utils.btn}
         onClick={() => {
           setState("aspect", "Fire");
           setState("aspectChosen", true);
@@ -16,7 +16,7 @@ export const ChooseAspect: Component = () => {
         {"Fire"}
       </button>
       <button
-        class={styles.btn}
+        class={utils.btn}
         onClick={() => {
           setState("aspect", "Water");
           setState("aspectChosen", true);
@@ -25,7 +25,7 @@ export const ChooseAspect: Component = () => {
         {"Water"}
       </button>
       <button
-        class={styles.btn}
+        class={utils.btn}
         onClick={() => {
           setState("aspect", "Wind");
           setState("aspectChosen", true);

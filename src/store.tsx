@@ -1,5 +1,6 @@
-import { createSignal } from "solid-js";
+import { createSignal, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
+import { combatTick } from "./tickMethods";
 
 type Action = "Meditate" | "Train" | "Combat";
 
@@ -41,14 +42,39 @@ export type Technique = {
   aspect: Aspect;
   baseCost: number;
   minCost: number;
+  onGoing: boolean;
+  active: boolean;
+  effect: Function;
 };
 
 export const fireTechniqes: Technique[] = [
   {
-    name: "test",
+    name: "Fire Bolt",
+    onGoing: false,
+    active: false,
     aspect: "Fire",
     baseCost: 5,
     minCost: 1,
+    effect: () => {
+      if (state.mana >= 5) {
+        setOpponent("health", (hp) => hp - 5);
+        setState("mana", (mp) => mp - 5);
+      }
+    },
+  },
+  {
+    name: "Clense wounds in flame",
+    onGoing: false,
+    active: false,
+    aspect: "Fire",
+    baseCost: 5,
+    minCost: 1,
+    effect: () => {
+      if (state.mana >= 5) {
+        setState("health", (hp) => hp + 10);
+        setState("mana", (mp) => mp - 5);
+      }
+    },
   },
 ];
 
@@ -59,6 +85,10 @@ export const [opponent, setOpponent] = createStore({
   damage: 3,
   respawn: 3,
 });
+export const [combatActions, setCombatActions] = createStore([
+  { name: "block", active: true },
+  { name: "heal", active: true },
+]);
 
 export const [state, setState] = createStore({
   meditate: {
@@ -78,7 +108,7 @@ export const [state, setState] = createStore({
   rank: 0,
   aspect: "Pure" as Aspect,
   aspectChosen: false,
-  techniques: [] as Technique[],
+  techniques: [fireTechniqes[0], fireTechniqes[1]] as Technique[],
   health: 20,
 });
 
@@ -125,38 +155,12 @@ export const advance = () => {
   }
 };
 
-const combatTick = () => {
-  setPause(true);
-  if (!opponent.alive) {
-    setState("combat", "tickSpeed", 1);
-    if (opponent.respawn <= 0) {
-      setOpponent({
-        alive: true,
-        health: 10,
-        respawn: 3,
-      });
-      setPause(true);
-      setState("combat", "tickSpeed", 0.0001);
-    } else {
-      setOpponent("respawn", (time) => time - 1);
+export const tickMana = createMemo(() => {
+  let total = 0;
+  state.techniques.forEach((e) => {
+    if (e.active) {
+      total += e.baseCost;
     }
-    setPause(false);
-  } else if (opponent.health <= 0) {
-    setState("combat", "tickSpeed", 1);
-    setOpponent("alive", false);
-  } else {
-    if (state.combat.turn === 0) {
-      setOpponent("health", (hp) => hp - 5);
-      setState("combat", "turn", 1);
-    } else {
-      setState("health", (hp) => hp - opponent.damage);
-      setState("combat", "turn", 0);
-      if (state.health <= 0) {
-        setState("action", "Meditate");
-        setState("health", 20);
-        setPause(false);
-      }
-    }
-    setState("combat", "tickSpeed", 0.0001);
-  }
-};
+  });
+  return total;
+});
