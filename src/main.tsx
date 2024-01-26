@@ -15,7 +15,10 @@ export const Main: Component = () => {
       <Show when={!state.aspectChosen && state.rank === 1}>
         <ChooseAspect />
       </Show>
-      <button class={styles.btn} onClick={() => setState("action", "Meditate")}>
+      <button
+        class={(styles.btn, styles.top_auto)}
+        onClick={() => setState("action", "Meditate")}
+      >
         Meditate
       </button>
     </Template>

@@ -1,11 +1,12 @@
 import { type Component, JSXElement, onCleanup } from "solid-js";
 import styles from "./App.module.css";
-import { state, setState, tick, tickSpeed } from "./store";
+import { state, setState, tick, tickSpeed, pause } from "./store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
 
 export const Template: Component<{ children: JSXElement }> = (props) => {
   const timer = setInterval(() => {
+    if (pause()) return;
     setState("bar", (bar) => bar + 1.0 / tickSpeed());
     if (state.bar > 100) {
       setState("bar", 0.0);

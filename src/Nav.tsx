@@ -1,6 +1,7 @@
 import { type Component } from "solid-js";
 import styles from "./App.module.css";
 import { A } from "@solidjs/router";
+import { setPause } from "./store";
 
 export const Nav: Component = () => {
   return (
@@ -11,6 +12,17 @@ export const Nav: Component = () => {
       <A class={styles.nav_item} href="/train">
         Train
       </A>
+      <A class={styles.nav_item} href="/combat">
+        Combat
+      </A>
+      <button
+        class={styles.nav_item}
+        onClick={() => {
+          setPause((pause) => !pause);
+        }}
+      >
+        Pause/Unpause
+      </button>
     </div>
   );
 };

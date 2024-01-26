@@ -89,5 +89,8 @@ body,
   border-radius: 0.25rem;
   color: black;
   background-color: #d0d0d0;
+}
+
+.top_auto {
   margin-top: auto;
 }

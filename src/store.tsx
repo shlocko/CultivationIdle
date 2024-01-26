@@ -1,6 +1,7 @@
+import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
 
-type Action = "Meditate" | "Train";
+type Action = "Meditate" | "Train" | "Combat";
 
 type Rank =
   | "Foundation"
@@ -33,6 +34,8 @@ export type Aspect =
   | "Pure"
   | "Shadow";
 
+export type TechniqueType = "Shaper" | "Enhancement" | "Range" | "Manipulation";
+
 export type Technique = {
   name: string;
   aspect: Aspect;
@@ -49,12 +52,24 @@ export const fireTechniqes: Technique[] = [
   },
 ];
 
+export const [pause, setPause] = createSignal(false);
+export const [opponent, setOpponent] = createStore({
+  alive: true,
+  health: 10,
+  damage: 3,
+  respawn: 3,
+});
+
 export const [state, setState] = createStore({
   meditate: {
     tickSpeed: 0.5,
   },
   train: {
     tickSpeed: 1,
+  },
+  combat: {
+    tickSpeed: 0.0001,
+    turn: 0,
   },
   mana: 0.0,
   maxMana: 22.0,
@@ -64,6 +79,7 @@ export const [state, setState] = createStore({
   aspect: "Pure" as Aspect,
   aspectChosen: false,
   techniques: [] as Technique[],
+  health: 20,
 });
 
 export const tickSpeed = () => {
@@ -72,6 +88,8 @@ export const tickSpeed = () => {
       return state.meditate.tickSpeed;
     case "Train":
       return state.train.tickSpeed;
+    case "Combat":
+      return state.combat.tickSpeed;
   }
 };
 
@@ -92,6 +110,9 @@ export const tick = {
       setState("mana", state.maxMana);
     }
   },
+  Combat: () => {
+    combatTick();
+  },
 };
 
 export const canAdvance = () => {
@@ -101,5 +122,41 @@ export const canAdvance = () => {
 export const advance = () => {
   if (canAdvance()) {
     setState("rank", (rank) => rank + 1);
+  }
+};
+
+const combatTick = () => {
+  setPause(true);
+  if (!opponent.alive) {
+    setState("combat", "tickSpeed", 1);
+    if (opponent.respawn <= 0) {
+      setOpponent({
+        alive: true,
+        health: 10,
+        respawn: 3,
+      });
+      setPause(true);
+      setState("combat", "tickSpeed", 0.0001);
+    } else {
+      setOpponent("respawn", (time) => time - 1);
+    }
+    setPause(false);
+  } else if (opponent.health <= 0) {
+    setState("combat", "tickSpeed", 1);
+    setOpponent("alive", false);
+  } else {
+    if (state.combat.turn === 0) {
+      setOpponent("health", (hp) => hp - 5);
+      setState("combat", "turn", 1);
+    } else {
+      setState("health", (hp) => hp - opponent.damage);
+      setState("combat", "turn", 0);
+      if (state.health <= 0) {
+        setState("action", "Meditate");
+        setState("health", 20);
+        setPause(false);
+      }
+    }
+    setState("combat", "tickSpeed", 0.0001);
   }
 };

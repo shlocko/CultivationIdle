@@ -6,7 +6,10 @@ import { Template } from "./Template";
 export const Train: Component = () => {
   return (
     <Template>
-      <button class={styles.btn} onClick={() => setState("action", "Train")}>
+      <button
+        class={(styles.btn, styles.top_auto)}
+        onClick={() => setState("action", "Train")}
+      >
         Train
       </button>{" "}
     </Template>

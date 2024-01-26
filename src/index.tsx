@@ -5,6 +5,7 @@ import { Router, Route } from "@solidjs/router";
 import "./index.css";
 import { Main } from "./main";
 import { Train } from "./Train";
+import { Combat } from "./Combat";
 
 const root = document.getElementById("root");
 
@@ -19,6 +20,7 @@ render(
     <Router>
       <Route path="/" component={Main} />
       <Route path="/train" component={Train} />
+      <Route path="/combat" component={Combat} />
     </Router>
   ),
   root!,
