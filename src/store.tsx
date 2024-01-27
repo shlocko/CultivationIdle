@@ -38,6 +38,9 @@ export type Aspect =
   | "Pure"
   | "Shadow";
 
+//********************************************************
+// techniques
+//********************************************************
 export type TechniqueType = "Shaper" | "Enhancement" | "Range" | "Manipulation";
 
 export type Technique = {
@@ -81,6 +84,15 @@ export const fireTechniqes: Technique[] = [
   },
 ];
 
+//********************************************************
+// items
+//********************************************************
+
+export type Item = "Health Potion" | "Mana Potion" | "Herb";
+
+//********************************************************
+// state
+//********************************************************
 export const [pause, setPause] = createSignal(false);
 export const [opponent, setOpponent] = createStore({
   alive: true,
@@ -120,7 +132,46 @@ export const [state, setState] = createStore({
   techniques: [fireTechniqes[0], fireTechniqes[1]] as Technique[],
   // Player's helth points for combat
   health: 20,
+  // Player's inventory, item name - item count
+  inventory: [
+    { item: "Health Potion", quantity: 1 },
+    { item: "Mana Potion", quantity: 3 },
+    { item: "Herb", quantity: 4 },
+  ] as Array<{ item: Item; quantity: number }>,
+  inventoryCapacity: 20,
 });
+
+//********************************************************
+// helper functions
+//********************************************************
+
+export const hasItem = (item: Item) => {
+  state.inventory.forEach((e) => {
+    if (e.item === item) {
+      return true;
+    }
+  });
+  return false;
+};
+
+export const howManyOfItem = (item: Item) => {
+  let count = 0;
+  state.inventory.forEach((e) => {
+    if (e.item === item) {
+      count = e.quantity;
+    }
+  });
+};
+
+export const inventoryRemove = (item: Item) => {
+  state.inventory.forEach((e, i) => {
+    if (e.item === item) {
+      let arr = state.inventory.slice();
+      arr.splice(i, 1);
+      setState("inventory", arr);
+    }
+  });
+};
 
 // Helper function for finding the current action's tickSpeed
 export const tickSpeed = () => {

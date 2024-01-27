@@ -6,6 +6,7 @@ import "./index.css";
 import { Main } from "./main";
 import { Train } from "./Train";
 import { Combat } from "./Combat";
+import { Toaster } from "solid-toast";
 
 const root = document.getElementById("root");
 

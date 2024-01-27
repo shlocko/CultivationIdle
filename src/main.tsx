@@ -1,8 +1,16 @@
-import { createSignal, type Component, Show } from "solid-js";
+import { createSignal, type Component, Show, For } from "solid-js";
 import utils from "./styles/utils.module.css";
-import { state, setState, canAdvance, advance, setAction } from "./store";
+import {
+  state,
+  setState,
+  canAdvance,
+  advance,
+  setAction,
+  inventoryRemove,
+} from "./store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
+import toast from "solid-toast";
 
 export const Main: Component = () => {
   return (
@@ -15,6 +23,25 @@ export const Main: Component = () => {
       <Show when={!state.aspect && state.rank >= 1}>
         <ChooseAspect />
       </Show>
+      <For each={state.inventory}>
+        {(item) => (
+          <>
+            <p>
+              {" "}
+              {item.item} x {item.quantity}
+            </p>
+            <button
+              class={utils.btn}
+              onClick={() => {
+                inventoryRemove(item.item);
+                toast(`${item.item} removed`);
+              }}
+            >
+              X
+            </button>
+          </>
+        )}
+      </For>
       <button
         class={(utils.btn, utils.top_auto)}
         onClick={() => setAction("Meditate")}

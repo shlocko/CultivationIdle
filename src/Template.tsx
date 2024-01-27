@@ -3,6 +3,7 @@ import utils from "./styles/utils.module.css";
 import { state, setState, tick, tickSpeed, pause, perTick } from "./store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
+import { Toaster } from "solid-toast";
 
 export const Template: Component<{ children: JSXElement }> = (props) => {
   const timer = setInterval(() => {
@@ -20,6 +21,7 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
   });
   return (
     <div class={utils.App}>
+      <Toaster />
       <QuickInfo />
       <progress max="100" value={state.bar}>
         {state.bar}/100
