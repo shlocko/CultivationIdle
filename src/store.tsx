@@ -103,9 +103,11 @@ export const [state, setState] = createStore({
     turn: 0,
   },
   // Player's current mana
-  mana: 0.0,
+  mana: 0,
   // Player's maximum mana
-  maxMana: 22.0,
+  maxMana: 22,
+  // Player's passive mana regeneration
+  passiveManaRegen: 1,
   // Current % of tick bar
   bar: 0.0,
   // Player's current action
@@ -135,9 +137,9 @@ export const tickSpeed = () => {
 // Helper Function to call the tick method for the current action
 export const tick = {
   Train: () => {
-    if (state.mana >= 1) {
-      setState("mana", (mana) => mana - 1);
-      setState("maxMana", (max) => max + 1);
+    if (state.mana >= 5) {
+      setState("mana", (mana) => mana - 5);
+      setState("maxMana", (max) => max + 0.2);
     } else {
       setState("action", "Meditate");
     }
@@ -146,13 +148,20 @@ export const tick = {
     if (state.mana < state.maxMana) {
       setState("mana", (mana) => mana + 1);
     }
-    if (state.mana > state.maxMana) {
-      setState("mana", state.maxMana);
-    }
   },
   Combat: () => {
     combatTick();
   },
+};
+
+// Happens every tick
+export const perTick = () => {
+  if (state.mana < state.maxMana) {
+    setState("mana", (m) => m + state.passiveManaRegen);
+  }
+  if (state.mana > state.maxMana) {
+    setState("mana", state.maxMana);
+  }
 };
 
 export const canAdvance = () => {
@@ -163,6 +172,11 @@ export const advance = () => {
   if (canAdvance()) {
     setState("rank", (rank) => rank + 1);
   }
+};
+
+export const setAction = (action: Action) => {
+  setState("action", action);
+  setPause(false);
 };
 
 // Memo for calculating mana per tick

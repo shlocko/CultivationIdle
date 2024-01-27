@@ -1,6 +1,6 @@
 import { createSignal, type Component, Show } from "solid-js";
 import utils from "./styles/utils.module.css";
-import { state, setState, canAdvance, advance } from "./store";
+import { state, setState, canAdvance, advance, setAction } from "./store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
 
@@ -17,7 +17,7 @@ export const Main: Component = () => {
       </Show>
       <button
         class={(utils.btn, utils.top_auto)}
-        onClick={() => setState("action", "Meditate")}
+        onClick={() => setAction("Meditate")}
       >
         <p>Meditate</p>
       </button>

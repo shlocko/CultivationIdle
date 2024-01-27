@@ -30,6 +30,7 @@ export const combatTick = () => {
     if (state.combat.turn === 0) {
       state.techniques.forEach((e, i) => {
         if (e.active) {
+          setState("maxMana", (m) => m + 0.1);
           e.effect();
           if (!e.onGoing) {
             setState("techniques", i, "active", false);

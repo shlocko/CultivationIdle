@@ -1,5 +1,5 @@
 import { createSignal, type Component } from "solid-js";
-import { state, setState } from "./store";
+import { state, setState, setAction } from "./store";
 import utils from "./styles/utils.module.css";
 import { Template } from "./Template";
 
@@ -8,7 +8,7 @@ export const Train: Component = () => {
     <Template>
       <button
         class={(utils.btn, utils.top_auto)}
-        onClick={() => setState("action", "Train")}
+        onClick={() => setAction("Train")}
       >
         <p>Train</p>
       </button>{" "}

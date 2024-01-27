@@ -1,6 +1,6 @@
 import { type Component, JSXElement, onCleanup } from "solid-js";
 import utils from "./styles/utils.module.css";
-import { state, setState, tick, tickSpeed, pause } from "./store";
+import { state, setState, tick, tickSpeed, pause, perTick } from "./store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
 
@@ -12,6 +12,7 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
     if (state.bar > 100) {
       setState("bar", 0.0);
       tick[state.action]();
+      perTick();
     }
   }, 10);
   onCleanup(() => {

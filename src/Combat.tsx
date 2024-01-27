@@ -2,8 +2,8 @@ import { Show, type Component, Switch, Match, For, JSXElement } from "solid-js";
 import utils from "./styles/utils.module.css";
 import { Template } from "./Template";
 import {
-  combatActions,
   opponent,
+  setAction,
   setPause,
   setState,
   state,
@@ -19,7 +19,7 @@ export const Combat: Component = () => {
         <Match when={state.action !== "Combat"}>
           <button
             class={(utils.btn, utils.top_auto)}
-            onClick={() => setState("action", "Combat")}
+            onClick={() => setAction("Combat")}
           >
             <p>Fight</p>
           </button>

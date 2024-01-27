@@ -11,7 +11,7 @@ export const QuickInfo: Component = () => {
       <p> Rank: {rankInfo[state.rank].name} </p>
       <p> Action: {state.action} </p>
       <p> Next Advancement: {rankInfo[state.rank].advMana} </p>
-      <p> Aspect: {state.aspect} </p>
+      <p> Aspect: {state.aspect ? state.aspect : "Pure"} </p>
       <p> HP: {state.health} </p>
     </div>
   );
