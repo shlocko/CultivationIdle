@@ -18,7 +18,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 render(
   () => (
     <Router>
-      <Route path="/" component={Main} />
+      <Route path="/CultivationIdle/" component={Main} />
       <Route path="/train" component={Train} />
       <Route path="/combat" component={Combat} />
     </Router>
