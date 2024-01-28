@@ -7,6 +7,9 @@ import {
   advance,
   setAction,
   inventoryRemove,
+  inventoryAdd,
+  load,
+  persist,
 } from "./store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
@@ -34,7 +37,7 @@ export const Main: Component = () => {
               class={utils.btn}
               onClick={() => {
                 inventoryRemove(item.item);
-                toast(`${item.item} removed`);
+                toast(`${item.quantity} ${item.item} removed`);
               }}
             >
               X
@@ -42,6 +45,13 @@ export const Main: Component = () => {
           </>
         )}
       </For>
+      <button
+        onClick={() => {
+          inventoryAdd("Health Potion", 3);
+        }}
+      >
+        Add 3 health Potion
+      </button>
       <button
         class={(utils.btn, utils.top_auto)}
         onClick={() => setAction("Meditate")}

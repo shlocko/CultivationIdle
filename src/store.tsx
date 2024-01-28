@@ -103,6 +103,8 @@ export const [opponent, setOpponent] = createStore({
 
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
+  // State version for ensuring compatibility with save data
+  version: 0,
   //Gamedata on the various actions
   meditate: {
     tickSpeed: 0.5,
@@ -145,13 +147,26 @@ export const [state, setState] = createStore({
 // helper functions
 //********************************************************
 
+export const persist = () => {
+  localStorage.setItem("state", JSON.stringify(state));
+};
+
+export const load = () => {
+  let rawState = localStorage.getItem("state");
+  if (rawState) {
+    let loadState = JSON.parse(rawState);
+    setState(loadState);
+  }
+};
+
 export const hasItem = (item: Item) => {
+  let has = false;
   state.inventory.forEach((e) => {
     if (e.item === item) {
-      return true;
+      has = true;
     }
   });
-  return false;
+  return has;
 };
 
 export const howManyOfItem = (item: Item) => {
@@ -171,6 +186,22 @@ export const inventoryRemove = (item: Item) => {
       setState("inventory", arr);
     }
   });
+};
+
+export const inventoryAtCapacity = () => {
+  return state.inventory.length > state.inventoryCapacity;
+};
+
+export const inventoryAdd = (item: Item, quantity: number) => {
+  let arr = state.inventory.slice();
+  if (hasItem(item)) {
+    let index = arr.findIndex((e) => e.item === item);
+    console.log(index);
+    setState("inventory", index, "quantity", (num) => num + quantity);
+  } else {
+    arr.push({ item: item, quantity: quantity });
+    setState("inventory", arr);
+  }
 };
 
 // Helper function for finding the current action's tickSpeed

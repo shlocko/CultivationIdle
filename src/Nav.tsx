@@ -1,7 +1,8 @@
 import { type Component } from "solid-js";
 import styles from "./styles/Nav.module.css";
 import { A } from "@solidjs/router";
-import { setPause } from "./store";
+import { setPause, load, persist } from "./store";
+import toast from "solid-toast";
 
 export const Nav: Component = () => {
   return (
@@ -22,6 +23,22 @@ export const Nav: Component = () => {
         }}
       >
         Pause/Unpause
+      </button>
+      <button
+        onClick={() => {
+          load();
+          toast("Data Loaded");
+        }}
+      >
+        <p>Load</p>
+      </button>
+      <button
+        onClick={() => {
+          persist();
+          toast("Data Saved");
+        }}
+      >
+        <p>Save</p>
       </button>
     </div>
   );
