@@ -10,6 +10,7 @@ import {
   tick,
   tickMana,
 } from "./store";
+import { oomModal, sendModal } from "./modalMessages";
 
 export const Combat: Component = () => {
   return (
@@ -62,7 +63,7 @@ export const Combat: Component = () => {
               if (tickMana() <= state.mana) {
                 setPause(false);
               } else {
-                alert("Not enough mana");
+                sendModal("You are out of mana!");
               }
             }}
           >

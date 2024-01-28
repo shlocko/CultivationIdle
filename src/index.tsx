@@ -8,6 +8,8 @@ import { Train } from "./Train";
 import { Combat } from "./Combat";
 import { Toaster } from "solid-toast";
 import { Inventory } from "./Inventory";
+import Modal from "@lutaok/solid-modal";
+import { state, setState, setPause } from "./store";
 
 const root = document.getElementById("root");
 
@@ -19,12 +21,24 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(
   () => (
-    <Router base="/CultivationIdle">
-      <Route path="/" component={Main} />
-      <Route path="/train" component={Train} />
-      <Route path="/combat" component={Combat} />
-      <Route path="/inventory" component={Inventory} />
-    </Router>
+    <>
+      <Toaster />
+      <Modal
+        isOpen={!!state.modalMessage}
+        onCloseRequest={() => {
+          setState("modalMessage", undefined);
+          setPause(false);
+        }}
+      >
+        {state.modalMessage}
+      </Modal>
+      <Router base="/CultivationIdle">
+        <Route path="/" component={Main} />
+        <Route path="/train" component={Train} />
+        <Route path="/combat" component={Combat} />
+        <Route path="/inventory" component={Inventory} />
+      </Router>
+    </>
   ),
   root!,
 );

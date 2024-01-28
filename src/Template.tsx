@@ -30,7 +30,6 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
   });
   return (
     <div class={utils.App}>
-      <Toaster />
       <QuickInfo />
       <progress max="100" value={state.bar}>
         {state.bar}/100

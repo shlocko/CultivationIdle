@@ -10,6 +10,7 @@ import {
   advance,
 } from "./store";
 import { techniqueEffect } from "./techniqueMethods";
+import { sendModal } from "./modalMessages";
 
 // Happens every tick
 export const perTick = () => {
@@ -25,7 +26,7 @@ export const perTick = () => {
 
   // Check for advancement
   if (canAdvance()) {
-    alert(rankInfo[state.rank].advMessage);
+    sendModal(rankInfo[state.rank].advMessage as string);
     advance();
   }
 };

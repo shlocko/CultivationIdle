@@ -14,10 +14,16 @@ import {
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
 import toast from "solid-toast";
+import Modal from "@lutaok/solid-modal";
+import { testModal } from "./modalMessages";
 
 export const Main: Component = () => {
+  const [isModalOpen, setIsModalOpen] = createSignal(false);
   return (
     <Template>
+      <button onClick={() => setState("modalMessage", testModal)}>
+        show modal
+      </button>
       <Show when={!state.aspect && state.rank >= 1}>
         <ChooseAspect />
       </Show>

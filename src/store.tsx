@@ -1,7 +1,8 @@
-import { createSignal, createMemo } from "solid-js";
+import { createSignal, createMemo, JSXElement } from "solid-js";
 import { createStore } from "solid-js/store";
 import { combatTick, meditateTick, trainTick } from "./tickMethods";
 import toast from "solid-toast";
+import { sendModal } from "./modalMessages";
 
 type Action = "Meditate" | "Train" | "Combat";
 
@@ -139,6 +140,7 @@ export const [state, setState] = createStore({
     { item: "Herb", quantity: 4 },
   ] as Array<{ item: Item; quantity: number }>,
   inventoryCapacity: 20,
+  modalMessage: undefined as JSXElement | undefined,
 });
 
 //********************************************************
@@ -163,8 +165,10 @@ export const load = () => {
 // Code to check for save data
 if (localStorage.getItem("state")) {
   load();
-}else{
-alert("You are embarking down a new path, one of magic and danger. You must train yourself and advance to prepare for what lies ahead!");
+} else {
+  sendModal(
+    "You are embarking down a new path, one of magic and danger. You must train yourself and advance to prepare for what lies ahead!",
+  );
 }
 
 export const clear = () => {
