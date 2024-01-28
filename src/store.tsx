@@ -1,6 +1,7 @@
 import { createSignal, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
 import { combatTick } from "./tickMethods";
+import toast from "solid-toast";
 
 type Action = "Meditate" | "Train" | "Combat";
 
@@ -105,6 +106,7 @@ export const [opponent, setOpponent] = createStore({
 export const [state, setState] = createStore({
   // State version for ensuring compatibility with save data
   version: 0,
+  loaded: false,
   //Gamedata on the various actions
   meditate: {
     tickSpeed: 0.5,
@@ -149,6 +151,8 @@ export const [state, setState] = createStore({
 
 export const persist = () => {
   localStorage.setItem("state", JSON.stringify(state));
+
+  toast("Data Saved");
 };
 
 export const load = () => {
@@ -157,10 +161,17 @@ export const load = () => {
     let loadState = JSON.parse(rawState);
     setState(loadState);
   }
+  setState("loaded", true);
+  toast("Data Loaded");
 };
+if(localStorage.getItem("state")){
+load();
+toast("Loaded found save data");
+}
 
 export const clear = () => {
   localStorage.clear();
+  toast("Data Cleared");
 };
 
 export const hasItem = (item: Item) => {

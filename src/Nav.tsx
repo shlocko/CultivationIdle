@@ -27,7 +27,6 @@ export const Nav: Component = () => {
       <button
         onClick={() => {
           load();
-          toast("Data Loaded");
         }}
       >
         <p>Load</p>
@@ -35,7 +34,6 @@ export const Nav: Component = () => {
       <button
         onClick={() => {
           persist();
-          toast("Data Saved");
         }}
       >
         <p>Save</p>
@@ -43,7 +41,6 @@ export const Nav: Component = () => {
       <button
         onClick={() => {
           clear();
-          toast("Data Cleared");
         }}
       >
         <p>Clear</p>
