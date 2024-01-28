@@ -18,40 +18,9 @@ import toast from "solid-toast";
 export const Main: Component = () => {
   return (
     <Template>
-      <Show when={canAdvance()}>
-        <button class={utils.btn} onClick={() => advance()}>
-          Advance
-        </button>
-      </Show>
       <Show when={!state.aspect && state.rank >= 1}>
         <ChooseAspect />
       </Show>
-      <For each={state.inventory}>
-        {(item) => (
-          <>
-            <p>
-              {" "}
-              {item.item} x {item.quantity}
-            </p>
-            <button
-              class={utils.btn}
-              onClick={() => {
-                inventoryRemove(item.item);
-                toast(`${item.quantity} ${item.item} removed`);
-              }}
-            >
-              X
-            </button>
-          </>
-        )}
-      </For>
-      <button
-        onClick={() => {
-          inventoryAdd("Health Potion", 3);
-        }}
-      >
-        Add 3 health Potion
-      </button>
       <button
         class={(utils.btn, utils.top_auto)}
         onClick={() => setAction("Meditate")}

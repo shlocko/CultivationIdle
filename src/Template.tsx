@@ -6,17 +6,15 @@ import {
   tick,
   tickSpeed,
   pause,
-  perTick,
   load,
+  persist,
 } from "./store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
 import { Toaster } from "solid-toast";
+import { perTick } from "./tickMethods";
 
 export const Template: Component<{ children: JSXElement }> = (props) => {
-  if (!state.loaded) {
-    load();
-  }
   const timer = setInterval(() => {
     if (!pause()) {
       setState("bar", (bar) => bar + 1.0 / tickSpeed());

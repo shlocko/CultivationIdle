@@ -7,6 +7,7 @@ import { Main } from "./main";
 import { Train } from "./Train";
 import { Combat } from "./Combat";
 import { Toaster } from "solid-toast";
+import { Inventory } from "./Inventory";
 
 const root = document.getElementById("root");
 
@@ -22,6 +23,7 @@ render(
       <Route path="/" component={Main} />
       <Route path="/train" component={Train} />
       <Route path="/combat" component={Combat} />
+      <Route path="/inventory" component={Inventory} />
     </Router>
   ),
   root!,

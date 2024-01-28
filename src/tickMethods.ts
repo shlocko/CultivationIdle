@@ -5,7 +5,48 @@ import {
   pause,
   opponent,
   setOpponent,
+  canAdvance,
+  rankInfo,
+  advance,
 } from "./store";
+import { techniqueEffect } from "./techniqueMethods";
+
+// Happens every tick
+export const perTick = () => {
+  if (state.mana < state.maxMana) {
+    setState("mana", (m) => m + state.passiveManaRegen);
+  }
+  if (state.mana > state.maxMana) {
+    setState("mana", state.maxMana);
+  }
+  if (state.health > state.maxHealth) {
+    setState("health", state.maxHealth);
+  }
+
+  // Check for advancement
+  if (canAdvance()) {
+    alert(rankInfo[state.rank].advMessage);
+    advance();
+  }
+};
+
+export const trainTick = () => {
+  if (state.mana >= 3) {
+    setState("mana", (mana) => mana - 3);
+    setState("maxMana", (max) => max + 0.5);
+  } else {
+    setState("action", "Meditate");
+  }
+};
+
+export const meditateTick = () => {
+  if (state.mana < state.maxMana) {
+    setState("mana", (mana) => mana + 1);
+  }
+  if (state.health < state.maxHealth) {
+    setState("health", (h) => h + 1);
+  }
+};
 
 export const combatTick = () => {
   setPause(true);
@@ -30,8 +71,8 @@ export const combatTick = () => {
     if (state.combat.turn === 0) {
       state.techniques.forEach((e, i) => {
         if (e.active) {
-          setState("maxMana", (m) => m + 0.1);
-          e.effect();
+          setState("maxMana", (m) => m + 0.2);
+          techniqueEffect[e.id as keyof typeof techniqueEffect]!();
           if (!e.onGoing) {
             setState("techniques", i, "active", false);
           }

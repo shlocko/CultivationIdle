@@ -1,6 +1,6 @@
 import { createSignal, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
-import { combatTick } from "./tickMethods";
+import { combatTick, meditateTick, trainTick } from "./tickMethods";
 import toast from "solid-toast";
 
 type Action = "Meditate" | "Train" | "Combat";
@@ -23,7 +23,12 @@ type Rank =
 
 // Gamedata on the ranks of advancement
 export const rankInfo = [
-  { name: "Foundation", advMana: 27 },
+  {
+    name: "Foundation",
+    advMana: 27,
+    advMessage:
+      "You feel your mana reach a critical density and begin to condense into a mana core. You may now choose an aspect to cultivate and begin learing to use your mana.",
+  },
   { name: "CoreFormation", advMana: 81 },
   { name: "RedCore", advMana: 243 },
   { name: "GreenCore", advMana: 729 },
@@ -46,42 +51,32 @@ export type TechniqueType = "Shaper" | "Enhancement" | "Range" | "Manipulation";
 
 export type Technique = {
   name: string;
+  id: string;
   aspect: Aspect;
   baseCost: number;
   minCost: number;
   onGoing: boolean; // whether the technique is an ongoing effect vs a one time use
   active: boolean; // Whether the technique is currently active
-  effect: Function; // Function to be called when technique is active and a tick occurs
 };
 
 export const fireTechniqes: Technique[] = [
   {
     name: "Fire Bolt",
+    id: "firebolt",
     onGoing: false,
     active: false,
     aspect: "Fire",
     baseCost: 5,
     minCost: 1,
-    effect: () => {
-      if (state.mana >= 5) {
-        setOpponent("health", (hp) => hp - 5);
-        setState("mana", (mp) => mp - 5);
-      }
-    },
   },
   {
     name: "Clense wounds in flame",
+    id: "clensewoundsinfire",
     onGoing: false,
     active: false,
     aspect: "Fire",
     baseCost: 5,
     minCost: 1,
-    effect: () => {
-      if (state.mana >= 5) {
-        setState("health", (hp) => hp + 10);
-        setState("mana", (mp) => mp - 5);
-      }
-    },
   },
 ];
 
@@ -121,7 +116,7 @@ export const [state, setState] = createStore({
   // Player's current mana
   mana: 0,
   // Player's maximum mana
-  maxMana: 22,
+  maxMana: 25,
   // Player's passive mana regeneration
   passiveManaRegen: 1,
   // Current % of tick bar
@@ -136,6 +131,7 @@ export const [state, setState] = createStore({
   techniques: [fireTechniqes[0], fireTechniqes[1]] as Technique[],
   // Player's helth points for combat
   health: 20,
+  maxHealth: 20,
   // Player's inventory, item name - item count
   inventory: [
     { item: "Health Potion", quantity: 1 },
@@ -164,9 +160,11 @@ export const load = () => {
   setState("loaded", true);
   toast("Data Loaded");
 };
-if(localStorage.getItem("state")){
-load();
-toast("Loaded found save data");
+// Code to check for save data
+if (localStorage.getItem("state")) {
+  load();
+}else{
+alert("You are embarking down a new path, one of magic and danger. You must train yourself and advance to prepare for what lies ahead!");
 }
 
 export const clear = () => {
@@ -211,7 +209,6 @@ export const inventoryAdd = (item: Item, quantity: number) => {
   let arr = state.inventory.slice();
   if (hasItem(item)) {
     let index = arr.findIndex((e) => e.item === item);
-    console.log(index);
     setState("inventory", index, "quantity", (num) => num + quantity);
   } else {
     arr.push({ item: item, quantity: quantity });
@@ -234,31 +231,14 @@ export const tickSpeed = () => {
 // Helper Function to call the tick method for the current action
 export const tick = {
   Train: () => {
-    if (state.mana >= 5) {
-      setState("mana", (mana) => mana - 5);
-      setState("maxMana", (max) => max + 0.2);
-    } else {
-      setState("action", "Meditate");
-    }
+    trainTick();
   },
   Meditate: () => {
-    if (state.mana < state.maxMana) {
-      setState("mana", (mana) => mana + 1);
-    }
+    meditateTick();
   },
   Combat: () => {
     combatTick();
   },
-};
-
-// Happens every tick
-export const perTick = () => {
-  if (state.mana < state.maxMana) {
-    setState("mana", (m) => m + state.passiveManaRegen);
-  }
-  if (state.mana > state.maxMana) {
-    setState("mana", state.maxMana);
-  }
 };
 
 export const canAdvance = () => {
