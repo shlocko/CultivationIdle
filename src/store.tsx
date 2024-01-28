@@ -159,6 +159,10 @@ export const load = () => {
   }
 };
 
+export const clear = () => {
+  localStorage.clear();
+};
+
 export const hasItem = (item: Item) => {
   let has = false;
   state.inventory.forEach((e) => {

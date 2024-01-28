@@ -1,7 +1,7 @@
 import { type Component } from "solid-js";
 import styles from "./styles/Nav.module.css";
 import { A } from "@solidjs/router";
-import { setPause, load, persist } from "./store";
+import { setPause, load, persist, clear } from "./store";
 import toast from "solid-toast";
 
 export const Nav: Component = () => {
@@ -39,6 +39,14 @@ export const Nav: Component = () => {
         }}
       >
         <p>Save</p>
+      </button>
+      <button
+        onClick={() => {
+          clear();
+          toast("Data Cleared");
+        }}
+      >
+        <p>Clear</p>
       </button>
     </div>
   );
