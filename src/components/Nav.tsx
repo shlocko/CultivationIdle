@@ -1,8 +1,7 @@
 import { type Component } from "solid-js";
-import styles from "./styles/Nav.module.css";
+import styles from "../styles/Nav.module.css";
 import { A } from "@solidjs/router";
-import { setPause, load, persist, clear } from "./store";
-import toast from "solid-toast";
+import { setPause, load, persist, clear } from "../state/store";
 
 export const Nav: Component = () => {
   return (

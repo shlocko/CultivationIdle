@@ -1,16 +1,17 @@
 import { For, type Component } from "solid-js";
-import utils from "./styles/utils.module.css";
-import { setState } from "./store";
+import utils from "../styles/utils.module.css";
+import { setState } from "../state/store";
+import { modalChooseTechniqe } from "../state/modalMessages";
 
 export const ChooseAspect: Component = () => {
   return (
     <div class={utils.container}>
-      <h3> Choose an aspect: </h3>
+      <h3> Choose an aspect for your mana: </h3>
       <button
         class={utils.btn}
         onClick={() => {
           setState("aspect", "Fire");
-          setState("aspectChosen", true);
+          modalChooseTechniqe();
         }}
       >
         {"Fire"}
@@ -19,7 +20,7 @@ export const ChooseAspect: Component = () => {
         class={utils.btn}
         onClick={() => {
           setState("aspect", "Water");
-          setState("aspectChosen", true);
+          modalChooseTechniqe();
         }}
       >
         {"Water"}
@@ -28,7 +29,7 @@ export const ChooseAspect: Component = () => {
         class={utils.btn}
         onClick={() => {
           setState("aspect", "Wind");
-          setState("aspectChosen", true);
+          modalChooseTechniqe();
         }}
       >
         {"Wind"}

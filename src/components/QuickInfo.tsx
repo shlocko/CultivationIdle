@@ -1,6 +1,6 @@
 import { type Component } from "solid-js";
-import utils from "./styles/utils.module.css";
-import { state, rankInfo } from "./store";
+import utils from "../styles/utils.module.css";
+import { state, rankInfo } from "../state/store";
 
 export const QuickInfo: Component = () => {
   return (

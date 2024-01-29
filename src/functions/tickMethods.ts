@@ -2,15 +2,14 @@ import {
   setPause,
   setState,
   state,
-  pause,
   opponent,
   setOpponent,
   canAdvance,
   rankInfo,
   advance,
-} from "./store";
+} from "../state/store";
 import { techniqueEffect } from "./techniqueMethods";
-import { sendModal } from "./modalMessages";
+import { advancementMethods } from "./advanceMethods";
 
 // Happens every tick
 export const perTick = () => {
@@ -26,7 +25,10 @@ export const perTick = () => {
 
   // Check for advancement
   if (canAdvance()) {
-    sendModal(rankInfo[state.rank].advMessage as string);
+    setPause(true);
+    advancementMethods[
+      rankInfo[state.rank].name as keyof typeof advancementMethods
+    ]();
     advance();
   }
 };
@@ -89,7 +91,7 @@ export const combatTick = () => {
       setState("combat", "turn", 0);
       if (state.health <= 0) {
         setState("action", "Meditate");
-        setState("health", 20);
+        setState("health", 0);
         setPause(false);
       }
     }

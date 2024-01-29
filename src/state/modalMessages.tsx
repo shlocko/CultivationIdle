@@ -1,8 +1,18 @@
+import { ChooseAspect } from "../components/ChooseAspect";
+import { ChooseTechnique } from "../components/chooseTechnique";
 import { setPause, setState } from "./store";
 
 export const closeModal = () => {
   setState("modalMessage", undefined);
   setPause(false);
+};
+
+export const modalChooseTechniqe = () => {
+  setState("modalMessage", <ChooseTechnique />);
+};
+
+export const modalChooseAspect = () => {
+  setState("modalMessage", <ChooseAspect />);
 };
 
 export const sendModal = (message: string) => {
@@ -16,7 +26,7 @@ export const sendModal = (message: string) => {
           setState("modalMessage", undefined);
         }}
       >
-        close
+        <p>Close</p>
       </button>
     </>,
   );
@@ -38,7 +48,7 @@ export const testModal = (
 
 export const advanceModal = (
   <>
-    <p> </p>
+    <p> rankInf </p>
 
     <button
       onClick={() => {

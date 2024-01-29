@@ -1,18 +1,10 @@
 import { type Component, JSXElement, onCleanup } from "solid-js";
-import utils from "./styles/utils.module.css";
-import {
-  state,
-  setState,
-  tick,
-  tickSpeed,
-  pause,
-  load,
-  persist,
-} from "./store";
+import utils from "../styles/utils.module.css";
+import { state, setState, tick, tickSpeed, pause } from "../state/store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
 import { Toaster } from "solid-toast";
-import { perTick } from "./tickMethods";
+import { perTick } from "../functions/tickMethods";
 
 export const Template: Component<{ children: JSXElement }> = (props) => {
   const timer = setInterval(() => {

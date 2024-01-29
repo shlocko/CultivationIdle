@@ -3,13 +3,13 @@ import { render } from "solid-js/web";
 import { Router, Route } from "@solidjs/router";
 
 import "./index.css";
-import { Main } from "./main";
-import { Train } from "./Train";
-import { Combat } from "./Combat";
+import { Main } from "./components/main";
+import { Train } from "./components/Train";
+import { Combat } from "./components/Combat";
 import { Toaster } from "solid-toast";
-import { Inventory } from "./Inventory";
+import { Inventory } from "./components/Inventory";
 import Modal from "@lutaok/solid-modal";
-import { state, setState, setPause } from "./store";
+import { state, setState, setPause } from "./state/store";
 
 const root = document.getElementById("root");
 

@@ -1,6 +1,6 @@
 import { createSignal, createMemo, JSXElement } from "solid-js";
 import { createStore } from "solid-js/store";
-import { combatTick, meditateTick, trainTick } from "./tickMethods";
+import { combatTick, meditateTick, trainTick } from "../functions/tickMethods";
 import toast from "solid-toast";
 import { sendModal } from "./modalMessages";
 
@@ -27,8 +27,6 @@ export const rankInfo = [
   {
     name: "Foundation",
     advMana: 27,
-    advMessage:
-      "You feel your mana reach a critical density and begin to condense into a mana core. You may now choose an aspect to cultivate and begin learing to use your mana.",
   },
   { name: "CoreFormation", advMana: 81 },
   { name: "RedCore", advMana: 243 },
@@ -58,26 +56,33 @@ export type Technique = {
   minCost: number;
   onGoing: boolean; // whether the technique is an ongoing effect vs a one time use
   active: boolean; // Whether the technique is currently active
+  description: string;
 };
 
-export const fireTechniqes: Technique[] = [
+//********************************************************
+// Meditation Tecniques
+//********************************************************
+export type meditationTechnique = {
+  name: string;
+  id: string;
+  description: string;
+};
+
+export const meditationTechniques: meditationTechnique[] = [
   {
-    name: "Fire Bolt",
-    id: "firebolt",
-    onGoing: false,
-    active: false,
-    aspect: "Fire",
-    baseCost: 5,
-    minCost: 1,
+    name: "Basic mana regeneration",
+    id: "basicmanaregen",
+    description: "Regenerate mana at an increased rate",
   },
   {
-    name: "Clense wounds in flame",
-    id: "clensewoundsinfire",
-    onGoing: false,
-    active: false,
-    aspect: "Fire",
-    baseCost: 5,
-    minCost: 1,
+    name: "Basic health regen",
+    id: "basichealhregen",
+    description: "Regenerate health at an increased rate",
+  },
+  {
+    name: "Basic mixed regeneration",
+    id: "basicmixedregen",
+    description: "Regenerate both health and mana at a minorly increased rate",
   },
 ];
 
@@ -115,7 +120,7 @@ export const [state, setState] = createStore({
     turn: 0,
   },
   // Player's current mana
-  mana: 0,
+  mana: 25,
   // Player's maximum mana
   maxMana: 25,
   // Player's passive mana regeneration
@@ -129,7 +134,9 @@ export const [state, setState] = createStore({
   // Player's magic aspect
   aspect: undefined as Aspect | undefined,
   // Player's known techniques
-  techniques: [fireTechniqes[0], fireTechniqes[1]] as Technique[],
+  techniques: [] as Technique[],
+  // Player's meditation techniques
+  meditationTechniques: [] as meditationTechnique[],
   // Player's helth points for combat
   health: 20,
   maxHealth: 20,
