@@ -10,7 +10,7 @@ import { Toaster } from "solid-toast";
 import { Inventory } from "./components/Inventory";
 import Modal from "@lutaok/solid-modal";
 import { state, setState, setPause } from "./state/store";
-import { TextModal } from "./state/modalMessages";
+import { ModalMessage } from "./state/modalMessages";
 
 const root = document.getElementById("root");
 
@@ -30,10 +30,7 @@ render(
           setPause(false);
         }}
       >
-        <TextModal
-          content={state.modalMessages[0].content}
-          buttonEffect={state.modalMessages[0].buttonEffect}
-        />
+        <ModalMessage type="Text"content={state.modalMessages[0].content} />
       </Modal>
       <Router base="/CultivationIdle">
         <Route path="/" component={Main} />

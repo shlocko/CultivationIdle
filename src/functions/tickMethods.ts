@@ -23,10 +23,6 @@ export const perTick = () => {
     setState("health", state.maxHealth);
   }
 
-  if (state.modalMessages.length > 0) {
-    setState("state", "Modal");
-  }
-
   // Check for advancement
   if (canAdvance()) {
     setPause(true);
