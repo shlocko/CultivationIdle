@@ -1,7 +1,6 @@
 import { For, type Component } from "solid-js";
 import utils from "../styles/utils.module.css";
 import { setState } from "../state/store";
-import { modalChooseTechniqe } from "../state/modalMessages";
 
 export const ChooseAspect: Component = () => {
   return (
@@ -11,7 +10,6 @@ export const ChooseAspect: Component = () => {
         class={utils.btn}
         onClick={() => {
           setState("aspect", "Fire");
-          modalChooseTechniqe();
         }}
       >
         {"Fire"}
@@ -20,7 +18,6 @@ export const ChooseAspect: Component = () => {
         class={utils.btn}
         onClick={() => {
           setState("aspect", "Water");
-          modalChooseTechniqe();
         }}
       >
         {"Water"}
@@ -29,7 +26,6 @@ export const ChooseAspect: Component = () => {
         class={utils.btn}
         onClick={() => {
           setState("aspect", "Wind");
-          modalChooseTechniqe();
         }}
       >
         {"Wind"}

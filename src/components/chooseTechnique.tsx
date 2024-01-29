@@ -2,7 +2,6 @@ import { For, type Component, createSignal } from "solid-js";
 import utils from "../styles/utils.module.css";
 import { Technique, setState, state } from "../state/store";
 import { techniques } from "../state/techniques";
-import { closeModal } from "../state/modalMessages";
 
 export const ChooseTechnique: Component = () => {
   const [chosen, setChosen] = createSignal(-1);
@@ -36,7 +35,6 @@ export const ChooseTechnique: Component = () => {
             ] as Technique,
           );
           setState("techniques", arr);
-          closeModal();
         }}
       >
         <p> Select Technique </p>

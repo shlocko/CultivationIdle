@@ -1,61 +1,44 @@
-import { ChooseAspect } from "../components/ChooseAspect";
-import { ChooseTechnique } from "../components/chooseTechnique";
-import { setPause, setState } from "./store";
+import { type Component } from "solid-js";
+import { setPause, setState, state } from "./store";
+import utils from "../styles/utils.module.css";
+import { hashKey } from "@solidjs/router/dist/data/cache";
 
-export const closeModal = () => {
-  setState("modalMessage", undefined);
-  setPause(false);
+export const sendModal = (content: string) => {
+  let msg = {
+    type: "test",
+    content: content,
+    buttonEffect: "next",
+  } as modalMessage;
+  let arr = state.modalMessages.slice();
+  arr.push(msg);
+  setState("modalMessages", arr);
 };
 
-export const modalChooseTechniqe = () => {
-  setState("modalMessage", <ChooseTechnique />);
-};
-
-export const modalChooseAspect = () => {
-  setState("modalMessage", <ChooseAspect />);
-};
-
-export const sendModal = (message: string) => {
-  setState(
-    "modalMessage",
+export const TextModal: Component<{
+  content: string;
+  buttonEffect: string;
+}> = (props) => {
+  return (
     <>
-      <p> {message} </p>
-
+      <p> {props.content} </p>
       <button
+        class={utils.btn}
         onClick={() => {
-          setState("modalMessage", undefined);
+          if (props.buttonEffect === "next") {
+            let arr = state.modalMessages.slice();
+            arr.shift();
+            setState("modalMessages", arr);
+          }
         }}
       >
-        <p>Close</p>
+        Next
       </button>
-    </>,
+    </>
   );
 };
 
-export const testModal = (
-  <>
-    <p> Hello </p>
-
-    <button
-      onClick={() => {
-        setState("modalMessage", undefined);
-      }}
-    >
-      close
-    </button>
-  </>
-);
-
-export const advanceModal = (
-  <>
-    <p> rankInf </p>
-
-    <button
-      onClick={() => {
-        setState("modalMessage", undefined);
-      }}
-    >
-      close
-    </button>
-  </>
-);
+export type modalMessage = {
+  type: string;
+  content: string;
+  buttonEffect: string;
+};

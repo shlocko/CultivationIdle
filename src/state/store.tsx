@@ -2,7 +2,7 @@ import { createSignal, createMemo, JSXElement } from "solid-js";
 import { createStore } from "solid-js/store";
 import { combatTick, meditateTick, trainTick } from "../functions/tickMethods";
 import toast from "solid-toast";
-import { sendModal } from "./modalMessages";
+import { modalMessage, sendModal } from "./modalMessages";
 
 type Action = "Meditate" | "Train" | "Combat";
 
@@ -95,6 +95,7 @@ export type Item = "Health Potion" | "Mana Potion" | "Herb";
 //********************************************************
 // state
 //********************************************************
+export type State = "Modal" | "Tick";
 export const [pause, setPause] = createSignal(false);
 export const [opponent, setOpponent] = createStore({
   alive: true,
@@ -107,7 +108,7 @@ export const [opponent, setOpponent] = createStore({
 export const [state, setState] = createStore({
   // State version for ensuring compatibility with save data
   version: 0,
-  loaded: false,
+  state: "Tick" as State,
   //Gamedata on the various actions
   meditate: {
     tickSpeed: 0.5,
@@ -147,7 +148,7 @@ export const [state, setState] = createStore({
     { item: "Herb", quantity: 4 },
   ] as Array<{ item: Item; quantity: number }>,
   inventoryCapacity: 20,
-  modalMessage: undefined as JSXElement | undefined,
+  modalMessages: [] as modalMessage[],
 });
 
 //********************************************************
@@ -166,7 +167,6 @@ export const load = () => {
     let loadState = JSON.parse(rawState);
     setState(loadState);
   }
-  setState("loaded", true);
   toast("Data Loaded");
 };
 // Code to check for save data

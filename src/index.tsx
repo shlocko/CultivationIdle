@@ -10,6 +10,7 @@ import { Toaster } from "solid-toast";
 import { Inventory } from "./components/Inventory";
 import Modal from "@lutaok/solid-modal";
 import { state, setState, setPause } from "./state/store";
+import { TextModal } from "./state/modalMessages";
 
 const root = document.getElementById("root");
 
@@ -24,13 +25,15 @@ render(
     <>
       <Toaster />
       <Modal
-        isOpen={!!state.modalMessage}
+        isOpen={state.state === "Modal" && state.modalMessages.length > 0}
         onCloseRequest={() => {
-          setState("modalMessage", undefined);
           setPause(false);
         }}
       >
-        {state.modalMessage}
+        <TextModal
+          content={state.modalMessages[0].content}
+          buttonEffect={state.modalMessages[0].buttonEffect}
+        />
       </Modal>
       <Router base="/CultivationIdle">
         <Route path="/" component={Main} />

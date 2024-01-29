@@ -8,13 +8,19 @@ import { perTick } from "../functions/tickMethods";
 
 export const Template: Component<{ children: JSXElement }> = (props) => {
   const timer = setInterval(() => {
-    if (!pause()) {
-      setState("bar", (bar) => bar + 1.0 / tickSpeed());
-    }
-    if (state.bar > 100) {
-      setState("bar", 0.0);
-      tick[state.action]();
-      perTick();
+    if (state.state === "Tick") {
+      if (!pause()) {
+        setState("bar", (bar) => bar + 1.0 / tickSpeed());
+      }
+      if (state.bar > 100) {
+        setState("bar", 0.0);
+        tick[state.action]();
+        perTick();
+      }
+    } else if (state.state === "Modal") {
+      if (state.modalMessages.length === 0) {
+        setState("state", "Tick");
+      }
     }
   }, 10);
   onCleanup(() => {

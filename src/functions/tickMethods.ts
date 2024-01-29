@@ -9,7 +9,7 @@ import {
   advance,
 } from "../state/store";
 import { techniqueEffect } from "./techniqueMethods";
-import { advancementMethods } from "./advanceMethods";
+//import { advancementMethods } from "./advanceMethods";
 
 // Happens every tick
 export const perTick = () => {
@@ -23,12 +23,16 @@ export const perTick = () => {
     setState("health", state.maxHealth);
   }
 
+  if (state.modalMessages.length > 0) {
+    setState("state", "Modal");
+  }
+
   // Check for advancement
   if (canAdvance()) {
     setPause(true);
-    advancementMethods[
-      rankInfo[state.rank].name as keyof typeof advancementMethods
-    ]();
+    //advancementMethods[
+    //rankInfo[state.rank].name as keyof typeof advancementMethods
+    //]();
     advance();
   }
 };

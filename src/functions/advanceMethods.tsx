@@ -1,8 +1,7 @@
-import { modalChooseAspect } from "../state/modalMessages";
 import { advance, setState } from "../state/store";
 import utils from "../styles/utils.module.css";
 
-export const advancementMethods = {
+/* export const advancementMethods = {
   Foundation: () => {
     setState(
       "modalMessage",
@@ -25,4 +24,4 @@ export const advancementMethods = {
     advance();
   },
   CoreFormation: () => {},
-};
+};*/
