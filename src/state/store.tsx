@@ -113,6 +113,7 @@ export const [opponent, setOpponent] = createStore({
 export const [state, setState] = createStore({
   // State version for ensuring compatibility with save data
   version: 0,
+  // State machine state
   state: "Tick" as State,
   //Gamedata on the various actions
   meditate: {

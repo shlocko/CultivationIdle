@@ -16,14 +16,17 @@ import { perTick } from "../functions/tickMethods";
 export const Template: Component<{ children: JSXElement }> = (props) => {
   const [saveTimer, setSaveTimer] = createSignal(0);
   const timer = setInterval(() => {
+    // Timer for auto saves
     setSaveTimer((t) => t + 10);
     if (saveTimer() >= 3000) {
-        setSaveTimer(0);
+      setSaveTimer(0);
       persist();
     }
+    // Check for pending modals, if so go to modal state
     if (state.modalMessages.length > 0) {
       setState("state", "Modal");
     }
+    // state machine behavior
     if (state.state === "Tick") {
       if (!pause()) {
         setState("bar", (bar) => bar + 1.0 / tickSpeed());
