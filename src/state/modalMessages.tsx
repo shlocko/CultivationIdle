@@ -12,18 +12,43 @@ export const sendModal = (content: string) => {
   setState("modalMessages", arr);
 };
 
+<<<<<<< HEAD
 export const sendChoice = (store: string, items: any[]) => {
+=======
+export const sendChoice = <T extends { name: string }>(
+  store: string,
+  items: Array<T>,
+) => {
+>>>>>>> afc4a9956d3155cba2b402ab6004e14610afa37e
   let msg = {
     type: "Choose",
     store: store,
     items: items,
   } as ChooseModalState;
+<<<<<<< HEAD
   let arr = state.modalMessages.slice();
   arr.push(msg);
   setState("modalMessages", arr);
 };
 
 export const ModalMessage: Component<TextModal | ChooseModalState> = () => {
+=======
+
+  //console.log(items);
+  let arr = state.modalMessages.slice();
+  arr.push(msg);
+  //console.log(arr);
+  setState("modalMessages", arr);
+};
+
+export const testModalList = <T extends { name: string }>(arr: Array<T>) => {
+  if (arr[0]) {
+    console.log(arr[0].name);
+  }
+};
+
+export const ModalMessage: Component = () => {
+>>>>>>> afc4a9956d3155cba2b402ab6004e14610afa37e
   let message = state.modalMessages[0];
   if (message.type === "Text") {
     return (
@@ -48,7 +73,11 @@ export const ModalMessage: Component<TextModal | ChooseModalState> = () => {
         <For each={message.items}>
           {(item, i) => {
             console.log(item);
+<<<<<<< HEAD
             return <p> {item} </p>;
+=======
+            return <p> {item.name} </p>;
+>>>>>>> afc4a9956d3155cba2b402ab6004e14610afa37e
           }}
         </For>
 
