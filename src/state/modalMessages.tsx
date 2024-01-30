@@ -12,15 +12,27 @@ export const sendModal = (content: string) => {
   setState("modalMessages", arr);
 };
 
-export const sendChoice = (store: string, items: any[]) => {
+export const sendChoice = <T extends { name: string }>(
+  store: string,
+  items: Array<T>,
+) => {
   let msg = {
     type: "Choose",
     store: store,
     items: items,
   } as ChooseModalState;
+
+  //console.log(items);
   let arr = state.modalMessages.slice();
   arr.push(msg);
+  //console.log(arr);
   setState("modalMessages", arr);
+};
+
+export const testModalList = <T extends { name: string }>(arr: Array<T>) => {
+  if (arr[0]) {
+    console.log(arr[0].name);
+  }
 };
 
 export const ModalMessage: Component = () => {
@@ -48,7 +60,7 @@ export const ModalMessage: Component = () => {
         <For each={message.items}>
           {(item, i) => {
             console.log(item);
-            return <p> {item} </p>;
+            return <p> {item.name} </p>;
           }}
         </For>
 

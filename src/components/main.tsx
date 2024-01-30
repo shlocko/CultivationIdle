@@ -3,7 +3,7 @@ import utils from "../styles/utils.module.css";
 import { state, setState, setAction } from "../state/store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
-import { sendChoice, sendModal } from "../state/modalMessages";
+import { sendChoice, sendModal, testModalList } from "../state/modalMessages";
 import { techniques } from "../state/techniques";
 //import { testModal } from "../state/modalMessages";
 
@@ -18,8 +18,9 @@ export const Main: Component = () => {
         <button
           class={utils.btn}
           onClick={() => {
+            testModalList(techniques["Fire"]);
             sendChoice("techniques", techniques["Fire"]);
-            console.log(techniques["Fire"]);
+            //console.log(techniques["Fire"]);
           }}
         >
           <p> Push! </p>

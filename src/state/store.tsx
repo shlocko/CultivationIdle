@@ -2,7 +2,12 @@ import { createSignal, createMemo, JSXElement } from "solid-js";
 import { createStore } from "solid-js/store";
 import { combatTick, meditateTick, trainTick } from "../functions/tickMethods";
 import toast from "solid-toast";
-import { ChooseModalState, ModalMessageType, TextModal, sendModal } from "./modalMessages";
+import {
+  ChooseModalState,
+  ModalMessageType,
+  TextModal,
+  sendModal,
+} from "./modalMessages";
 
 type Action = "Meditate" | "Train" | "Combat";
 
