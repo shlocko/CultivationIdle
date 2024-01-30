@@ -1,7 +1,6 @@
 import { For, type Component } from "solid-js";
 import { setPause, setState, state } from "./store";
 import utils from "../styles/utils.module.css";
-import { hashKey } from "@solidjs/router/dist/data/cache";
 
 export const sendModal = (content: string) => {
   let msg = {
@@ -13,19 +12,23 @@ export const sendModal = (content: string) => {
   setState("modalMessages", arr);
 };
 
-export const ChooseModal: Component<{
-  content: string;
-  buttonEffect: string;
-}> = (props) => {
-  return <></>;
+export const sendChoice = (store: string, items: any[]) => {
+  let msg = {
+    type: "Choose",
+    store: store,
+    items: items,
+  } as ChooseModalState;
+  let arr = state.modalMessages.slice();
+  arr.push(msg);
+  setState("modalMessages", arr);
 };
 
 export const ModalMessage: Component<TextModal | ChooseModalState> = () => {
-  let props = state.modalMessages[0];
-  if (props.type === "Text") {
+  let message = state.modalMessages[0];
+  if (message.type === "Text") {
     return (
       <>
-        <p> {props.content} </p>
+        <p> {message.content} </p>
         <button
           class={utils.btn}
           onClick={() => {
@@ -38,19 +41,33 @@ export const ModalMessage: Component<TextModal | ChooseModalState> = () => {
         </button>
       </>
     );
-  } else if (props.type === "ChooseState") {
+  } else if (message.type === "Choose") {
     return (
       <>
         <p> Choose </p>
-        <For each={state[props.items as keyof typeof state] as []}>
-          {(item, i) => <p> {item} </p>}
+        <For each={message.items}>
+          {(item, i) => {
+            console.log(item);
+            return <p> {item} </p>;
+          }}
         </For>
+
+        <button
+          class={utils.btn}
+          onClick={() => {
+            let arr = state.modalMessages.slice();
+            arr.shift();
+            setState("modalMessages", arr);
+          }}
+        >
+          Next
+        </button>
       </>
     );
   }
 };
 
-export type ModalMessageType = "Text" | "Choose";
+export type ModalMessageType = TextModal | ChooseModalState;
 
 export type TextModal = {
   type: "Text";
@@ -58,14 +75,7 @@ export type TextModal = {
 };
 
 export type ChooseModalState = {
-  type: "ChooseState";
-  items: string;
+  type: "Choose";
+  store: string;
+  items: any[];
 };
-
-export type modalMessage =
-  | {
-      type: string;
-      content: string;
-      buttonEffect: string;
-    }
-  | {};
