@@ -30,7 +30,7 @@ render(
           setPause(false);
         }}
       >
-        <ModalMessage type="Text"content={state.modalMessages[0].content} />
+        <ModalMessage />
       </Modal>
       <Router base="/CultivationIdle">
         <Route path="/" component={Main} />

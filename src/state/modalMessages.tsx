@@ -23,7 +23,7 @@ export const sendChoice = (store: string, items: any[]) => {
   setState("modalMessages", arr);
 };
 
-export const ModalMessage: Component<TextModal | ChooseModalState> = () => {
+export const ModalMessage: Component = () => {
   let message = state.modalMessages[0];
   if (message.type === "Text") {
     return (

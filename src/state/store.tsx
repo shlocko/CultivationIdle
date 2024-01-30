@@ -2,12 +2,7 @@ import { createSignal, createMemo, JSXElement } from "solid-js";
 import { createStore } from "solid-js/store";
 import { combatTick, meditateTick, trainTick } from "../functions/tickMethods";
 import toast from "solid-toast";
-import {
-  ChooseModalState,
-  TextModal,
-  modalMessage,
-  sendModal,
-} from "./modalMessages";
+import { ChooseModalState, ModalMessageType, TextModal, sendModal } from "./modalMessages";
 
 type Action = "Meditate" | "Train" | "Combat";
 
@@ -154,7 +149,7 @@ export const [state, setState] = createStore({
     { item: "Herb", quantity: 4 },
   ] as Array<{ item: Item; quantity: number }>,
   inventoryCapacity: 20,
-  modalMessages: [] as (TextModal | ChooseModalState)[],
+  modalMessages: [] as ModalMessageType[],
 });
 
 //********************************************************
