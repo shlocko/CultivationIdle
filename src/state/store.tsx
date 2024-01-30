@@ -4,8 +4,8 @@ import { combatTick, meditateTick, trainTick } from "../functions/tickMethods";
 import toast from "solid-toast";
 import {
   ChooseModalState,
+  ModalMessageType,
   TextModal,
-  modalMessage,
   sendModal,
 } from "./modalMessages";
 
@@ -154,7 +154,7 @@ export const [state, setState] = createStore({
     { item: "Herb", quantity: 4 },
   ] as Array<{ item: Item; quantity: number }>,
   inventoryCapacity: 20,
-  modalMessages: [] as (TextModal | ChooseModalState)[],
+  modalMessages: [] as ModalMessageType[],
 });
 
 //********************************************************

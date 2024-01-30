@@ -3,7 +3,8 @@ import utils from "../styles/utils.module.css";
 import { state, setState, setAction } from "../state/store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
-import { sendModal } from "../state/modalMessages";
+import { sendChoice, sendModal } from "../state/modalMessages";
+import { techniques } from "../state/techniques";
 //import { testModal } from "../state/modalMessages";
 
 export const Main: Component = () => {
@@ -17,7 +18,8 @@ export const Main: Component = () => {
         <button
           class={utils.btn}
           onClick={() => {
-            sendModal("Posh!");
+            sendChoice("techniques", techniques["Fire"]);
+            console.log(techniques["Fire"]);
           }}
         >
           <p> Push! </p>
