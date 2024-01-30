@@ -3,11 +3,7 @@ import utils from "../styles/utils.module.css";
 import { state, setState, setAction } from "../state/store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
-<<<<<<< HEAD
 import { sendChoice, sendModal } from "../state/modalMessages";
-=======
-import { sendChoice, sendModal, testModalList } from "../state/modalMessages";
->>>>>>> afc4a9956d3155cba2b402ab6004e14610afa37e
 import { techniques } from "../state/techniques";
 //import { testModal } from "../state/modalMessages";
 
@@ -22,14 +18,8 @@ export const Main: Component = () => {
         <button
           class={utils.btn}
           onClick={() => {
-<<<<<<< HEAD
             sendChoice("techniques", techniques["Fire"]);
             console.log(techniques["Fire"]);
-=======
-            testModalList(techniques["Fire"]);
-            sendChoice("techniques", techniques["Fire"]);
-            //console.log(techniques["Fire"]);
->>>>>>> afc4a9956d3155cba2b402ab6004e14610afa37e
           }}
         >
           <p> Push! </p>
