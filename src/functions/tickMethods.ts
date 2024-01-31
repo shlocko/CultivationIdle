@@ -1,4 +1,9 @@
 import {
+  sendAspectChoice,
+  sendModal,
+  sendTechniqueChoice,
+} from "../state/modalMessages";
+import {
   setPause,
   setState,
   state,
@@ -25,10 +30,9 @@ export const perTick = () => {
 
   // Check for advancement
   if (canAdvance()) {
-    setPause(true);
-    //advancementMethods[
-    //rankInfo[state.rank].name as keyof typeof advancementMethods
-    //]();
+    sendModal("You advance");
+    sendAspectChoice();
+    sendTechniqueChoice();
     advance();
   }
 };

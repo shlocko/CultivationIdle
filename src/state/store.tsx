@@ -39,7 +39,7 @@ export const rankInfo = [
 ];
 
 // Available aspects at CoreFormation rank
-export type Aspect =
+export type AspectOld =
   | "Fire"
   | "Water"
   | "Stone"
@@ -47,6 +47,18 @@ export type Aspect =
   | "Sword"
   | "Pure"
   | "Shadow";
+
+export type Aspect = (typeof aspects)[number];
+
+export const aspects = [
+  "Fire",
+  "Water",
+  "Stone",
+  "Wind",
+  "Sword",
+  "Pure",
+  "Shadow",
+];
 
 //********************************************************
 // techniques
