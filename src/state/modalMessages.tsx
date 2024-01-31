@@ -4,6 +4,8 @@ import {
   createSignal,
   createEffect,
   createMemo,
+  Switch,
+  Match,
 } from "solid-js";
 import { Aspect, Technique, aspects, setPause, setState, state } from "./store";
 import utils from "../styles/utils.module.css";
@@ -59,6 +61,26 @@ export const testModalList = <T extends { name: string }>(arr: Array<T>) => {
   if (arr[0]) {
     console.log(arr[0].name);
   }
+};
+
+export const ModalText: Component = () => {
+  let text = (state.modalMessages[0] as TextModal).content;
+
+  return (
+    <>
+      <p> {text} </p>
+      <button
+        class={utils.btn}
+        onClick={() => {
+          let arr = state.modalMessages.slice();
+          arr.shift();
+          setState("modalMessages", arr);
+        }}
+      >
+        Next
+      </button>
+    </>
+  );
 };
 
 export const ModalChooseTechnique: Component = () => {
@@ -154,29 +176,19 @@ export const ModalMessage: Component = () => {
   createEffect(() => {
     setMsg(state.modalMessages[0]);
   });
-  if (msg().type === "Text") {
-    let message = msg() as TextModal;
-
-    return (
-      <>
-        <p> {message.content} </p>
-        <button
-          class={utils.btn}
-          onClick={() => {
-            let arr = state.modalMessages.slice();
-            arr.shift();
-            setState("modalMessages", arr);
-          }}
-        >
-          Next
-        </button>
-      </>
-    );
-  } else if (msg().type === "ChooseTechnique") {
-    return <ModalChooseTechnique />;
-  } else if (msg().type === "ChooseAspect") {
-    return <ModalChooseAspect />;
-  }
+  return (
+    <Switch>
+      <Match when={msg().type === "Text"}>
+        <ModalText />
+      </Match>
+      <Match when={msg().type === "ChooseTechnique"}>
+        <ModalChooseTechnique />
+      </Match>
+      <Match when={msg().type === "ChooseAspect"}>
+        <ModalChooseAspect />
+      </Match>
+    </Switch>
+  );
 };
 
 export type ModalMessageType =
