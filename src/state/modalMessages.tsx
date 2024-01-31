@@ -1,4 +1,10 @@
-import { For, type Component, createSignal, createEffect } from "solid-js";
+import {
+  For,
+  type Component,
+  createSignal,
+  createEffect,
+  createMemo,
+} from "solid-js";
 import { Aspect, Technique, aspects, setPause, setState, state } from "./store";
 import utils from "../styles/utils.module.css";
 import modalStyles from "../styles/Modal.module.css";
@@ -62,24 +68,22 @@ export const ModalChooseTechnique: Component = () => {
     <>
       <p> Choose </p>
       <For each={techniqueList}>
-        {(item, i) => {
-          return (
-            <>
-              <button
-                classList={{
-                  [utils.btn]: true,
-                  [modalStyles.btn_choice]: true,
-                  [utils.btn_active]: choice() === i(),
-                }}
-                onClick={() => {
-                  setChoice(i());
-                }}
-              >
-                <p>{item.name}</p>
-              </button>
-            </>
-          );
-        }}
+        {(item, i) => (
+          <>
+            <button
+              classList={{
+                [utils.btn]: true,
+                [modalStyles.btn_choice]: true,
+                [utils.btn_active]: choice() === i(),
+              }}
+              onClick={() => {
+                setChoice(i());
+              }}
+            >
+              <p>{item.name}</p>
+            </button>
+          </>
+        )}
       </For>
 
       <button
@@ -89,10 +93,10 @@ export const ModalChooseTechnique: Component = () => {
             let techniquesKnown = state.techniques.slice();
             techniquesKnown.push(techniqueList[choice()] as Technique);
             setState("techniques", techniquesKnown);
-            let arr = state.modalMessages.slice();
-            arr.shift();
-            setState("modalMessages", arr);
           }
+          let arr = state.modalMessages.slice();
+          arr.shift();
+          setState("modalMessages", arr);
         }}
       >
         <p>Choose</p>
@@ -107,24 +111,22 @@ export const ModalChooseAspect: Component = () => {
     <div class={utils.container}>
       <p> Choose </p>
       <For each={aspects}>
-        {(item, i) => {
-          return (
-            <>
-              <button
-                classList={{
-                  [utils.btn]: true,
-                  [modalStyles.btn_choice]: true,
-                  [utils.btn_active]: choice() === i(),
-                }}
-                onClick={() => {
-                  setChoice(i());
-                }}
-              >
-                <p>{item}</p>
-              </button>
-            </>
-          );
-        }}
+        {(item, i) => (
+          <>
+            <button
+              classList={{
+                [utils.btn]: true,
+                [modalStyles.btn_choice]: true,
+                [utils.btn_active]: choice() === i(),
+              }}
+              onClick={() => {
+                setChoice(i());
+              }}
+            >
+              <p>{item}</p>
+            </button>
+          </>
+        )}
       </For>
 
       <button
@@ -132,10 +134,10 @@ export const ModalChooseAspect: Component = () => {
         onClick={() => {
           if (choice() >= 0) {
             setState("aspect", aspects[choice()] as Aspect);
-            let arr = state.modalMessages.slice();
-            arr.shift();
-            setState("modalMessages", arr);
           }
+          let arr = state.modalMessages.slice();
+          arr.shift();
+          setState("modalMessages", arr);
         }}
       >
         <p>Choose</p>
@@ -145,9 +147,16 @@ export const ModalChooseAspect: Component = () => {
 };
 
 export const ModalMessage: Component = () => {
-  let msg = state.modalMessages[0];
-  if (msg.type === "Text") {
-    let message = msg as TextModal;
+  //let msg = state.modalMessages[0];
+  const [msg, setMsg] = createSignal(state.modalMessages[0]);
+
+  // Update the message whenever state.modalMessages changes
+  createEffect(() => {
+    setMsg(state.modalMessages[0]);
+  });
+  if (msg().type === "Text") {
+    let message = msg() as TextModal;
+
     return (
       <>
         <p> {message.content} </p>
@@ -163,10 +172,9 @@ export const ModalMessage: Component = () => {
         </button>
       </>
     );
-  } else if (msg.type === "Choose") {
-  } else if (msg.type === "ChooseTechnique") {
+  } else if (msg().type === "ChooseTechnique") {
     return <ModalChooseTechnique />;
-  } else if (msg.type === "ChooseAspect") {
+  } else if (msg().type === "ChooseAspect") {
     return <ModalChooseAspect />;
   }
 };

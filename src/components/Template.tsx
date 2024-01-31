@@ -18,7 +18,7 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
   const timer = setInterval(() => {
     // Timer for auto saves
     setSaveTimer((t) => t + 10);
-    if (saveTimer() >= 3000) {
+    if (saveTimer() >= 9000) {
       setSaveTimer(0);
       persist();
     }
