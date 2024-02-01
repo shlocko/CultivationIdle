@@ -7,7 +7,15 @@ import {
   Switch,
   Match,
 } from "solid-js";
-import { Aspect, Technique, aspects, setPause, setState, state } from "./store";
+import {
+  Aspect,
+  Technique,
+  aspects,
+  meditationTechniques,
+  setPause,
+  setState,
+  state,
+} from "./store";
 import utils from "../styles/utils.module.css";
 import modalStyles from "../styles/Modal.module.css";
 import { techniques } from "./techniques";
@@ -43,6 +51,15 @@ export const sendTechniqueChoice = () => {
   let msg = {
     type: "ChooseTechnique",
   } as ChooseTechniqueModal;
+  let arr = state.modalMessages.slice();
+  arr.push(msg);
+  setState("modalMessages", arr);
+};
+
+export const sendMeditationTechniqueChoice = () => {
+  let msg = {
+    type: "ChooseMeditationTechnique",
+  } as ChooseMeditationTechniqueModal;
   let arr = state.modalMessages.slice();
   arr.push(msg);
   setState("modalMessages", arr);
@@ -127,6 +144,50 @@ export const ModalChooseTechnique: Component = () => {
   );
 };
 
+export const ModalChooseMeditationTechnique: Component = () => {
+  const [choice, setChoice] = createSignal(-1);
+  let techniqueList = meditationTechniques;
+  return (
+    <>
+      <p> Choose </p>
+      <For each={techniqueList}>
+        {(item, i) => (
+          <>
+            <button
+              classList={{
+                [utils.btn]: true,
+                [modalStyles.btn_choice]: true,
+                [utils.btn_active]: choice() === i(),
+              }}
+              onClick={() => {
+                setChoice(i());
+              }}
+            >
+              <p>{item.name}</p>
+            </button>
+          </>
+        )}
+      </For>
+
+      <button
+        class={utils.btn}
+        onClick={() => {
+          if (choice() >= 0) {
+            let techniquesKnown = state.meditationTechniques.slice();
+            techniquesKnown.push(techniqueList[choice()] as Technique);
+            setState("meditationTechniques", techniquesKnown);
+          }
+          let arr = state.modalMessages.slice();
+          arr.shift();
+          setState("modalMessages", arr);
+        }}
+      >
+        <p>Choose</p>
+      </button>
+    </>
+  );
+};
+
 export const ModalChooseAspect: Component = () => {
   const [choice, setChoice] = createSignal(-1);
   return (
@@ -187,6 +248,9 @@ export const ModalMessage: Component = () => {
       <Match when={msg().type === "ChooseAspect"}>
         <ModalChooseAspect />
       </Match>
+      <Match when={msg().type === "ChooseMeditationTechnique"}>
+        <ModalChooseMeditationTechnique />
+      </Match>
     </Switch>
   );
 };
@@ -195,6 +259,7 @@ export type ModalMessageType =
   | TextModal
   | ChooseModalState
   | ChooseTechniqueModal
+  | ChooseMeditationTechniqueModal
   | ChooseAspectModal;
 
 export type TextModal = {
@@ -214,4 +279,8 @@ export type ChooseTechniqueModal = {
 
 export type ChooseAspectModal = {
   type: "ChooseAspect";
+};
+
+export type ChooseMeditationTechniqueModal = {
+  type: "ChooseMeditationTechnique";
 };

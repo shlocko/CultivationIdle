@@ -13,22 +13,27 @@ import { techniques } from "../state/techniques";
 //import { testModal } from "../state/modalMessages";
 
 export const Main: Component = () => {
-  const [isModalOpen, setIsModalOpen] = createSignal(false);
   return (
     <>
       <Template>
         <Show when={!state.aspect && state.rank >= 1}>
           <ChooseAspect />
         </Show>
-        <button
-          class={utils.btn}
-          onClick={() => {
-            sendAspectChoice();
-            console.log(techniques["Fire"]);
-          }}
-        >
-          <p> Push! </p>
-        </button>
+        <For each={state.meditationTechniques}>
+          {(item, i) => (
+            <button
+              classList={{
+                [utils.btn]: true,
+                [utils.btn_active]: i() === state.activeMeditationTechnique,
+              }}
+              onClick={() => {
+                setState("activeMeditationTechnique", i());
+              }}
+            >
+              <p> {item.name} </p>
+            </button>
+          )}
+        </For>
         <button
           class={(utils.btn, utils.top_auto)}
           onClick={() => setAction("Meditate")}

@@ -93,7 +93,7 @@ export const meditationTechniques: meditationTechnique[] = [
   },
   {
     name: "Basic health regen",
-    id: "basichealhregen",
+    id: "basichealthregen",
     description: "Regenerate health at an increased rate",
   },
   {
@@ -156,6 +156,7 @@ export const [state, setState] = createStore({
   techniques: [] as Technique[],
   // Player's meditation techniques
   meditationTechniques: [] as meditationTechnique[],
+  activeMeditationTechnique: 0,
   // Player's helth points for combat
   health: 20,
   maxHealth: 20,

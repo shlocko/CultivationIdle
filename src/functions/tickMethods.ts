@@ -1,5 +1,6 @@
 import {
   sendAspectChoice,
+  sendMeditationTechniqueChoice,
   sendModal,
   sendTechniqueChoice,
 } from "../state/modalMessages";
@@ -12,8 +13,9 @@ import {
   canAdvance,
   rankInfo,
   advance,
+  meditationTechniques,
 } from "../state/store";
-import { techniqueEffect } from "./techniqueMethods";
+import { meditationTechniqueEffect, techniqueEffect } from "./techniqueMethods";
 //import { advancementMethods } from "./advanceMethods";
 
 // Happens every tick
@@ -33,6 +35,7 @@ export const perTick = () => {
     sendModal("You advance");
     sendAspectChoice();
     sendTechniqueChoice();
+    sendMeditationTechniqueChoice();
     advance();
   }
 };
@@ -47,7 +50,15 @@ export const trainTick = () => {
 };
 
 export const meditateTick = () => {
-  if (state.mana < state.maxMana) {
+  if (
+    state.meditationTechniques.length > 0 &&
+    state.activeMeditationTechnique >= 0
+  ) {
+    meditationTechniqueEffect[
+      state.meditationTechniques[state.activeMeditationTechnique]
+        .id as keyof typeof meditationTechniqueEffect
+    ]!();
+  }else if (state.mana < state.maxMana) {
     setState("mana", (mana) => mana + 1);
   }
   if (state.health < state.maxHealth) {
