@@ -139,9 +139,9 @@ export const [state, setState] = createStore({
     turn: 0,
   },
   // Player's current mana
-  mana: 25,
+  mana: 10,
   // Player's maximum mana
-  maxMana: 25,
+  maxMana: 10,
   // Player's passive mana regeneration
   passiveManaRegen: 1,
   // Current % of tick bar
@@ -167,7 +167,9 @@ export const [state, setState] = createStore({
     { item: "Herb", quantity: 4 },
   ] as Array<{ item: Item; quantity: number }>,
   inventoryCapacity: 20,
+  // Queue of modal's to appear
   modalMessages: [] as ModalMessageType[],
+  autoAdventure: false,
 });
 
 //********************************************************
@@ -284,6 +286,21 @@ export const advance = () => {
 export const setAction = (action: Action) => {
   setState("action", action);
   setPause(false);
+};
+
+export const findFight = () => {
+  setOpponent({
+    alive: true,
+    health: 10,
+    respawn: 3,
+  });
+  setState("combat", "turn", -1);
+};
+
+export const resetActiveTechniques = () => {
+  state.techniques.forEach((item, i) => {
+    setState("techniques", i, "active", false);
+  });
 };
 
 // Memo for calculating mana per tick

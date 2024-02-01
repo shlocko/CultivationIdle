@@ -1,8 +1,18 @@
-import { Show, type Component, Switch, Match, For, JSXElement } from "solid-js";
+import {
+  Show,
+  type Component,
+  Switch,
+  Match,
+  For,
+  JSXElement,
+  createSignal,
+} from "solid-js";
 import utils from "../styles/utils.module.css";
 import { Template } from "./Template";
 import {
+  findFight,
   opponent,
+  resetActiveTechniques,
   setAction,
   setPause,
   setState,
@@ -21,7 +31,11 @@ export const Combat: Component = () => {
           <Match when={state.action !== "Combat"}>
             <button
               class={(utils.btn, utils.top_auto)}
-              onClick={() => setAction("Combat")}
+              onClick={() => {
+                findFight();
+                resetActiveTechniques();
+                setAction("Combat");
+              }}
             >
               <p>Venture Forth</p>
             </button>
@@ -72,6 +86,15 @@ export const Combat: Component = () => {
             </button>
           </Match>
         </Switch>
+        <button
+          classList={{
+            [utils.btn]: true,
+            [utils.btn_active]: state.autoAdventure,
+          }}
+          onClick={() => setState("autoAdventure", (a) => !a)}
+        >
+          <p> Auto Adventure </p>
+        </button>
       </Template>
     </>
   );

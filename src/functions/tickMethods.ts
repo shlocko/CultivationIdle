@@ -14,6 +14,8 @@ import {
   rankInfo,
   advance,
   meditationTechniques,
+  setAction,
+  findFight,
 } from "../state/store";
 import { meditationTechniqueEffect, techniqueEffect } from "./techniqueMethods";
 //import { advancementMethods } from "./advanceMethods";
@@ -69,19 +71,19 @@ export const meditateTick = () => {
 export const combatTick = () => {
   setPause(true);
   if (!opponent.alive) {
-    setState("combat", "tickSpeed", 1);
-    if (opponent.respawn <= 0) {
-      setOpponent({
-        alive: true,
-        health: 10,
-        respawn: 3,
-      });
-      setPause(true);
-      setState("combat", "tickSpeed", 0.0001);
+    if (state.autoAdventure) {
+      setState("combat", "tickSpeed", 1);
+      if (opponent.respawn <= 0) {
+        findFight();
+        setPause(true);
+        setState("combat", "tickSpeed", 0.0001);
+      } else {
+        setOpponent("respawn", (time) => time - 1);
+      }
+      setPause(false);
     } else {
-      setOpponent("respawn", (time) => time - 1);
+      setAction("Meditate");
     }
-    setPause(false);
   } else if (opponent.health <= 0) {
     setState("combat", "tickSpeed", 1);
     setOpponent("alive", false);
@@ -101,7 +103,7 @@ export const combatTick = () => {
         setState("combat", "tickSpeed", 1);
         setOpponent("alive", false);
       }
-    } else {
+    } else if (state.combat.turn === 1) {
       setState("health", (hp) => hp - opponent.damage);
       setState("combat", "turn", 0);
       if (state.health <= 0) {
@@ -109,6 +111,8 @@ export const combatTick = () => {
         setState("health", 0);
         setPause(false);
       }
+    } else {
+      setState("combat", "turn", 0);
     }
     setState("combat", "tickSpeed", 0.0001);
   }
