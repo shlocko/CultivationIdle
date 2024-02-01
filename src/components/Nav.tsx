@@ -13,7 +13,7 @@ export const Nav: Component = () => {
         Train
       </A>
       <A class={styles.nav_item} href="/combat">
-        Combat
+        Adventure
       </A>
       <A class={styles.nav_item} href="/inventory">
         Inventory

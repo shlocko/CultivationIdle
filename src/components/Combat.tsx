@@ -16,14 +16,14 @@ export const Combat: Component = () => {
   return (
     <>
       <Template>
-        <h2> Combat </h2>
+        <h2> Adventure </h2>
         <Switch>
           <Match when={state.action !== "Combat"}>
             <button
               class={(utils.btn, utils.top_auto)}
               onClick={() => setAction("Combat")}
             >
-              <p>Fight</p>
+              <p>Venture Forth</p>
             </button>
           </Match>
           <Match when={state.combat.turn === 1}>

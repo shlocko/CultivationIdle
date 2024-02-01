@@ -58,7 +58,7 @@ export const meditateTick = () => {
       state.meditationTechniques[state.activeMeditationTechnique]
         .id as keyof typeof meditationTechniqueEffect
     ]!();
-  }else if (state.mana < state.maxMana) {
+  } else if (state.mana < state.maxMana) {
     setState("mana", (mana) => mana + 1);
   }
   if (state.health < state.maxHealth) {
@@ -91,9 +91,9 @@ export const combatTick = () => {
         if (e.active) {
           setState("maxMana", (m) => m + 0.2);
           techniqueEffect[e.id as keyof typeof techniqueEffect]!();
-          if (!e.onGoing) {
+          /*if (!e.onGoing) {
             setState("techniques", i, "active", false);
-          }
+          }*/
         }
       });
       setState("combat", "turn", 1);
