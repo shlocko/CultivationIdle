@@ -72,7 +72,7 @@ export const combatTick = () => {
   setPause(true);
   if (!opponent.alive) {
     if (state.autoAdventure) {
-      setState("combat", "tickSpeed", 1);
+      setState("combat", "tickSpeed", 0.7);
       if (opponent.respawn <= 0) {
         findFight();
         setPause(true);
@@ -91,7 +91,7 @@ export const combatTick = () => {
     if (state.combat.turn === 0) {
       state.techniques.forEach((e, i) => {
         if (e.active) {
-          setState("maxMana", (m) => m + 0.2);
+          setState("maxMana", (m) => m + 0.3);
           techniqueEffect[e.id as keyof typeof techniqueEffect]!();
           /*if (!e.onGoing) {
             setState("techniques", i, "active", false);
