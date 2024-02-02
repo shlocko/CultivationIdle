@@ -74,6 +74,7 @@ export type Technique = {
   onGoing: boolean; // whether the technique is an ongoing effect vs a one time use
   active: boolean; // Whether the technique is currently active
   description: string;
+  mastery: number;
 };
 
 //********************************************************
@@ -139,9 +140,9 @@ export const [state, setState] = createStore({
     turn: 0,
   },
   // Player's current mana
-  mana: 10,
+  mana: 9,
   // Player's maximum mana
-  maxMana: 10,
+  maxMana: 9,
   // Player's passive mana regeneration
   passiveManaRegen: 1,
   // Current % of tick bar
@@ -154,6 +155,7 @@ export const [state, setState] = createStore({
   aspect: undefined as Aspect | undefined,
   // Player's known techniques
   techniques: [] as Technique[],
+  trainingTechnique: 0,
   // Player's meditation techniques
   meditationTechniques: [] as meditationTechnique[],
   activeMeditationTechnique: 0,
@@ -308,7 +310,8 @@ export const tickMana = createMemo(() => {
   let total = 0;
   state.techniques.forEach((e) => {
     if (e.active) {
-      total += e.baseCost;
+      let cost = e.baseCost - e.mastery / 250;
+      total += cost;
     }
   });
   return total;
