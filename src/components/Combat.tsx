@@ -56,20 +56,40 @@ export const Combat: Component = () => {
           <Match when={state.combat.turn === 0}>
             <h2> Your Turn </h2>
             <p class={utils.top_auto}> Opponent: {opponent.health} HP. </p>
-            <p> Mana per turn: {tickMana()} </p>
+            <p> Mana per turn: {tickMana().toFixed(2)} </p>
             <For each={state.techniques}>
               {(item, i) => (
-                <button
-                  classList={{
-                    [utils.btn]: true,
-                    [utils.btn_active]: item.active,
-                  }}
-                  onClick={() => {
-                    setState("techniques", i(), "active", (a) => !a);
-                  }}
-                >
-                  {item.name}
-                </button>
+                <div>
+                  <button
+                    classList={{
+                      [utils.btn]: true,
+                      [utils.btn_active]: item.active,
+                    }}
+                    onClick={() => {
+                      setState("techniques", i(), "active", (a) => !a);
+                    }}
+                  >
+                    {item.name} x{item.multiplier}
+                  </button>
+                  <button
+                    class={utils.btn}
+                    onClick={() => {
+                      setState("techniques", i(), "multiplier", (n) => n + 1);
+                    }}
+                  >
+                    {" "}
+                    +{" "}
+                  </button>
+                  <button
+                    class={utils.btn}
+                    onClick={() => {
+                      setState("techniques", i(), "multiplier", (n) => n - 1);
+                    }}
+                  >
+                    {" "}
+                    -{" "}
+                  </button>
+                </div>
               )}
             </For>
             <button

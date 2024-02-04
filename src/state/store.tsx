@@ -70,11 +70,13 @@ export type Technique = {
   id: string;
   aspect: Aspect;
   baseCost: number;
+  currentCost: number;
   minCost: number;
   onGoing: boolean; // whether the technique is an ongoing effect vs a one time use
   active: boolean; // Whether the technique is currently active
   description: string;
   mastery: number;
+  multiplier: number;
 };
 
 //********************************************************
@@ -140,9 +142,9 @@ export const [state, setState] = createStore({
     turn: 0,
   },
   // Player's current mana
-  mana: 9,
+  mana: 26,
   // Player's maximum mana
-  maxMana: 9,
+  maxMana: 26,
   // Player's passive mana regeneration
   passiveManaRegen: 1,
   // Current % of tick bar
@@ -155,7 +157,7 @@ export const [state, setState] = createStore({
   aspect: undefined as Aspect | undefined,
   // Player's known techniques
   techniques: [] as Technique[],
-  trainingTechnique: 0,
+  trainingTechnique: -1,
   // Player's meditation techniques
   meditationTechniques: [] as meditationTechnique[],
   activeMeditationTechnique: 0,
@@ -308,11 +310,18 @@ export const resetActiveTechniques = () => {
 // Memo for calculating mana per tick
 export const tickMana = createMemo(() => {
   let total = 0;
-  state.techniques.forEach((e) => {
+  state.techniques.forEach((e, i) => {
     if (e.active) {
-      let cost = e.baseCost - e.mastery / 250;
+      let cost =
+        (e.baseCost - (e.mastery / 10000) * (e.baseCost - e.minCost)) *
+        e.multiplier;
+      setState("techniques", i, "currentCost", cost);
       total += cost;
     }
   });
   return total;
 });
+
+export const effectMultiplier = (mult: number) => {
+  return 5 * Math.pow(mult + 10, 0.5779) - 19;
+};

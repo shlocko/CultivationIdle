@@ -20,7 +20,7 @@ export const Train: Component = () => {
             >
               <p>
                 {" "}
-                {item.name}: {item.mastery}/1000{" "}
+                {item.name}: {item.mastery}/10000{" "}
               </p>
             </button>
           )}

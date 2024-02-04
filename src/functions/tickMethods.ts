@@ -17,6 +17,7 @@ import {
   setAction,
   findFight,
   tickMana,
+  effectMultiplier,
 } from "../state/store";
 import { meditationTechniqueEffect, techniqueEffect } from "./techniqueMethods";
 //import { advancementMethods } from "./advanceMethods";
@@ -48,7 +49,9 @@ export const trainTick = () => {
     let num: number = state.trainingTechnique;
     setState("mana", (mana) => mana - 3);
     setState("maxMana", (max) => max + 0.5);
-    setState("techniques", num, "mastery", (x) => x + 1);
+    if (state.trainingTechnique >= 0 && state.techniques[num].mastery < 10000) {
+      setState("techniques", num, "mastery", (x) => x + 1);
+    }
   } else {
     setState("action", "Meditate");
   }
@@ -94,9 +97,13 @@ export const combatTick = () => {
     if (state.combat.turn === 0) {
       state.techniques.forEach((e, i) => {
         if (e.active) {
-          setState("maxMana", (m) => m + 0.3);
-          setState("mana", (m) => m - tickMana());
-          techniqueEffect[e.id as keyof typeof techniqueEffect]!();
+          setState("maxMana", (m) => m + 0.3 * effectMultiplier(e.multiplier));
+          //setState("mana", (m) => m - tickMana());
+          console.log("tick mana" + tickMana());
+          techniqueEffect[e.id as keyof typeof techniqueEffect]!(
+            e.multiplier,
+            e.currentCost,
+          );
           /*if (!e.onGoing) {
             setState("techniques", i, "active", false);
           }*/

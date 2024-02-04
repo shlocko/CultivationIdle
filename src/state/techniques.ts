@@ -1,3 +1,5 @@
+import { Technique } from "./store";
+
 export const techniques = {
   Fire: [
     {
@@ -10,6 +12,7 @@ export const techniques = {
       minCost: 1,
       description: "Fire a small ball of fire at the target",
       mastery: 1,
+      multiplier: 2,
     },
     {
       name: "Clense wounds in flame",
@@ -21,6 +24,7 @@ export const techniques = {
       minCost: 1,
       description: "Sear your wounds closed",
       mastery: 1,
+      multiplier: 1,
     },
-  ],
+  ] as Technique[],
 };

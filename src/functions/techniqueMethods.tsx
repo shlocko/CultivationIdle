@@ -1,12 +1,14 @@
-import { setOpponent, state, setState } from "../state/store";
+import { setOpponent, state, setState, effectMultiplier } from "../state/store";
 
 export const techniqueEffect = {
-  firebolt: () => {
-    if (state.mana >= 5) {
-      setOpponent("health", (hp) => hp - 5);
+  firebolt: (mult: number, cost: number) => {
+    let multiplier = effectMultiplier(mult);
+    if (state.mana >= cost) {
+      setState("mana", (m) => m - cost);
+      setOpponent("health", (hp) => hp - 5 * multiplier);
     }
   },
-  clensewoundsinfire: () => {
+  clensewoundsinfire: (mult: number, cost: number) => {
     if (state.mana >= 5) {
       setState("health", (hp) => hp + 10);
     }
