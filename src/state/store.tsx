@@ -238,10 +238,8 @@ export const load = () => {
     let loadState = JSON.parse(rawState);
     if (loadState.version === state.version) {
       setState(loadState);
-      console.log("load");
     } else {
       localStorage.clear();
-      console.log("didnt load");
     }
   }
   toast("Data Loaded");
@@ -357,7 +355,7 @@ export const setAction = (action: Action) => {
 export const findFight = () => {
   setOpponent({
     alive: true,
-    health: 10,
+    health: state.rank * 10,
     respawn: 3,
   });
   setState("combat", "turn", -1);

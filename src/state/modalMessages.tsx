@@ -45,10 +45,8 @@ export const sendChoice = <T extends { name: string }>(
     items: items,
   } as ChooseModalState;
 
-  //console.log(items);
   let arr = state.modalMessages.slice();
   arr.push(msg);
-  //console.log(arr);
   setState("modalMessages", arr);
 };
 
@@ -261,7 +259,6 @@ export const ModalLoot: Component = () => {
                   inventoryAdd(item.name, quantity);
                   toast(`${quantity} ${item.name} added`);
                   setOpponent("loot", i(), "show", false);
-                  console.log(opponent);
                 }}
               >
                 <p>
