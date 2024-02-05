@@ -172,7 +172,7 @@ export const [opponent, setOpponent] = createStore({
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
   // State version for ensuring compatibility with save data
-  version: 1,
+  version: 2,
   // State machine state
   state: "Tick" as State,
   //Gamedata on the various actions

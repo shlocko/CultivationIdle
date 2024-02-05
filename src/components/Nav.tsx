@@ -18,6 +18,9 @@ export const Nav: Component = () => {
       <A class={styles.nav_item} href="/inventory">
         Inventory
       </A>
+      <A class={styles.nav_item} href="/shop">
+        Shop
+      </A>
       <button
         class={styles.nav_item}
         onClick={() => {
