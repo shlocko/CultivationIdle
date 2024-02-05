@@ -155,7 +155,7 @@ export const [opponent, setOpponent] = createStore({
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
   // State version for ensuring compatibility with save data
-  version: 0,
+  version: 1,
   // State machine state
   state: "Tick" as State,
   //Gamedata on the various actions
@@ -219,7 +219,13 @@ export const load = () => {
   let rawState = localStorage.getItem("state");
   if (rawState) {
     let loadState = JSON.parse(rawState);
-    setState(loadState);
+    if (loadState.version === state.version) {
+      setState(loadState);
+      console.log("load");
+    } else {
+      localStorage.clear();
+      console.log("didnt load");
+    }
   }
   toast("Data Loaded");
 };
