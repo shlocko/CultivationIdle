@@ -6,19 +6,24 @@ import {
   createMemo,
   Switch,
   Match,
+  Show,
+  onMount,
 } from "solid-js";
 import {
   Aspect,
   Technique,
   aspects,
+  inventoryAdd,
   meditationTechniques,
-  setPause,
+  opponent,
+  setOpponent,
   setState,
   state,
 } from "./store";
 import utils from "../styles/utils.module.css";
 import modalStyles from "../styles/Modal.module.css";
 import { techniques } from "./techniques";
+import toast from "solid-toast";
 
 export const sendModal = (content: string) => {
   let msg = {
@@ -69,6 +74,15 @@ export const sendAspectChoice = () => {
   let msg = {
     type: "ChooseAspect",
   } as ChooseAspectModal;
+  let arr = state.modalMessages.slice();
+  arr.push(msg);
+  setState("modalMessages", arr);
+};
+
+export const sendLoot = () => {
+  let msg = {
+    type: "Loot",
+  } as LootModal;
   let arr = state.modalMessages.slice();
   arr.push(msg);
   setState("modalMessages", arr);
@@ -229,6 +243,50 @@ export const ModalChooseAspect: Component = () => {
   );
 };
 
+export const ModalLoot: Component = () => {
+  return (
+    <div class={utils.container}>
+      <p> Loot: </p>
+      <For each={opponent.loot}>
+        {(item, i) => {
+          let chanceRoll = Math.floor(Math.random() * 100) + 1;
+          setOpponent("loot", i(), "show", chanceRoll >= item.chance);
+          let quantity =
+            Math.floor(Math.random() * (item.max - item.min + 1)) + item.min;
+          return (
+            <Show when={item.show}>
+              <button
+                class={utils.btn}
+                onClick={() => {
+                  inventoryAdd(item.name, quantity);
+                  toast(`${quantity} ${item.name} added`);
+                  setOpponent("loot", i(), "show", false);
+                  console.log(opponent);
+                }}
+              >
+                <p>
+                  {" "}
+                  {quantity} {item.name}{" "}
+                </p>
+              </button>
+            </Show>
+          );
+        }}
+      </For>
+      <button
+        class={utils.btn}
+        onClick={() => {
+          let arr = state.modalMessages.slice();
+          arr.shift();
+          setState("modalMessages", arr);
+        }}
+      >
+        <p>Next</p>
+      </button>
+    </div>
+  );
+};
+
 export const ModalMessage: Component = () => {
   //let msg = state.modalMessages[0];
   const [msg, setMsg] = createSignal(state.modalMessages[0]);
@@ -251,6 +309,9 @@ export const ModalMessage: Component = () => {
       <Match when={msg().type === "ChooseMeditationTechnique"}>
         <ModalChooseMeditationTechnique />
       </Match>
+      <Match when={msg().type === "Loot"}>
+        <ModalLoot />
+      </Match>
     </Switch>
   );
 };
@@ -260,7 +321,8 @@ export type ModalMessageType =
   | ChooseModalState
   | ChooseTechniqueModal
   | ChooseMeditationTechniqueModal
-  | ChooseAspectModal;
+  | ChooseAspectModal
+  | LootModal;
 
 export type TextModal = {
   type: "Text";
@@ -283,4 +345,8 @@ export type ChooseAspectModal = {
 
 export type ChooseMeditationTechniqueModal = {
   type: "ChooseMeditationTechnique";
+};
+
+export type LootModal = {
+  type: "Loot";
 };

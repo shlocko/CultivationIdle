@@ -35,6 +35,13 @@ export const Inventory: Component = () => {
         >
           Add 3 health Potion
         </button>
+        <button
+          onClick={() => {
+            inventoryAdd("Iron Bar", 3);
+          }}
+        >
+          Add 3 Iron Bar
+        </button>
         <div class={utils.top_auto}></div>
       </Template>
     </>

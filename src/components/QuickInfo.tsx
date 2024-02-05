@@ -13,6 +13,7 @@ export const QuickInfo: Component = () => {
       <p> Next Advancement: {rankInfo[state.rank].advMana} </p>
       <p> Aspect: {state.aspect ? state.aspect : "Pure"} </p>
       <p> HP: {state.health} </p>
+      <p> Coins: {state.coins} </p>
     </div>
   );
 };

@@ -12,7 +12,7 @@ export const techniques = {
       minCost: 1,
       description: "Fire a small ball of fire at the target",
       mastery: 1,
-      multiplier: 2,
+      multiplier: 1,
     },
     {
       name: "Clense wounds in flame",

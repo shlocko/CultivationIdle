@@ -110,7 +110,16 @@ export const meditationTechniques: meditationTechnique[] = [
 // items
 //********************************************************
 
-export type Item = "Health Potion" | "Mana Potion" | "Herb";
+export type Item =
+  | "Health Potion"
+  | "Mana Potion"
+  | "Herb"
+  | "Iron Bar"
+  | "Sword"
+  | "Berry"
+  | "Fireroot"
+  | "Blueleaf"
+  | "Glass Bottle";
 
 //********************************************************
 // state
@@ -122,6 +131,25 @@ export const [opponent, setOpponent] = createStore({
   health: 10,
   damage: 3,
   respawn: 3,
+  name: "Nerd",
+  loot: [
+    {
+      name: "Glass Bottle",
+      chance: 30,
+      min: 1,
+      max: 1,
+    },
+    { name: "Berry", chance: 80, min: 1, max: 10 },
+    { name: "Herb", chance: 80, min: 1, max: 10 },
+  ] as Array<{
+    name: Item;
+    chance: number;
+    min: number;
+    max: number;
+    show: boolean;
+  }>,
+  coinMax: 100,
+  coinMin: 1,
 });
 
 // Gamestate intended for persistence
@@ -171,6 +199,7 @@ export const [state, setState] = createStore({
     { item: "Herb", quantity: 4 },
   ] as Array<{ item: Item; quantity: number }>,
   inventoryCapacity: 20,
+  coins: 0,
   // Queue of modal's to appear
   modalMessages: [] as ModalMessageType[],
   autoAdventure: false,
@@ -324,4 +353,10 @@ export const tickMana = createMemo(() => {
 
 export const effectMultiplier = (mult: number) => {
   return 5 * Math.pow(mult + 10, 0.5779) - 19;
+};
+
+export const addCoins = (min: number, max: number) => {
+  let coins = Math.floor(Math.random() * (max - min + 1)) + min;
+  setState("coins", (c) => c + coins);
+  toast(`${coins} coins added`);
 };

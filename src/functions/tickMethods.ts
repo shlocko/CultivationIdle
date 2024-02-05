@@ -1,5 +1,6 @@
 import {
   sendAspectChoice,
+  sendLoot,
   sendMeditationTechniqueChoice,
   sendModal,
   sendTechniqueChoice,
@@ -18,6 +19,7 @@ import {
   findFight,
   tickMana,
   effectMultiplier,
+  addCoins,
 } from "../state/store";
 import { meditationTechniqueEffect, techniqueEffect } from "./techniqueMethods";
 //import { advancementMethods } from "./advanceMethods";
@@ -99,7 +101,6 @@ export const combatTick = () => {
         if (e.active) {
           setState("maxMana", (m) => m + 0.3 * effectMultiplier(e.multiplier));
           //setState("mana", (m) => m - tickMana());
-          console.log("tick mana" + tickMana());
           techniqueEffect[e.id as keyof typeof techniqueEffect]!(
             e.multiplier,
             e.currentCost,
@@ -111,6 +112,8 @@ export const combatTick = () => {
       });
       setState("combat", "turn", 1);
       if (opponent.health <= 0) {
+        sendLoot();
+        addCoins(opponent.coinMin, opponent.coinMax);
         setState("combat", "tickSpeed", 1);
         setOpponent("alive", false);
       }
