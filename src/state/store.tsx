@@ -277,7 +277,7 @@ export const howManyOfItem = (item: Item) => {
   });
 };
 
-export const inventoryRemove = (item: Item, quantity: number) => {
+export const inventoryRemove = (item: Item) => {
   state.inventory.forEach((e, i) => {
     if (e.item === item) {
       let arr = state.inventory.slice();
@@ -290,9 +290,10 @@ export const inventoryRemove = (item: Item, quantity: number) => {
 export const inventoryRemoveQuantity = (item: Item, quantity: number) => {
   state.inventory.forEach((e, i) => {
     if (e.item === item) {
-      let arr = state.inventory.slice();
-      arr[i].quantity -= quantity;
-      setState("inventory", arr);
+      setState("inventory", i, "quantity", (q) => q - quantity);
+      if (state.inventory[i].quantity <= 0) {
+        inventoryRemove(e.item);
+      }
     }
   });
 };

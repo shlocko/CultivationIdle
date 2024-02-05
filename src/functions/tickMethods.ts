@@ -128,7 +128,7 @@ export const combatTick = () => {
             break;
           case 2:
             if (hasItem("Mana Potion")) {
-              inventoryRemoveQuantity("Health Potion", 1);
+              inventoryRemoveQuantity("Mana Potion", 1);
               setState("mana", (h) => h + 20);
             }
             break;
