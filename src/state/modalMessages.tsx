@@ -250,7 +250,7 @@ export const ModalLoot: Component = () => {
       <For each={opponent.loot}>
         {(item, i) => {
           let chanceRoll = Math.floor(Math.random() * 100) + 1;
-          setOpponent("loot", i(), "show", chanceRoll >= item.chance);
+          setOpponent("loot", i(), "show", chanceRoll <= item.chance);
           let quantity =
             Math.floor(Math.random() * (item.max - item.min + 1)) + item.min;
           return (

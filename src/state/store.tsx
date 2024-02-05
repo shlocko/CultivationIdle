@@ -122,8 +122,13 @@ export type Item =
   | "Glass Bottle";
 
 //********************************************************
+// Combat Actions
+//********************************************************
+
+//********************************************************
 // state
 //********************************************************
+
 export type State = "Modal" | "Tick";
 export const [pause, setPause] = createSignal(false);
 export const [opponent, setOpponent] = createStore({
@@ -133,6 +138,18 @@ export const [opponent, setOpponent] = createStore({
   respawn: 3,
   name: "Nerd",
   loot: [
+    {
+      name: "Mana Potion",
+      chance: 10,
+      min: 1,
+      max: 1,
+    },
+    {
+      name: "Health Potion",
+      chance: 10,
+      min: 1,
+      max: 1,
+    },
     {
       name: "Glass Bottle",
       chance: 30,
@@ -262,11 +279,21 @@ export const howManyOfItem = (item: Item) => {
   });
 };
 
-export const inventoryRemove = (item: Item) => {
+export const inventoryRemove = (item: Item, quantity: number) => {
   state.inventory.forEach((e, i) => {
     if (e.item === item) {
       let arr = state.inventory.slice();
       arr.splice(i, 1);
+      setState("inventory", arr);
+    }
+  });
+};
+
+export const inventoryRemoveQuantity = (item: Item, quantity: number) => {
+  state.inventory.forEach((e, i) => {
+    if (e.item === item) {
+      let arr = state.inventory.slice();
+      arr[i].quantity -= quantity;
       setState("inventory", arr);
     }
   });
@@ -365,4 +392,12 @@ export const addCoins = (min: number, max: number) => {
   let coins = Math.floor(Math.random() * (max - min + 1)) + min;
   setState("coins", (c) => c + coins);
   toast(`${coins} coins added`);
+};
+
+export const clearNotOngoing = () => {
+  state.techniques.forEach((item, i) => {
+    if (item.active && !item.onGoing) {
+      setState("techniques", i, "active", false);
+    }
+  });
 };

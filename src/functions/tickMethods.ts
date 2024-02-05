@@ -1,3 +1,4 @@
+import { choice } from "../components/Combat";
 import {
   sendAspectChoice,
   sendLoot,
@@ -20,6 +21,9 @@ import {
   tickMana,
   effectMultiplier,
   addCoins,
+  hasItem,
+  inventoryRemove,
+  inventoryRemoveQuantity,
 } from "../state/store";
 import { meditationTechniqueEffect, techniqueEffect } from "./techniqueMethods";
 //import { advancementMethods } from "./advanceMethods";
@@ -97,19 +101,42 @@ export const combatTick = () => {
     setOpponent("alive", false);
   } else {
     if (state.combat.turn === 0) {
-      state.techniques.forEach((e, i) => {
-        if (e.active) {
-          setState("maxMana", (m) => m + 0.3 * effectMultiplier(e.multiplier));
-          //setState("mana", (m) => m - tickMana());
-          techniqueEffect[e.id as keyof typeof techniqueEffect]!(
-            e.multiplier,
-            e.currentCost,
-          );
-          /*if (!e.onGoing) {
-            setState("techniques", i, "active", false);
-          }*/
+      if (choice() === -1) {
+        state.techniques.forEach((e, i) => {
+          if (e.active) {
+            setState(
+              "maxMana",
+              (m) => m + 0.3 * effectMultiplier(e.multiplier),
+            );
+            //setState("mana", (m) => m - tickMana());
+            techniqueEffect[e.id as keyof typeof techniqueEffect]!(
+              e.multiplier,
+              e.currentCost,
+            );
+            if (!e.onGoing) {
+              setState("techniques", i, "active", false);
+            }
+          }
+        });
+      } else if (choice() >= 0) {
+        switch (choice()) {
+          case 1:
+            if (hasItem("Health Potion")) {
+              inventoryRemoveQuantity("Health Potion", 1);
+              setState("health", (h) => h + 10);
+            }
+            break;
+          case 2:
+            if (hasItem("Mana Potion")) {
+              inventoryRemoveQuantity("Health Potion", 1);
+              setState("mana", (h) => h + 20);
+            }
+            break;
+          case 3:
+            setOpponent("health", (h) => h - 5);
+            break;
         }
-      });
+      }
       setState("combat", "turn", 1);
       if (opponent.health <= 0) {
         sendLoot();
