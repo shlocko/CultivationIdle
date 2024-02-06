@@ -102,6 +102,7 @@ export const combatTick = () => {
     setState("action", state.previousAction);
     setPause(false);
   } else if (state.health <= 0) {
+    sendModal("You lost! Meditate on your failures, and try again!");
     setState("action", "Meditate");
     setPause(false);
   } else {
@@ -147,85 +148,6 @@ export const combatTick = () => {
     } else {
       setState("combat", "turn", 0);
     }
-  }
-};
-
-// Old combat loop, to be discarded later
-export const combatTickB = () => {
-  console.log(`turn ${state.combat.turn}`);
-  setPause(true);
-  if (!opponent.alive) {
-    /*if (state.autoAdventure) {
-      setState("combat", "tickSpeed", 0.7);
-      if (opponent.respawn <= 0) {
-        findFight();
-        setPause(true);
-        setState("combat", "tickSpeed", 0.0001);
-      } else {
-        setOpponent("respawn", (time) => time - 1);
-      }
-      setPause(false);
-    } else {
-      setAction("Meditate");
-    }*/
-    setState("action", state.previousAction);
-    setPause(false);
-  } else if (opponent.health <= 0) {
-    setState("combat", "tickSpeed", 1);
-    setOpponent("alive", false);
-  } else {
-    if (state.combat.turn === 0) {
-      if (choice() === -1) {
-        state.techniques.forEach((e, i) => {
-          if (e.active) {
-            setState(
-              "maxMana",
-              (m) => m + 0.3 * effectMultiplier(e.multiplier),
-            );
-            //setState("mana", (m) => m - tickMana());
-            if (!e.onGoing) {
-              setState("techniques", i, "active", false);
-            }
-          }
-        });
-      } else if (choice() >= 0) {
-        switch (choice()) {
-          case 1:
-            if (hasItem("Health Potion")) {
-              inventoryRemoveQuantity("Health Potion", 1);
-              setState("health", (h) => h + 10);
-            }
-            break;
-          case 2:
-            if (hasItem("Mana Potion")) {
-              inventoryRemoveQuantity("Mana Potion", 1);
-              setState("mana", (h) => h + 20);
-            }
-            break;
-          case 3:
-            setOpponent("health", (h) => h - 5);
-            break;
-        }
-      }
-      setState("combat", "turn", 1);
-      if (opponent.health <= 0) {
-        sendLoot(opponent.loot);
-        addCoins(opponent.coinMin, opponent.coinMax);
-        setState("combat", "tickSpeed", 1);
-        setOpponent("alive", false);
-      }
-    } else if (state.combat.turn === 1) {
-      setState("health", (hp) => hp - opponent.damage);
-      setState("combat", "turn", 0);
-      if (state.health <= 0) {
-        setState("action", "Meditate");
-        setState("health", 0);
-        setPause(false);
-      }
-    } else {
-      setState("combat", "turn", 0);
-    }
-    setState("combat", "tickSpeed", 0.0001);
   }
 };
 
