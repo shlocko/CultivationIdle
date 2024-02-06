@@ -126,6 +126,16 @@ export type Item =
   | "Blueleaf"
   | "Glass Bottle";
 
+export type LootTable = Array<{
+  name: Item;
+  chance: number;
+  min: number;
+  max: number;
+  show: boolean;
+}>;
+
+export type Area = "BeginnerArea" | "SecondArea";
+
 //********************************************************
 // Combat Actions
 //********************************************************
@@ -193,6 +203,7 @@ export const [state, setState] = createStore({
   },
   adventure: {
     tickSpeed: 1,
+    area: "BeginnerArea" as Area,
   },
   // Player's current mana
   mana: 26,

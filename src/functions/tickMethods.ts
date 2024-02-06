@@ -27,7 +27,7 @@ import {
   inventoryRemoveQuantity,
 } from "../state/store";
 import { meditationTechniqueEffect, techniqueEffect } from "./techniqueMethods";
-import { commonEvents } from "../state/events";
+import { beginnerArea } from "../state/events";
 //import { advancementMethods } from "./advanceMethods";
 
 // Happens every tick
@@ -97,6 +97,7 @@ export const combatTick = () => {
     setPause(false);
   } else if (state.health <= 0) {
     setState("action", "Meditate");
+    setPause(false);
   } else {
     if (state.combat.turn === 0) {
       if (choice() === -1) {
@@ -232,7 +233,9 @@ export const adventureTick = () => {
   console.log("adventure");
   let eventRoll = Math.floor(Math.random() * 100) + 1;
   console.log(eventRoll);
-  if (eventRoll >= 50) {
-    commonEvents[0].activation();
+  if (state.adventure.area === "BeginnerArea") {
+    if (eventRoll >= 50) {
+      beginnerArea.commonEvents[0].activation();
+    }
   }
 };

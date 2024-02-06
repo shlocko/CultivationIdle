@@ -28,6 +28,7 @@ export const [choice, setChoice] = createSignal(-1);
 export const Combat: Component = () => {
   return (
     <>
+      <p> You are fighting a {opponent.name}! </p>
       <Switch>
         <Match when={state.combat.turn === 1}>
           <h2> Opponent's Turn </h2>
