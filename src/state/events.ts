@@ -27,6 +27,7 @@ export const beginnerArea = {
       isUnlocked: () => state.rank >= 1,
       activation: () => {
         let enemy = Math.floor(Math.random() * beginnerArea.enemies.length);
+        console.log(enemy);
         setOpponent(enemyList[beginnerArea.enemies[enemy]]);
         sendModal(`You encounter a ${opponent.name}! Defend yourself!`);
         setState("combat", "turn", -1);
