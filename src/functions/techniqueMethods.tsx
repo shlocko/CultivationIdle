@@ -1,16 +1,43 @@
-import { setOpponent, state, setState, effectMultiplier } from "../state/store";
+import { hashParser } from "@solidjs/router/dist/routers/HashRouter";
+import {
+  setOpponent,
+  state,
+  setState,
+  effectMultiplier,
+  maxHealth,
+  opponent,
+  Technique,
+} from "../state/store";
 
-export const techniqueEffect = {
-  firebolt: (mult: number, cost: number) => {
-    let multiplier = effectMultiplier(mult);
-    if (state.mana >= cost) {
-      setState("mana", (m) => m - cost);
-      setOpponent("health", (hp) => hp - 5 * multiplier);
+export const techniqueCustomEffect = {
+  // Fire techniques
+  test: (technique: Technique) => {},
+};
+
+export const useTechnique = (technique: Technique) => {
+  if (technique.effect) {
+    techniqueEffects[technique.effect](technique);
+  }
+  if (technique.customEffect) {
+    techniqueCustomEffect[technique.customEffect](technique);
+  }
+};
+
+export type EffectType = keyof typeof techniqueEffects;
+
+export const techniqueEffects = {
+  damage: (technique: Technique) => {
+    let multiplier = effectMultiplier(technique.multiplier);
+    if (state.mana >= technique.currentCost) {
+      setState("mana", (m) => m - technique.currentCost);
+      setOpponent("health", (hp) => hp - technique.magnitude * multiplier);
     }
   },
-  clensewoundsinfire: (mult: number, cost: number) => {
-    if (state.mana >= 5) {
-      setState("health", (hp) => hp + 10);
+  heal: (technique: Technique) => {
+    let multiplier = effectMultiplier(technique.multiplier);
+    if (state.mana >= technique.currentCost) {
+      setState("mana", (m) => m - technique.currentCost);
+      setState("health", (hp) => hp + technique.magnitude * multiplier);
     }
   },
 };
@@ -22,7 +49,7 @@ export const meditationTechniqueEffect = {
     }
   },
   basichealthregen: () => {
-    if (state.health < state.maxHealth) {
+    if (state.health < maxHealth()) {
       setState("health", (h) => h + 4);
     }
   },
@@ -30,7 +57,7 @@ export const meditationTechniqueEffect = {
     if (state.mana < state.maxMana) {
       setState("mana", (m) => m + 2);
     }
-    if (state.health < state.maxHealth) {
+    if (state.health < maxHealth()) {
       setState("health", (h) => h + 2);
     }
   },

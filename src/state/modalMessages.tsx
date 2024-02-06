@@ -11,6 +11,7 @@ import {
 } from "solid-js";
 import {
   Aspect,
+  LootTable,
   Technique,
   aspects,
   inventoryAdd,
@@ -24,6 +25,7 @@ import utils from "../styles/utils.module.css";
 import modalStyles from "../styles/Modal.module.css";
 import { techniques } from "./techniques";
 import toast from "solid-toast";
+import { createStore } from "solid-js/store";
 
 export const sendModal = (content: string) => {
   let msg = {
@@ -77,9 +79,10 @@ export const sendAspectChoice = () => {
   setState("modalMessages", arr);
 };
 
-export const sendLoot = () => {
+export const sendLoot = (loot: LootTable) => {
   let msg = {
     type: "Loot",
+    loot: loot,
   } as LootModal;
   let arr = state.modalMessages.slice();
   arr.push(msg);
@@ -241,14 +244,15 @@ export const ModalChooseAspect: Component = () => {
   );
 };
 
-export const ModalLoot: Component = () => {
+export const ModalLoot: Component<{ loot: LootTable }> = (props) => {
+  let [loot, setLoot] = createStore(props.loot.slice(0));
   return (
     <div class={utils.container}>
       <p> Loot: </p>
-      <For each={opponent.loot}>
+      <For each={loot}>
         {(item, i) => {
           let chanceRoll = Math.floor(Math.random() * 100) + 1;
-          setOpponent("loot", i(), "show", chanceRoll <= item.chance);
+          setLoot(i(), "show", chanceRoll <= item.chance);
           let quantity =
             Math.floor(Math.random() * (item.max - item.min + 1)) + item.min;
           return (
@@ -258,7 +262,7 @@ export const ModalLoot: Component = () => {
                 onClick={() => {
                   inventoryAdd(item.name, quantity);
                   toast(`${quantity} ${item.name} added`);
-                  setOpponent("loot", i(), "show", false);
+                  setLoot(i(), "show", false);
                 }}
               >
                 <p>
@@ -307,7 +311,7 @@ export const ModalMessage: Component = () => {
         <ModalChooseMeditationTechnique />
       </Match>
       <Match when={msg().type === "Loot"}>
-        <ModalLoot />
+        <ModalLoot loot={(msg() as LootModal).loot} />
       </Match>
     </Switch>
   );
@@ -346,4 +350,5 @@ export type ChooseMeditationTechniqueModal = {
 
 export type LootModal = {
   type: "Loot";
+  loot: LootTable;
 };

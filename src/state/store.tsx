@@ -13,6 +13,10 @@ import {
   TextModal,
   sendModal,
 } from "./modalMessages";
+import {
+  EffectType,
+  techniqueCustomEffect,
+} from "../functions/techniqueMethods";
 
 type Action = "Meditate" | "Train" | "Combat" | "Adventure";
 
@@ -72,11 +76,14 @@ export type TechniqueType = "Shaper" | "Enhancement" | "Range" | "Manipulation";
 
 export type Technique = {
   name: string;
-  id: string;
   aspect: Aspect;
+  type: TechniqueType;
   baseCost: number;
   currentCost: number;
   minCost: number;
+  magnitude: number;
+  effect: undefined | EffectType;
+  customEffect: undefined | keyof typeof techniqueCustomEffect;
   onGoing: boolean; // whether the technique is an ongoing effect vs a one time use
   active: boolean; // Whether the technique is currently active
   description: string;
@@ -228,7 +235,6 @@ export const [state, setState] = createStore({
   activeMeditationTechnique: 0,
   // Player's helth points for combat
   health: 20,
-  maxHealth: 20,
   // Player's inventory, item name - item count
   inventory: [
     { item: "Health Potion", quantity: 1 },
@@ -276,6 +282,10 @@ if (localStorage.getItem("state")) {
 export const clear = () => {
   localStorage.clear();
   toast("Data Cleared");
+};
+
+export const maxHealth = () => {
+  return state.rank * 10;
 };
 
 export const hasItem = (item: Item) => {

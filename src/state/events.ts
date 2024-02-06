@@ -1,7 +1,9 @@
 import { Enemies, enemyList } from "./enemies";
+import { sendLoot, sendModal } from "./modalMessages";
 import {
   Item,
   LootTable,
+  addCoins,
   setAction,
   setOpponent,
   setState,
@@ -29,6 +31,32 @@ export const beginnerArea = {
         setState("combat", "turn", -1);
         setAction("Combat");
       },
-    },
+    } as Event,
+  ],
+  uncommonEvents: [
+    {
+      name: "loot",
+      isUnlocked: () => true,
+      activation: () => {
+        sendModal("You found a stash of loot!");
+        addCoins(10, 100);
+        sendLoot([
+          {
+            name: "Health Potion",
+            chance: 50,
+            min: 1,
+            max: 5,
+            show: true,
+          },
+          {
+            name: "Mana Potion",
+            chance: 50,
+            min: 1,
+            max: 5,
+            show: true,
+          },
+        ]);
+      },
+    } as Event,
   ],
 };

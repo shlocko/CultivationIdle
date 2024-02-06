@@ -25,8 +25,14 @@ import {
   hasItem,
   inventoryRemove,
   inventoryRemoveQuantity,
+  maxHealth,
 } from "../state/store";
-import { meditationTechniqueEffect, techniqueEffect } from "./techniqueMethods";
+import {
+  meditationTechniqueEffect,
+  techniqueEffect,
+  techniqueEffects,
+  useTechnique,
+} from "./techniqueMethods";
 import { beginnerArea } from "../state/events";
 //import { advancementMethods } from "./advanceMethods";
 
@@ -38,8 +44,8 @@ export const perTick = () => {
   if (state.mana > state.maxMana) {
     setState("mana", state.maxMana);
   }
-  if (state.health > state.maxHealth) {
-    setState("health", state.maxHealth);
+  if (state.health > maxHealth()) {
+    setState("health", maxHealth());
   }
   if (opponent.health <= 0) {
     setOpponent("health", 0);
@@ -80,7 +86,7 @@ export const meditateTick = () => {
   } else if (state.mana < state.maxMana) {
     setState("mana", (mana) => mana + 1);
   }
-  if (state.health < state.maxHealth) {
+  if (state.health < maxHealth()) {
     setState("health", (h) => h + 1);
   }
 };
@@ -91,7 +97,7 @@ export const combatTick = () => {
   if (opponent.health <= 0 || !opponent.alive) {
     setOpponent("health", 0);
     setOpponent("alive", false);
-    sendLoot();
+    sendLoot(opponent.loot);
     addCoins(opponent.coinMin, opponent.coinMax);
     setState("action", state.previousAction);
     setPause(false);
@@ -108,10 +114,8 @@ export const combatTick = () => {
               (m) => m + 0.3 * effectMultiplier(e.multiplier),
             );
             //setState("mana", (m) => m - tickMana());
-            techniqueEffect[e.id as keyof typeof techniqueEffect]!(
-              e.multiplier,
-              e.currentCost,
-            );
+            console.log(e.effect);
+            useTechnique(e);
             if (!e.onGoing) {
               setState("techniques", i, "active", false);
             }
@@ -179,10 +183,6 @@ export const combatTickB = () => {
               (m) => m + 0.3 * effectMultiplier(e.multiplier),
             );
             //setState("mana", (m) => m - tickMana());
-            techniqueEffect[e.id as keyof typeof techniqueEffect]!(
-              e.multiplier,
-              e.currentCost,
-            );
             if (!e.onGoing) {
               setState("techniques", i, "active", false);
             }
@@ -209,7 +209,7 @@ export const combatTickB = () => {
       }
       setState("combat", "turn", 1);
       if (opponent.health <= 0) {
-        sendLoot();
+        sendLoot(opponent.loot);
         addCoins(opponent.coinMin, opponent.coinMax);
         setState("combat", "tickSpeed", 1);
         setOpponent("alive", false);
@@ -234,8 +234,12 @@ export const adventureTick = () => {
   let eventRoll = Math.floor(Math.random() * 100) + 1;
   console.log(eventRoll);
   if (state.adventure.area === "BeginnerArea") {
-    if (eventRoll >= 50) {
-      beginnerArea.commonEvents[0].activation();
+    if (eventRoll >= 80) {
+      let pick = Math.floor(Math.random() * beginnerArea.uncommonEvents.length);
+      beginnerArea.uncommonEvents[pick].activation();
+    } else if (eventRoll >= 50) {
+      let pick = Math.floor(Math.random() * beginnerArea.commonEvents.length);
+      beginnerArea.commonEvents[pick].activation();
     }
   }
 };
