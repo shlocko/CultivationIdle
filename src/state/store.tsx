@@ -17,6 +17,7 @@ import {
   EffectType,
   techniqueCustomEffect,
 } from "../functions/techniqueMethods";
+import { enemyList } from "./enemies";
 
 type Action = "Meditate" | "Train" | "Combat" | "Adventure";
 
@@ -153,48 +154,12 @@ export type Area = "BeginnerArea" | "SecondArea";
 
 export type State = "Modal" | "Tick";
 export const [pause, setPause] = createSignal(false);
-export const [opponent, setOpponent] = createStore({
-  alive: true,
-  health: 10,
-  damage: 3,
-  respawn: 3,
-  name: "Nerd",
-  loot: [
-    {
-      name: "Mana Potion",
-      chance: 10,
-      min: 1,
-      max: 1,
-    },
-    {
-      name: "Health Potion",
-      chance: 10,
-      min: 1,
-      max: 1,
-    },
-    {
-      name: "Glass Bottle",
-      chance: 30,
-      min: 1,
-      max: 1,
-    },
-    { name: "Berry", chance: 80, min: 1, max: 10 },
-    { name: "Herb", chance: 80, min: 1, max: 10 },
-  ] as Array<{
-    name: Item;
-    chance: number;
-    min: number;
-    max: number;
-    show: boolean;
-  }>,
-  coinMax: 100,
-  coinMin: 1,
-});
+export const [opponent, setOpponent] = createStore(enemyList.bandit);
 
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
   // State version for ensuring compatibility with save data
-  version: 2,
+  version: 3,
   // State machine state
   state: "Tick" as State,
   //Gamedata on the various actions
