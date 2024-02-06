@@ -1,6 +1,11 @@
 import { createSignal, createMemo, JSXElement } from "solid-js";
 import { createStore } from "solid-js/store";
-import { combatTick, meditateTick, trainTick } from "../functions/tickMethods";
+import {
+  adventureTick,
+  combatTick,
+  meditateTick,
+  trainTick,
+} from "../functions/tickMethods";
 import toast from "solid-toast";
 import {
   ChooseModalState,
@@ -9,7 +14,7 @@ import {
   sendModal,
 } from "./modalMessages";
 
-type Action = "Meditate" | "Train" | "Combat";
+type Action = "Meditate" | "Train" | "Combat" | "Adventure";
 
 // Old, here for reference to rank names until I finish rankInfo
 type Rank =
@@ -186,6 +191,9 @@ export const [state, setState] = createStore({
     tickSpeed: 0.0001,
     turn: 0,
   },
+  adventure: {
+    tickSpeed: 1,
+  },
   // Player's current mana
   mana: 26,
   // Player's maximum mana
@@ -196,6 +204,7 @@ export const [state, setState] = createStore({
   bar: 0.0,
   // Player's current action
   action: "Meditate" as Action,
+  previousAction: "Meditate" as Action,
   // Player's current rank
   rank: 0,
   // Player's magic aspect
@@ -322,6 +331,8 @@ export const tickSpeed = () => {
       return state.train.tickSpeed;
     case "Combat":
       return state.combat.tickSpeed;
+    case "Adventure":
+      return state.adventure.tickSpeed;
   }
 };
 
@@ -336,6 +347,9 @@ export const tick = {
   Combat: () => {
     combatTick();
   },
+  Adventure: () => {
+    adventureTick();
+  },
 };
 
 export const canAdvance = () => {
@@ -349,6 +363,7 @@ export const advance = () => {
 };
 
 export const setAction = (action: Action) => {
+  setState("previousAction", state.action);
   setState("action", action);
   setPause(false);
 };

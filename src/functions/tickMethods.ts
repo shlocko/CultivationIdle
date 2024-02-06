@@ -1,3 +1,4 @@
+import { from } from "solid-js";
 import { choice } from "../components/Combat";
 import {
   sendAspectChoice,
@@ -26,6 +27,7 @@ import {
   inventoryRemoveQuantity,
 } from "../state/store";
 import { meditationTechniqueEffect, techniqueEffect } from "./techniqueMethods";
+import { commonEvents } from "../state/events";
 //import { advancementMethods } from "./advanceMethods";
 
 // Happens every tick
@@ -38,6 +40,9 @@ export const perTick = () => {
   }
   if (state.health > state.maxHealth) {
     setState("health", state.maxHealth);
+  }
+  if (opponent.health <= 0) {
+    setOpponent("health", 0);
   }
 
   // Check for advancement
@@ -80,10 +85,72 @@ export const meditateTick = () => {
   }
 };
 
+// To be entiruely reworked
 export const combatTick = () => {
   setPause(true);
+  if (opponent.health <= 0 || !opponent.alive) {
+    setOpponent("health", 0);
+    setOpponent("alive", false);
+    sendLoot();
+    addCoins(opponent.coinMin, opponent.coinMax);
+    setState("action", state.previousAction);
+    setPause(false);
+  } else if (state.health <= 0) {
+    setState("action", "Meditate");
+  } else {
+    if (state.combat.turn === 0) {
+      if (choice() === -1) {
+        state.techniques.forEach((e, i) => {
+          if (e.active) {
+            setState(
+              "maxMana",
+              (m) => m + 0.3 * effectMultiplier(e.multiplier),
+            );
+            //setState("mana", (m) => m - tickMana());
+            techniqueEffect[e.id as keyof typeof techniqueEffect]!(
+              e.multiplier,
+              e.currentCost,
+            );
+            if (!e.onGoing) {
+              setState("techniques", i, "active", false);
+            }
+          }
+        });
+      } else if (choice() >= 0) {
+        switch (choice()) {
+          case 1:
+            if (hasItem("Health Potion")) {
+              inventoryRemoveQuantity("Health Potion", 1);
+              setState("health", (h) => h + 10);
+            }
+            break;
+          case 2:
+            if (hasItem("Mana Potion")) {
+              inventoryRemoveQuantity("Mana Potion", 1);
+              setState("mana", (h) => h + 20);
+            }
+            break;
+          case 3:
+            setOpponent("health", (h) => h - 5);
+            break;
+        }
+      }
+      setState("combat", "turn", 1);
+    } else if (state.combat.turn === 1) {
+      setState("health", (hp) => hp - opponent.damage);
+      setState("combat", "turn", 0);
+    } else {
+      setState("combat", "turn", 0);
+    }
+  }
+};
+
+// Old combat loop, to be discarded later
+export const combatTickB = () => {
+  console.log(`turn ${state.combat.turn}`);
+  setPause(true);
   if (!opponent.alive) {
-    if (state.autoAdventure) {
+    /*if (state.autoAdventure) {
       setState("combat", "tickSpeed", 0.7);
       if (opponent.respawn <= 0) {
         findFight();
@@ -95,7 +162,9 @@ export const combatTick = () => {
       setPause(false);
     } else {
       setAction("Meditate");
-    }
+    }*/
+    setState("action", state.previousAction);
+    setPause(false);
   } else if (opponent.health <= 0) {
     setState("combat", "tickSpeed", 1);
     setOpponent("alive", false);
@@ -156,5 +225,14 @@ export const combatTick = () => {
       setState("combat", "turn", 0);
     }
     setState("combat", "tickSpeed", 0.0001);
+  }
+};
+
+export const adventureTick = () => {
+  console.log("adventure");
+  let eventRoll = Math.floor(Math.random() * 100) + 1;
+  console.log(eventRoll);
+  if (eventRoll >= 50) {
+    commonEvents[0].activation();
   }
 };

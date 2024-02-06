@@ -12,7 +12,7 @@ export const Nav: Component = () => {
       <A class={styles.nav_item} href="/train">
         Train
       </A>
-      <A class={styles.nav_item} href="/combat">
+      <A class={styles.nav_item} href="/adventure">
         Adventure
       </A>
       <A class={styles.nav_item} href="/inventory">

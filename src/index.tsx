@@ -12,6 +12,7 @@ import Modal from "@lutaok/solid-modal";
 import { state, setState, setPause } from "./state/store";
 import { ModalMessage } from "./state/modalMessages";
 import { Shop } from "./components/Shop";
+import { Adventure } from "./components/Adventure";
 
 const root = document.getElementById("root");
 
@@ -36,7 +37,7 @@ render(
       <Router base="/CultivationIdle">
         <Route path="/" component={Main} />
         <Route path="/train" component={Train} />
-        <Route path="/combat" component={Combat} />
+        <Route path="/adventure" component={Adventure} />
         <Route path="/inventory" component={Inventory} />
         <Route path="/shop" component={Shop} />
       </Router>
