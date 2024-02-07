@@ -16,7 +16,7 @@ export const enemyList = {
   bandit: {
     name: "Bandit",
     health: 10,
-    damage: 5,
+    damage: 2,
     alive: true,
     coinMin: 1,
     coinMax: 50,
@@ -46,7 +46,7 @@ export const enemyList = {
   wanderingKnight: {
     name: "Wandering Knight",
     health: 25,
-    damage: 8,
+    damage: 4,
     alive: true,
     coinMin: 25,
     coinMax: 100,

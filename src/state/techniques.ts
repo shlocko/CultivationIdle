@@ -12,7 +12,7 @@ export const techniques = {
       minCost: 1,
       effect: "damage",
       customEffect: undefined,
-      magnitude: 5,
+      magnitude: 3,
       description: "Fire a small ball of fire at the target",
       mastery: 1,
       multiplier: 1,
@@ -42,7 +42,7 @@ export const techniques = {
       minCost: 2,
       effect: "ongoingAreaDamage",
       customEffect: undefined,
-      magnitude: 4,
+      magnitude: 2,
       description:
         "Set the battle area aflame, damaging target every round it is maintained",
       mastery: 1,
