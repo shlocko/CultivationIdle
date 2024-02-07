@@ -17,7 +17,7 @@ import {
   EffectType,
   techniqueCustomEffect,
 } from "../functions/techniqueMethods";
-import { enemyList } from "./enemies";
+import { Enemy, enemyList } from "./enemies";
 
 type Action = "Meditate" | "Train" | "Combat" | "Adventure";
 
@@ -154,12 +154,12 @@ export type Area = "BeginnerArea" | "SecondArea";
 
 export type State = "Modal" | "Tick";
 export const [pause, setPause] = createSignal(false);
-export const [opponent, setOpponent] = createStore(enemyList.bandit);
+export const [opponent, setOpponent] = createStore({} as Enemy);
 
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
   // State version for ensuring compatibility with save data
-  version: 4,
+  version: 5,
   // State machine state
   state: "Tick" as State,
   //Gamedata on the various actions
@@ -178,9 +178,9 @@ export const [state, setState] = createStore({
     area: "BeginnerArea" as Area,
   },
   // Player's current mana
-  mana: 26,
+  mana: 9,
   // Player's maximum mana
-  maxMana: 26,
+  maxMana: 9,
   // Player's passive mana regeneration
   passiveManaRegen: 1,
   // Current % of tick bar
@@ -354,10 +354,15 @@ export const setAction = (action: Action) => {
   setPause(false);
 };
 
-export const findFight = () => {
+export const findFight = (enemy: Enemy) => {
   setOpponent({
     alive: true,
-    health: state.rank * 10,
+    health: enemy.health,
+    damage: enemy.damage,
+    name: enemy.name,
+    loot: enemy.loot,
+    coinMax: enemy.coinMax,
+    coinMin: enemy.coinMin,
   });
   setState("combat", "turn", -1);
 };

@@ -1,9 +1,11 @@
+import { cloneDeep } from "lodash";
 import { Enemies, enemyList } from "./enemies";
 import { sendLoot, sendModal } from "./modalMessages";
 import {
   Item,
   LootTable,
   addCoins,
+  findFight,
   opponent,
   setAction,
   setOpponent,
@@ -28,7 +30,13 @@ export const beginnerArea = {
       activation: () => {
         let enemy = Math.floor(Math.random() * beginnerArea.enemies.length);
         console.log(enemy);
-        setOpponent(enemyList[beginnerArea.enemies[enemy]]);
+        //let newEnemy = cloneDeep(enemyList[beginnerArea.enemies[enemy]]);
+        //setOpponent(JSON.parse(JSON.stringify(newEnemy)));
+        //findFight(enemyList[beginnerArea.enemies[enemy]]);
+        //console.log(enemyList[beginnerArea.enemies[enemy]] === newEnemy);
+        setOpponent(cloneDeep(enemyList[beginnerArea.enemies[enemy]]));
+        console.log(`alive: ${opponent.alive}`);
+        console.log(`health: ${opponent.health}`);
         sendModal(`You encounter a ${opponent.name}! Defend yourself!`);
         setState("combat", "turn", -1);
         setAction("Combat");

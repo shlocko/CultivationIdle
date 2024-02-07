@@ -33,6 +33,7 @@ import {
   useTechnique,
 } from "./techniqueMethods";
 import { beginnerArea } from "../state/events";
+import { enemyList } from "../state/enemies";
 //import { advancementMethods } from "./advanceMethods";
 
 // Happens every tick
@@ -95,6 +96,7 @@ export const meditateTick = () => {
 // To be entiruely reworked
 export const combatTick = () => {
   setPause(true);
+  console.log(enemyList);
   if (opponent.health <= 0 || !opponent.alive) {
     setOpponent("health", 0);
     setOpponent("alive", false);
