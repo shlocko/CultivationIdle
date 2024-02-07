@@ -21,6 +21,8 @@ export const useTechnique = (technique: Technique) => {
   if (technique.customEffect) {
     techniqueCustomEffect[technique.customEffect](technique);
   }
+  let index = state.techniques.indexOf(technique);
+  setState("techniques", index, "active", false);
 };
 
 export type EffectType = keyof typeof techniqueEffects;
