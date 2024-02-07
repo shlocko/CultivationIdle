@@ -73,7 +73,7 @@ export const aspects = [
 //********************************************************
 // techniques
 //********************************************************
-export type TechniqueType = "Shaper" | "Enhancement" | "Range" | "Manipulation";
+export type TechniqueType = "Shaper" | "Enhancement" | "Range" | "Area";
 
 export type Technique = {
   name: string;
@@ -159,7 +159,7 @@ export const [opponent, setOpponent] = createStore(enemyList.bandit);
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
   // State version for ensuring compatibility with save data
-  version: 3,
+  version: 4,
   // State machine state
   state: "Tick" as State,
   //Gamedata on the various actions
@@ -358,7 +358,6 @@ export const findFight = () => {
   setOpponent({
     alive: true,
     health: state.rank * 10,
-    respawn: 3,
   });
   setState("combat", "turn", -1);
 };
@@ -373,7 +372,7 @@ export const resetActiveTechniques = () => {
 export const tickMana = createMemo(() => {
   let total = 0;
   state.techniques.forEach((e, i) => {
-    if (e.active) {
+    if (e.active || e.onGoing) {
       let cost =
         (e.baseCost - (e.mastery / 10000) * (e.baseCost - e.minCost)) *
         e.multiplier;

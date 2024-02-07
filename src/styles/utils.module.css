@@ -89,6 +89,10 @@ body,
   color: red;
 }
 
+.btn_ongoing {
+  color: blue;
+}
+
 .top_auto {
   margin-top: auto;
 }

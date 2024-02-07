@@ -57,9 +57,14 @@ export const Combat: Component = () => {
                       classList={{
                         [utils.btn]: true,
                         [utils.btn_active]: item.active,
+                        [utils.btn_ongoing]: item.onGoing,
                       }}
                       onClick={() => {
-                        setState("techniques", i(), "active", (a) => !a);
+                        if (item.onGoing) {
+                          setState("techniques", i(), "onGoing", false);
+                        } else {
+                          setState("techniques", i(), "active", (a) => !a);
+                        }
                         setChoice(-1);
                       }}
                     >

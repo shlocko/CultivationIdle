@@ -29,7 +29,6 @@ import {
 } from "../state/store";
 import {
   meditationTechniqueEffect,
-  techniqueEffect,
   techniqueEffects,
   useTechnique,
 } from "./techniqueMethods";
@@ -54,7 +53,9 @@ export const perTick = () => {
   // Check for advancement
   if (canAdvance()) {
     sendModal("You advance");
-    sendAspectChoice();
+    if (state.aspect === undefined) {
+      sendAspectChoice();
+    }
     sendTechniqueChoice();
     sendMeditationTechniqueChoice();
     advance();
@@ -100,6 +101,10 @@ export const combatTick = () => {
     sendLoot(opponent.loot);
     addCoins(opponent.coinMin, opponent.coinMax);
     setState("action", state.previousAction);
+    state.techniques.forEach((e, i) => {
+      setState("techniques", i, "active", false);
+      setState("techniques", i, "onGoing", false);
+    });
     setPause(false);
   } else if (state.health <= 0) {
     sendModal("You lost! Meditate on your failures, and try again!");
@@ -107,6 +112,13 @@ export const combatTick = () => {
     setPause(false);
   } else {
     if (state.combat.turn === 0) {
+      state.techniques.forEach((e, i) => {
+        if (e.onGoing) {
+          setState("maxMana", (m) => m + 0.3 * effectMultiplier(e.multiplier));
+          console.log("ongoing");
+          useTechnique(e);
+        }
+      });
       if (choice() === -1) {
         state.techniques.forEach((e, i) => {
           if (e.active) {
@@ -117,9 +129,7 @@ export const combatTick = () => {
             //setState("mana", (m) => m - tickMana());
             console.log(e.effect);
             useTechnique(e);
-            if (!e.onGoing) {
-              setState("techniques", i, "active", false);
-            }
+            setState("techniques", i, "active", false);
           }
         });
       } else if (choice() >= 0) {
@@ -158,10 +168,14 @@ export const adventureTick = () => {
   if (state.adventure.area === "BeginnerArea") {
     if (eventRoll >= 80) {
       let pick = Math.floor(Math.random() * beginnerArea.uncommonEvents.length);
-      beginnerArea.uncommonEvents[pick].activation();
+      if (beginnerArea.uncommonEvents[pick].isUnlocked()) {
+        beginnerArea.uncommonEvents[pick].activation();
+      }
     } else if (eventRoll >= 50) {
       let pick = Math.floor(Math.random() * beginnerArea.commonEvents.length);
-      beginnerArea.commonEvents[pick].activation();
+      if (beginnerArea.commonEvents[pick].isUnlocked()) {
+        beginnerArea.commonEvents[pick].activation();
+      }
     }
   }
 };

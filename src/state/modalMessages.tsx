@@ -15,6 +15,7 @@ import {
   Technique,
   aspects,
   inventoryAdd,
+  meditationTechnique,
   meditationTechniques,
   opponent,
   setOpponent,
@@ -120,7 +121,7 @@ export const ModalChooseTechnique: Component = () => {
   let techniqueList = techniques[state.aspect as keyof typeof techniques];
   return (
     <>
-      <p> Choose </p>
+      <p> Choose: </p>
       <For each={techniqueList}>
         {(item, i) => (
           <>
@@ -136,6 +137,9 @@ export const ModalChooseTechnique: Component = () => {
             >
               <p>{item.name}</p>
             </button>
+            <Show when={choice() === i()}>
+              <p> {item.description} </p>
+            </Show>
           </>
         )}
       </For>
@@ -180,6 +184,9 @@ export const ModalChooseMeditationTechnique: Component = () => {
             >
               <p>{item.name}</p>
             </button>
+            <Show when={choice() === i()}>
+              <p> {item.description} </p>
+            </Show>
           </>
         )}
       </For>
@@ -189,7 +196,9 @@ export const ModalChooseMeditationTechnique: Component = () => {
         onClick={() => {
           if (choice() >= 0) {
             let techniquesKnown = state.meditationTechniques.slice();
-            techniquesKnown.push(techniqueList[choice()] as Technique);
+            techniquesKnown.push(
+              techniqueList[choice()] as meditationTechnique,
+            );
             setState("meditationTechniques", techniquesKnown);
           }
           let arr = state.modalMessages.slice();

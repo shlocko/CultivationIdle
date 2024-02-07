@@ -1,4 +1,3 @@
-import { hashParser } from "@solidjs/router/dist/routers/HashRouter";
 import {
   setOpponent,
   state,
@@ -8,6 +7,7 @@ import {
   opponent,
   Technique,
 } from "../state/store";
+import { techniques } from "../state/techniques";
 
 export const techniqueCustomEffect = {
   // Fire techniques
@@ -38,6 +38,20 @@ export const techniqueEffects = {
     if (state.mana >= technique.currentCost) {
       setState("mana", (m) => m - technique.currentCost);
       setState("health", (hp) => hp + technique.magnitude * multiplier);
+    }
+  },
+  ongoingAreaDamage: (technique: Technique) => {
+    let index = state.techniques.indexOf(technique);
+    let multiplier = effectMultiplier(technique.multiplier);
+    if (technique.active) {
+      setState("techniques", index, "active", false);
+      setState("techniques", index, "onGoing", true);
+    }
+    if (state.mana >= technique.currentCost) {
+      setState("mana", (m) => m - technique.currentCost);
+      setOpponent("health", (hp) => hp - technique.magnitude * multiplier);
+    } else {
+      setState("techniques", index, "onGoing", false);
     }
   },
 };

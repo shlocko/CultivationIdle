@@ -32,6 +32,22 @@ export const techniques = {
       mastery: 1,
       multiplier: 1,
     },
+    {
+      name: "Burn Area",
+      onGoing: false,
+      active: false,
+      aspect: "Fire",
+      type: "Area",
+      baseCost: 6,
+      minCost: 2,
+      effect: "ongoingAreaDamage",
+      customEffect: undefined,
+      magnitude: 4,
+      description:
+        "Set the battle area aflame, damaging target every round it is maintained",
+      mastery: 1,
+      multiplier: 1,
+    },
   ] as Technique[],
   Water: [
     {
