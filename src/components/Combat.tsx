@@ -10,6 +10,7 @@ import {
 import utils from "../styles/utils.module.css";
 import { Template } from "./Template";
 import {
+  activeTechniqueCount,
   clearNotOngoing,
   findFight,
   opponent,
@@ -63,7 +64,15 @@ export const Combat: Component = () => {
                         if (item.onGoing) {
                           setState("techniques", i(), "onGoing", false);
                         } else {
-                          setState("techniques", i(), "active", (a) => !a);
+                          if (
+                            activeTechniqueCount() <
+                              Math.ceil(state.rank / 3) &&
+                            !item.active
+                          ) {
+                            setState("techniques", i(), "active", true);
+                          } else {
+                            setState("techniques", i(), "active", false);
+                          }
                         }
                         setChoice(-1);
                       }}

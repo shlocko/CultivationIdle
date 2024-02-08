@@ -27,6 +27,7 @@ import modalStyles from "../styles/Modal.module.css";
 import { techniques } from "./techniques";
 import toast from "solid-toast";
 import { createStore } from "solid-js/store";
+import { cloneDeep } from "lodash";
 
 export const sendModal = (content: string) => {
   let msg = {
@@ -125,20 +126,26 @@ export const ModalChooseTechnique: Component = () => {
       <For each={techniqueList}>
         {(item, i) => (
           <>
-            <button
-              classList={{
-                [utils.btn]: true,
-                [modalStyles.btn_choice]: true,
-                [utils.btn_active]: choice() === i(),
-              }}
-              onClick={() => {
-                setChoice(i());
-              }}
+            <Show
+              when={
+                state.techniques.find((e) => e.name === item.name) === undefined
+              }
             >
-              <p>{item.name}</p>
-            </button>
-            <Show when={choice() === i()}>
-              <p> {item.description} </p>
+              <button
+                classList={{
+                  [utils.btn]: true,
+                  [modalStyles.btn_choice]: true,
+                  [utils.btn_active]: choice() === i(),
+                }}
+                onClick={() => {
+                  setChoice(i());
+                }}
+              >
+                <p>{item.name}</p>
+              </button>
+              <Show when={choice() === i()}>
+                <p> {item.description} </p>
+              </Show>
             </Show>
           </>
         )}
@@ -182,6 +189,15 @@ export const ModalChooseMeditationTechnique: Component = () => {
                 setChoice(i());
               }}
             >
+              <Show
+                when={state.meditationTechniques.find(
+                  (e) => e.name === item.name,
+                )}
+              >
+                <p>
+                  Upgrade: {item.level} =&gt {item.level + 1}
+                </p>
+              </Show>
               <p>{item.name}</p>
             </button>
             <Show when={choice() === i()}>
@@ -195,15 +211,35 @@ export const ModalChooseMeditationTechnique: Component = () => {
         class={utils.btn}
         onClick={() => {
           if (choice() >= 0) {
-            let techniquesKnown = state.meditationTechniques.slice();
-            techniquesKnown.push(
-              techniqueList[choice()] as meditationTechnique,
-            );
+            let techniquesKnown = cloneDeep(state.meditationTechniques);
+            if (
+              techniquesKnown.find(
+                (e) =>
+                  e.name ===
+                  (techniqueList[choice()] as meditationTechnique).name,
+              ) === undefined
+            ) {
+              techniquesKnown.push(
+                techniqueList[choice()] as meditationTechnique,
+              );
+            } else {
+              let tech = techniquesKnown.find(
+                (e) =>
+                  e.name ===
+                  (techniqueList[choice()] as meditationTechnique).name,
+              );
+              if (tech !== undefined) {
+                console.log("upgrade");
+                tech.level += 1;
+              } else {
+                console.log("error upgrading");
+              }
+            }
             setState("meditationTechniques", techniquesKnown);
+            let arr = state.modalMessages.slice();
+            arr.shift();
+            setState("modalMessages", arr);
           }
-          let arr = state.modalMessages.slice();
-          arr.shift();
-          setState("modalMessages", arr);
         }}
       >
         <p>Choose</p>
@@ -220,18 +256,20 @@ export const ModalChooseAspect: Component = () => {
       <For each={aspects}>
         {(item, i) => (
           <>
-            <button
-              classList={{
-                [utils.btn]: true,
-                [modalStyles.btn_choice]: true,
-                [utils.btn_active]: choice() === i(),
-              }}
-              onClick={() => {
-                setChoice(i());
-              }}
-            >
-              <p>{item}</p>
-            </button>
+            <Show when={techniques[item as keyof typeof techniques]}>
+              <button
+                classList={{
+                  [utils.btn]: true,
+                  [modalStyles.btn_choice]: true,
+                  [utils.btn_active]: choice() === i(),
+                }}
+                onClick={() => {
+                  setChoice(i());
+                }}
+              >
+                <p>{item}</p>
+              </button>
+            </Show>
           </>
         )}
       </For>

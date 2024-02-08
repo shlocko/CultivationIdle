@@ -22,7 +22,8 @@ export type Event = {
 // Rarity: Common, Uncommon, Rare, Epic, Legendary, Mythical, Unique
 
 export const beginnerArea = {
-  enemies: ["bandit", "wanderingKnight"] as Enemies[],
+  enemies: ["bandit", "bear"] as Enemies[],
+  hardEnemies: ["waderingKnight"] as Enemies[],
   commonEvents: [
     {
       name: "combat",
@@ -44,6 +45,22 @@ export const beginnerArea = {
     } as Event,
   ],
   uncommonEvents: [
+    {
+      name: "hardCombat",
+      isUnlocked: () => state.rank >= 3,
+      activation: () => {
+        let enemy = Math.floor(Math.random() * beginnerArea.hardEnemies.length);
+        console.log(enemy);
+        setOpponent(cloneDeep(enemyList[beginnerArea.hardEnemies[enemy]]));
+        console.log(`alive: ${opponent.alive}`);
+        console.log(`health: ${opponent.health}`);
+        sendModal(`You encounter a ${opponent.name}! Defend yourself!`);
+        setState("combat", "turn", -1);
+        setAction("Combat");
+      },
+    } as Event,
+  ],
+  rareEvents: [
     {
       name: "loot",
       isUnlocked: () => true,

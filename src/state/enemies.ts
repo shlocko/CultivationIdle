@@ -43,8 +43,8 @@ export const enemyList = {
       { name: "Herb", chance: 80, min: 1, max: 10 },
     ] as LootTable,
   } as Enemy,
-  wanderingKnight: {
-    name: "Wandering Knight",
+  bear: {
+    name: "Bear",
     health: 25,
     damage: 4,
     alive: true,
@@ -71,6 +71,34 @@ export const enemyList = {
       },
       { name: "Berry", chance: 80, min: 5, max: 20 },
       { name: "Herb", chance: 80, min: 5, max: 20 },
+    ] as LootTable,
+  } as Enemy,
+  waderingKnight: {
+    name: "Wandering Knight",
+    health: 75,
+    damage: 6,
+    alive: true,
+    coinMin: 100,
+    coinMax: 500,
+    loot: [
+      {
+        name: "Sword",
+        chance: 10,
+        min: 1,
+        max: 1,
+      },
+      {
+        name: "Health Potion",
+        chance: 90,
+        min: 1,
+        max: 10,
+      },
+      {
+        name: "Mana Potion",
+        chance: 70,
+        min: 1,
+        max: 8,
+      },
     ] as LootTable,
   } as Enemy,
 };

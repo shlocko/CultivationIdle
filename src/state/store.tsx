@@ -18,6 +18,7 @@ import {
   techniqueCustomEffect,
 } from "../functions/techniqueMethods";
 import { Enemy, enemyList } from "./enemies";
+import { cloneDeep } from "lodash";
 
 type Action = "Meditate" | "Train" | "Combat" | "Adventure";
 
@@ -99,23 +100,27 @@ export type meditationTechnique = {
   name: string;
   id: string;
   description: string;
+  level: number;
 };
 
 export const meditationTechniques: meditationTechnique[] = [
   {
-    name: "Basic mana regeneration",
-    id: "basicmanaregen",
+    name: "Mana Regeneration",
+    id: "manaregen",
     description: "Regenerate mana at an increased rate",
+    level: 1,
   },
   {
-    name: "Basic health regen",
-    id: "basichealthregen",
+    name: "Health Regen",
+    id: "healthregen",
     description: "Regenerate health at an increased rate",
+    level: 1,
   },
   {
-    name: "Basic mixed regeneration",
-    id: "basicmixedregen",
+    name: "Mixed Regeneration",
+    id: "mixedregen",
     description: "Regenerate both health and mana at a minorly increased rate",
+    level: 1,
   },
 ];
 
@@ -154,7 +159,7 @@ export type Area = "BeginnerArea" | "SecondArea";
 
 export type State = "Modal" | "Tick";
 export const [pause, setPause] = createSignal(false);
-export const [opponent, setOpponent] = createStore({} as Enemy);
+export const [opponent, setOpponent] = createStore(cloneDeep(enemyList.bandit));
 
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
@@ -178,9 +183,9 @@ export const [state, setState] = createStore({
     area: "BeginnerArea" as Area,
   },
   // Player's current mana
-  mana: 9,
+  mana: 80,
   // Player's maximum mana
-  maxMana: 9,
+  maxMana: 80,
   // Player's passive mana regeneration
   passiveManaRegen: 1,
   // Current % of tick bar
@@ -211,6 +216,7 @@ export const [state, setState] = createStore({
   // Queue of modal's to appear
   modalMessages: [] as ModalMessageType[],
   autoAdventure: false,
+  weaponDamageBuff: 0,
 });
 
 //********************************************************
@@ -379,7 +385,7 @@ export const tickMana = createMemo(() => {
   state.techniques.forEach((e, i) => {
     if (e.active || e.onGoing) {
       let cost =
-        (e.baseCost - (e.mastery / 10000) * (e.baseCost - e.minCost)) *
+        (e.baseCost - (e.mastery / 3000) * (e.baseCost - e.minCost)) *
         e.multiplier;
       setState("techniques", i, "currentCost", cost);
       total += cost;
@@ -389,7 +395,18 @@ export const tickMana = createMemo(() => {
 });
 
 export const effectMultiplier = (mult: number) => {
-  return 5 * Math.pow(mult + 10, 0.5779) - 19;
+  //return 5 * Math.pow(mult + 10, 0.5779) - 19;
+  return Math.pow(mult, 0.9);
+};
+
+export const activeTechniqueCount = () => {
+  let count = 0;
+  state.techniques.forEach((e, i) => {
+    if (e.active) {
+      count += 1;
+    }
+  });
+  return count;
 };
 
 export const addCoins = (min: number, max: number) => {

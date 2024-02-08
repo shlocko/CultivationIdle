@@ -84,7 +84,7 @@ export const meditateTick = () => {
     meditationTechniqueEffect[
       state.meditationTechniques[state.activeMeditationTechnique]
         .id as keyof typeof meditationTechniqueEffect
-    ]!();
+    ]!(state.meditationTechniques[state.activeMeditationTechnique].level);
   } else if (state.mana < state.maxMana) {
     setState("mana", (mana) => mana + 1);
   }
@@ -114,6 +114,7 @@ export const combatTick = () => {
     setPause(false);
   } else {
     if (state.combat.turn === 0) {
+      setState("weaponDamageBuff", 0);
       state.techniques.forEach((e, i) => {
         if (e.onGoing) {
           setState("maxMana", (m) => m + 0.3 * effectMultiplier(e.multiplier));
@@ -149,7 +150,10 @@ export const combatTick = () => {
             }
             break;
           case 3:
-            setOpponent("health", (h) => h - 5);
+            let buff = state.weaponDamageBuff;
+            console.log(`buff: ${buff}`);
+            setOpponent("health", (h) => h - (5 + buff));
+            setState("weaponDamageBuff", 0);
             break;
         }
       }
@@ -165,10 +169,15 @@ export const combatTick = () => {
 
 export const adventureTick = () => {
   console.log("adventure");
-  let eventRoll = Math.floor(Math.random() * 100) + 1;
+  let eventRoll = Math.random() * 100 + 1;
   console.log(eventRoll);
   if (state.adventure.area === "BeginnerArea") {
-    if (eventRoll >= 80) {
+    if (eventRoll >= 90) {
+      let pick = Math.floor(Math.random() * beginnerArea.uncommonEvents.length);
+      if (beginnerArea.rareEvents[pick].isUnlocked()) {
+        beginnerArea.rareEvents[pick].activation();
+      }
+    } else if (eventRoll >= 80) {
       let pick = Math.floor(Math.random() * beginnerArea.uncommonEvents.length);
       if (beginnerArea.uncommonEvents[pick].isUnlocked()) {
         beginnerArea.uncommonEvents[pick].activation();
