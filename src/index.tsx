@@ -1,6 +1,6 @@
 /* @refresh reload */
 import { render } from "solid-js/web";
-import { Router, Route } from "@solidjs/router";
+import { Route, HashRouter } from "@solidjs/router";
 
 import "./index.css";
 import { Main } from "./components/main";
@@ -34,13 +34,13 @@ render(
       >
         <ModalMessage />
       </Modal>
-      <Router base="/CultivationIdle">
+      <HashRouter base="/CultivationIdle">
         <Route path="/" component={Main} />
         <Route path="/train" component={Train} />
         <Route path="/adventure" component={Adventure} />
         <Route path="/inventory" component={Inventory} />
         <Route path="/shop" component={Shop} />
-      </Router>
+      </HashRouter>
     </>
   ),
   root!,
