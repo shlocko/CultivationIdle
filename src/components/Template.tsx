@@ -7,11 +7,14 @@ import {
 	tickSpeed,
 	pause,
 	persist,
+	combatState,
+	setCombatState,
 } from "../state/store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
 import { Toaster } from "solid-toast";
 import { perTick } from "../functions/tickMethods";
+import { cloneDeep } from "lodash";
 
 export const Template: Component<{ children: JSXElement }> = (props) => {
 	const [saveTimer, setSaveTimer] = createSignal(0);
@@ -41,7 +44,16 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 				setState("state", "Tick");
 			}
 		} else if (state.state === "Combat") {
-			// TODO
+			combatState.opponents.forEach((e, i) => {
+				if (e.health <= 0) {
+					let arr = cloneDeep(combatState.opponents);
+					arr.splice(i, 1);
+					setCombatState("opponents", arr);
+				}
+			});
+			if (combatState.opponents.length === 0) {
+				setState("state", "Tick");
+			}
 		}
 	}, 10);
 	onCleanup(() => {

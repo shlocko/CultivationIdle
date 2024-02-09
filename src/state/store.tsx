@@ -19,6 +19,7 @@ import {
 } from "../functions/techniqueMethods";
 import { Enemy, enemyList } from "./enemies";
 import { cloneDeep } from "lodash";
+import { effectMultiplier } from "../functions/combatMethods";
 
 type Action = "Meditate" | "Train" | "Combat" | "Adventure";
 
@@ -143,10 +144,6 @@ export type LootTable = {
 export type Area = "BeginnerArea" | "SecondArea";
 
 //********************************************************
-// Combat Actions
-//********************************************************
-
-//********************************************************
 // state
 //********************************************************
 
@@ -210,6 +207,39 @@ export const [state, setState] = createStore({
 	modalMessages: [] as ModalMessageType[],
 	autoAdventure: false,
 	weaponDamageBuff: 0,
+});
+
+//********************************************************
+// Combat State
+//********************************************************
+
+export const damageToTarget = createMemo(() => {
+	let count = 0;
+	state.techniques.forEach((e, i) => {
+		if (e.active || e.onGoing) {
+			if (e.effect === "damage") {
+				count += e.magnitude * effectMultiplier(e.multiplier);
+			}
+		}
+	});
+	return count;
+});
+
+export const damageToArea = createMemo(() => {
+	let count = 0;
+	state.techniques.forEach((e, i) => {
+		if (e.active || e.onGoing) {
+			if (e.effect === "ongoingAreaDamage") {
+				count += e.magnitude * effectMultiplier(e.multiplier);
+			}
+		}
+	});
+	return count;
+});
+
+export const [combatState, setCombatState] = createStore({
+	opponents: [] as Enemy[],
+	activeEnemy: 0,
 });
 
 //********************************************************
@@ -386,11 +416,6 @@ export const tickMana = createMemo(() => {
 	});
 	return total;
 });
-
-export const effectMultiplier = (mult: number) => {
-	//return 5 * Math.pow(mult + 10, 0.5779) - 19;
-	return Math.pow(mult, 0.9);
-};
 
 export const activeTechniqueCount = () => {
 	let count = 0;
