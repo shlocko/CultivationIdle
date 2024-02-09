@@ -13,11 +13,11 @@ import {
 	state,
 } from "./store";
 
-export type Event = {
+export interface Event {
 	name: string;
 	isUnlocked: () => boolean;
 	activation: Function;
-};
+}
 
 // Rarity: Common, Uncommon, Rare, Epic, Legendary, Mythical, Unique
 
@@ -29,7 +29,7 @@ export const beginnerArea = {
 			name: "combat",
 			isUnlocked: () => state.rank >= 1,
 			activation: () => {
-				let enemy = Math.floor(
+				const enemy = Math.floor(
 					Math.random() * beginnerArea.enemies.length,
 				);
 				console.log(enemy);
@@ -51,7 +51,7 @@ export const beginnerArea = {
 			name: "hardCombat",
 			isUnlocked: () => state.rank >= 3,
 			activation: () => {
-				let enemy = Math.floor(
+				const enemy = Math.floor(
 					Math.random() * beginnerArea.hardEnemies.length,
 				);
 				console.log(enemy);

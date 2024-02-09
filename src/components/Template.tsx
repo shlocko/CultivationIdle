@@ -41,8 +41,8 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 				setState("state", "Tick");
 			}
 		} else if (state.state === "Combat") {
-      // TODO
-    }
+			// TODO
+		}
 	}, 10);
 	onCleanup(() => {
 		clearInterval(timer);

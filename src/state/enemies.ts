@@ -1,6 +1,6 @@
 import { LootTable } from "./store";
 
-export type Enemy = {
+export interface Enemy {
 	alive: boolean;
 	health: number;
 	damage: number;
@@ -8,7 +8,7 @@ export type Enemy = {
 	loot: LootTable;
 	coinMin: number;
 	coinMax: number;
-};
+}
 
 export type Enemies = keyof typeof enemyList;
 

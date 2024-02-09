@@ -65,7 +65,7 @@ export const perTick = () => {
 
 export const trainTick = () => {
 	if (state.mana >= 3) {
-		let num: number = state.trainingTechnique;
+		const num: number = state.trainingTechnique;
 		setState("mana", (mana) => mana - 3);
 		setState("maxMana", (max) => max + 0.5);
 		if (
@@ -87,7 +87,7 @@ export const meditateTick = () => {
 		meditationTechniqueEffect[
 			state.meditationTechniques[state.activeMeditationTechnique]
 				.id as keyof typeof meditationTechniqueEffect
-		]!(state.meditationTechniques[state.activeMeditationTechnique].level);
+		](state.meditationTechniques[state.activeMeditationTechnique].level);
 	} else if (state.mana < state.maxMana) {
 		setState("mana", (mana) => mana + 1);
 	}
@@ -156,7 +156,7 @@ export const combatTick = () => {
 						}
 						break;
 					case 3:
-						let buff = state.weaponDamageBuff;
+						const buff = state.weaponDamageBuff;
 						console.log(`buff: ${buff}`);
 						setOpponent("health", (h) => h - (5 + buff));
 						setState("weaponDamageBuff", 0);
@@ -175,25 +175,25 @@ export const combatTick = () => {
 
 export const adventureTick = () => {
 	console.log("adventure");
-	let eventRoll = Math.random() * 100 + 1;
+	const eventRoll = Math.random() * 100 + 1;
 	console.log(eventRoll);
 	if (state.adventure.area === "BeginnerArea") {
 		if (eventRoll >= 90) {
-			let pick = Math.floor(
+			const pick = Math.floor(
 				Math.random() * beginnerArea.uncommonEvents.length,
 			);
 			if (beginnerArea.rareEvents[pick].isUnlocked()) {
 				beginnerArea.rareEvents[pick].activation();
 			}
 		} else if (eventRoll >= 80) {
-			let pick = Math.floor(
+			const pick = Math.floor(
 				Math.random() * beginnerArea.uncommonEvents.length,
 			);
 			if (beginnerArea.uncommonEvents[pick].isUnlocked()) {
 				beginnerArea.uncommonEvents[pick].activation();
 			}
 		} else if (eventRoll >= 50) {
-			let pick = Math.floor(
+			const pick = Math.floor(
 				Math.random() * beginnerArea.commonEvents.length,
 			);
 			if (beginnerArea.commonEvents[pick].isUnlocked()) {

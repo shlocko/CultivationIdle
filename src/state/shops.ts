@@ -1,9 +1,9 @@
 import { Item } from "./store";
 
-export type ShopItem = {
+export interface ShopItem {
 	item: Item;
 	cost: number;
-};
+}
 
 export const basicShop: ShopItem[] = [
 	{
