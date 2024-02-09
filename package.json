@@ -6,10 +6,12 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "prettier": "prettier . --write"
   },
   "license": "MIT",
   "devDependencies": {
+    "prettier": "^3.2.5",
     "solid-devtools": "^0.29.3",
     "typescript": "^5.3.3",
     "vite": "^5.0.11",
