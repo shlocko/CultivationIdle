@@ -4,43 +4,46 @@ import { state, setState, setAction } from "../state/store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
 import {
-  sendAspectChoice,
-  sendChoice,
-  sendModal,
-  sendTechniqueChoice,
+	sendAspectChoice,
+	sendChoice,
+	sendModal,
+	sendTechniqueChoice,
 } from "../state/modalMessages";
 import { techniques } from "../state/techniques";
 //import { testModal } from "../state/modalMessages";
 
 export const Main: Component = () => {
-  return (
-    <>
-      <Template>
-        <Show when={!state.aspect && state.rank >= 1}>
-          <ChooseAspect />
-        </Show>
-        <For each={state.meditationTechniques}>
-          {(item, i) => (
-            <button
-              classList={{
-                [utils.btn]: true,
-                [utils.btn_active]: i() === state.activeMeditationTechnique,
-              }}
-              onClick={() => {
-                setState("activeMeditationTechnique", i());
-              }}
-            >
-              <p> {item.name} </p>
-            </button>
-          )}
-        </For>
-        <button
-          class={(utils.btn, utils.top_auto)}
-          onClick={() => setAction("Meditate")}
-        >
-          <p>Meditate</p>
-        </button>
-      </Template>
-    </>
-  );
+	return (
+		<>
+			<Template>
+				<Show when={!state.aspect && state.rank >= 1}>
+					<ChooseAspect />
+				</Show>
+				<For each={state.meditationTechniques}>
+					{(item, i) => (
+						<button
+							classList={{
+								[utils.btn]: true,
+								[utils.btn_active]:
+									i() === state.activeMeditationTechnique,
+							}}
+							onClick={() => {
+								setState("activeMeditationTechnique", i());
+							}}
+						>
+							<p> {item.name} </p>
+						</button>
+					)}
+				</For>
+				<button
+					class={(utils.btn, utils.top_auto)}
+					onClick={() => {
+						setAction("Meditate");
+					}}
+				>
+					<p>Meditate</p>
+				</button>
+			</Template>
+		</>
+	);
 };

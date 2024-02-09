@@ -1,14 +1,14 @@
 .action_container {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .action_col {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
 }
 
 .action_item {
-  flex-grow: 1;
+	flex-grow: 1;
 }
