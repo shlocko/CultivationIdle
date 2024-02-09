@@ -44,7 +44,7 @@ export const Inventory: Component = () => {
 				>
 					Add 3 Iron Bar
 				</button>
-				<div class={utils.top_auto}></div>
+				<div class={utils.top_auto} />
 			</Template>
 		</>
 	);

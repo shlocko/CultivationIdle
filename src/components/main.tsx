@@ -37,7 +37,9 @@ export const Main: Component = () => {
 				</For>
 				<button
 					class={(utils.btn, utils.top_auto)}
-					onClick={() => setAction("Meditate")}
+					onClick={() => {
+						setAction("Meditate");
+					}}
 				>
 					<p>Meditate</p>
 				</button>

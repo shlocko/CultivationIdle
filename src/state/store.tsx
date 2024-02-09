@@ -68,7 +68,7 @@ export const aspects = [
 //********************************************************
 export type TechniqueType = "Shaper" | "Enhancement" | "Range" | "Area";
 
-export type Technique = {
+export interface Technique {
 	name: string;
 	aspect: Aspect;
 	type: TechniqueType;
@@ -83,17 +83,17 @@ export type Technique = {
 	description: string;
 	mastery: number;
 	multiplier: number;
-};
+}
 
 //********************************************************
 // Meditation Tecniques
 //********************************************************
-export type meditationTechnique = {
+export interface meditationTechnique {
 	name: string;
 	id: string;
 	description: string;
 	level: number;
-};
+}
 
 export const meditationTechniques: meditationTechnique[] = [
 	{
@@ -132,13 +132,13 @@ export type Item =
 	| "Blueleaf"
 	| "Glass Bottle";
 
-export type LootTable = Array<{
+export type LootTable = {
 	name: Item;
 	chance: number;
 	min: number;
 	max: number;
 	show: boolean;
-}>;
+}[];
 
 export type Area = "BeginnerArea" | "SecondArea";
 
@@ -203,7 +203,7 @@ export const [state, setState] = createStore({
 		{ item: "Health Potion", quantity: 1 },
 		{ item: "Mana Potion", quantity: 3 },
 		{ item: "Herb", quantity: 4 },
-	] as Array<{ item: Item; quantity: number }>,
+	] as { item: Item; quantity: number }[],
 	inventoryCapacity: 20,
 	coins: 0,
 	// Queue of modal's to appear
@@ -223,9 +223,9 @@ export const persist = () => {
 };
 
 export const load = () => {
-	let rawState = localStorage.getItem("state");
+	const rawState = localStorage.getItem("state");
 	if (rawState) {
-		let loadState = JSON.parse(rawState);
+		const loadState = JSON.parse(rawState);
 		if (loadState.version === state.version) {
 			setState(loadState);
 		} else {
@@ -274,7 +274,7 @@ export const howManyOfItem = (item: Item) => {
 export const inventoryRemove = (item: Item) => {
 	state.inventory.forEach((e, i) => {
 		if (e.item === item) {
-			let arr = state.inventory.slice();
+			const arr = state.inventory.slice();
 			arr.splice(i, 1);
 			setState("inventory", arr);
 		}
@@ -297,9 +297,9 @@ export const inventoryAtCapacity = () => {
 };
 
 export const inventoryAdd = (item: Item, quantity: number) => {
-	let arr = state.inventory.slice();
+	const arr = state.inventory.slice();
 	if (hasItem(item)) {
-		let index = arr.findIndex((e) => e.item === item);
+		const index = arr.findIndex((e) => e.item === item);
 		setState("inventory", index, "quantity", (num) => num + quantity);
 	} else {
 		arr.push({ item: item, quantity: quantity });
@@ -377,7 +377,7 @@ export const tickMana = createMemo(() => {
 	let total = 0;
 	state.techniques.forEach((e, i) => {
 		if (e.active || e.onGoing) {
-			let cost =
+			const cost =
 				(e.baseCost - (e.mastery / 3000) * (e.baseCost - e.minCost)) *
 				e.multiplier;
 			setState("techniques", i, "currentCost", cost);
@@ -403,7 +403,7 @@ export const activeTechniqueCount = () => {
 };
 
 export const addCoins = (min: number, max: number) => {
-	let coins = Math.floor(Math.random() * (max - min + 1)) + min;
+	const coins = Math.floor(Math.random() * (max - min + 1)) + min;
 	setState("coins", (c) => c + coins);
 	toast(`${coins} coins added`);
 };

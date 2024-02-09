@@ -8,7 +8,7 @@ export const ChooseTechnique: Component = () => {
 	return (
 		<div class={utils.container}>
 			<h3> Choose a technique: </h3>
-			<For each={techniques[state.aspect as keyof typeof techniques]!}>
+			<For each={techniques[state.aspect as keyof typeof techniques]}>
 				{(item, i) => (
 					<>
 						<button
@@ -28,11 +28,11 @@ export const ChooseTechnique: Component = () => {
 			<button
 				class={utils.btn}
 				onClick={() => {
-					let arr = state.techniques.slice();
+					const arr = state.techniques.slice();
 					arr.push(
-						techniques[state.aspect as keyof typeof techniques]![
+						techniques[state.aspect as keyof typeof techniques][
 							chosen()
-						] as Technique,
+						],
 					);
 					setState("techniques", arr);
 				}}

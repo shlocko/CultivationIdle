@@ -28,7 +28,9 @@ export const Train: Component = () => {
 				</For>
 				<button
 					class={(utils.btn, utils.top_auto)}
-					onClick={() => setAction("Train")}
+					onClick={() => {
+						setAction("Train");
+					}}
 				>
 					<p>Train</p>
 				</button>{" "}

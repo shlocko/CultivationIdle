@@ -21,7 +21,7 @@ export const useTechnique = (technique: Technique) => {
 	if (technique.customEffect) {
 		techniqueCustomEffect[technique.customEffect](technique);
 	}
-	let index = state.techniques.indexOf(technique);
+	const index = state.techniques.indexOf(technique);
 	setState("techniques", index, "active", false);
 };
 
@@ -29,7 +29,7 @@ export type EffectType = keyof typeof techniqueEffects;
 
 export const techniqueEffects = {
 	damage: (technique: Technique) => {
-		let multiplier = effectMultiplier(technique.multiplier);
+		const multiplier = effectMultiplier(technique.multiplier);
 		if (state.mana >= technique.currentCost) {
 			setState("mana", (m) => m - technique.currentCost);
 			setOpponent(
@@ -39,15 +39,15 @@ export const techniqueEffects = {
 		}
 	},
 	heal: (technique: Technique) => {
-		let multiplier = effectMultiplier(technique.multiplier);
+		const multiplier = effectMultiplier(technique.multiplier);
 		if (state.mana >= technique.currentCost) {
 			setState("mana", (m) => m - technique.currentCost);
 			setState("health", (hp) => hp + technique.magnitude * multiplier);
 		}
 	},
 	ongoingAreaDamage: (technique: Technique) => {
-		let index = state.techniques.indexOf(technique);
-		let multiplier = effectMultiplier(technique.multiplier);
+		const index = state.techniques.indexOf(technique);
+		const multiplier = effectMultiplier(technique.multiplier);
 		if (technique.active) {
 			setState("techniques", index, "active", false);
 			setState("techniques", index, "onGoing", true);
@@ -63,8 +63,8 @@ export const techniqueEffects = {
 		}
 	},
 	enhanceWeapon: (technique: Technique) => {
-		let index = state.techniques.indexOf(technique);
-		let multiplier = effectMultiplier(technique.multiplier);
+		const index = state.techniques.indexOf(technique);
+		const multiplier = effectMultiplier(technique.multiplier);
 		if (technique.active) {
 			setState("techniques", index, "active", false);
 			setState("techniques", index, "onGoing", true);

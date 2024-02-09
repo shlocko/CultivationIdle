@@ -30,75 +30,75 @@ import { createStore } from "solid-js/store";
 import { cloneDeep } from "lodash";
 
 export const sendModal = (content: string) => {
-	let msg = {
+	const msg = {
 		type: "Text",
 		content: content,
 	} as TextModal;
-	let arr = state.modalMessages.slice();
+	const arr = state.modalMessages.slice();
 	arr.push(msg);
 	setState("modalMessages", arr);
 };
 
 export const sendChoice = <T extends { name: string }>(
 	store: string,
-	items: Array<T>,
+	items: T[],
 ) => {
-	let msg = {
+	const msg = {
 		type: "Choose",
 		store: store,
 		items: items,
 	} as ChooseModalState;
 
-	let arr = state.modalMessages.slice();
+	const arr = state.modalMessages.slice();
 	arr.push(msg);
 	setState("modalMessages", arr);
 };
 
 export const sendTechniqueChoice = () => {
-	let msg = {
+	const msg = {
 		type: "ChooseTechnique",
 	} as ChooseTechniqueModal;
-	let arr = state.modalMessages.slice();
+	const arr = state.modalMessages.slice();
 	arr.push(msg);
 	setState("modalMessages", arr);
 };
 
 export const sendMeditationTechniqueChoice = () => {
-	let msg = {
+	const msg = {
 		type: "ChooseMeditationTechnique",
 	} as ChooseMeditationTechniqueModal;
-	let arr = state.modalMessages.slice();
+	const arr = state.modalMessages.slice();
 	arr.push(msg);
 	setState("modalMessages", arr);
 };
 
 export const sendAspectChoice = () => {
-	let msg = {
+	const msg = {
 		type: "ChooseAspect",
 	} as ChooseAspectModal;
-	let arr = state.modalMessages.slice();
+	const arr = state.modalMessages.slice();
 	arr.push(msg);
 	setState("modalMessages", arr);
 };
 
 export const sendLoot = (loot: LootTable) => {
-	let msg = {
+	const msg = {
 		type: "Loot",
 		loot: loot,
 	} as LootModal;
-	let arr = state.modalMessages.slice();
+	const arr = state.modalMessages.slice();
 	arr.push(msg);
 	setState("modalMessages", arr);
 };
 
-export const testModalList = <T extends { name: string }>(arr: Array<T>) => {
+export const testModalList = <T extends { name: string }>(arr: T[]) => {
 	if (arr[0]) {
 		console.log(arr[0].name);
 	}
 };
 
 export const ModalText: Component = () => {
-	let text = (state.modalMessages[0] as TextModal).content;
+	const text = (state.modalMessages[0] as TextModal).content;
 
 	return (
 		<>
@@ -106,7 +106,7 @@ export const ModalText: Component = () => {
 			<button
 				class={utils.btn}
 				onClick={() => {
-					let arr = state.modalMessages.slice();
+					const arr = state.modalMessages.slice();
 					arr.shift();
 					setState("modalMessages", arr);
 				}}
@@ -119,7 +119,7 @@ export const ModalText: Component = () => {
 
 export const ModalChooseTechnique: Component = () => {
 	const [choice, setChoice] = createSignal(-1);
-	let techniqueList = techniques[state.aspect as keyof typeof techniques];
+	const techniqueList = techniques[state.aspect as keyof typeof techniques];
 	return (
 		<>
 			<p> Choose: </p>
@@ -157,13 +157,11 @@ export const ModalChooseTechnique: Component = () => {
 				class={utils.btn}
 				onClick={() => {
 					if (choice() >= 0) {
-						let techniquesKnown = state.techniques.slice();
-						techniquesKnown.push(
-							techniqueList[choice()] as Technique,
-						);
+						const techniquesKnown = state.techniques.slice();
+						techniquesKnown.push(techniqueList[choice()]);
 						setState("techniques", techniquesKnown);
 					}
-					let arr = state.modalMessages.slice();
+					const arr = state.modalMessages.slice();
 					arr.shift();
 					setState("modalMessages", arr);
 				}}
@@ -176,7 +174,7 @@ export const ModalChooseTechnique: Component = () => {
 
 export const ModalChooseMeditationTechnique: Component = () => {
 	const [choice, setChoice] = createSignal(-1);
-	let techniqueList = meditationTechniques;
+	const techniqueList = meditationTechniques;
 	return (
 		<>
 			<p> Choose </p>
@@ -215,32 +213,18 @@ export const ModalChooseMeditationTechnique: Component = () => {
 				class={utils.btn}
 				onClick={() => {
 					if (choice() >= 0) {
-						let techniquesKnown = cloneDeep(
+						const techniquesKnown = cloneDeep(
 							state.meditationTechniques,
 						);
 						if (
 							techniquesKnown.find(
-								(e) =>
-									e.name ===
-									(
-										techniqueList[
-											choice()
-										] as meditationTechnique
-									).name,
+								(e) => e.name === techniqueList[choice()].name,
 							) === undefined
 						) {
-							techniquesKnown.push(
-								techniqueList[choice()] as meditationTechnique,
-							);
+							techniquesKnown.push(techniqueList[choice()]);
 						} else {
-							let tech = techniquesKnown.find(
-								(e) =>
-									e.name ===
-									(
-										techniqueList[
-											choice()
-										] as meditationTechnique
-									).name,
+							const tech = techniquesKnown.find(
+								(e) => e.name === techniqueList[choice()].name,
 							);
 							if (tech !== undefined) {
 								console.log("upgrade");
@@ -250,7 +234,7 @@ export const ModalChooseMeditationTechnique: Component = () => {
 							}
 						}
 						setState("meditationTechniques", techniquesKnown);
-						let arr = state.modalMessages.slice();
+						const arr = state.modalMessages.slice();
 						arr.shift();
 						setState("modalMessages", arr);
 					}
@@ -294,9 +278,9 @@ export const ModalChooseAspect: Component = () => {
 				class={utils.btn}
 				onClick={() => {
 					if (choice() >= 0) {
-						setState("aspect", aspects[choice()] as Aspect);
+						setState("aspect", aspects[choice()]);
 					}
-					let arr = state.modalMessages.slice();
+					const arr = state.modalMessages.slice();
 					arr.shift();
 					setState("modalMessages", arr);
 				}}
@@ -308,15 +292,15 @@ export const ModalChooseAspect: Component = () => {
 };
 
 export const ModalLoot: Component<{ loot: LootTable }> = (props) => {
-	let [loot, setLoot] = createStore(props.loot.slice(0));
+	const [loot, setLoot] = createStore(props.loot.slice(0));
 	return (
 		<div class={utils.container}>
 			<p> Loot: </p>
 			<For each={loot}>
 				{(item, i) => {
-					let chanceRoll = Math.floor(Math.random() * 100) + 1;
+					const chanceRoll = Math.floor(Math.random() * 100) + 1;
 					setLoot(i(), "show", chanceRoll <= item.chance);
-					let quantity =
+					const quantity =
 						Math.floor(Math.random() * (item.max - item.min + 1)) +
 						item.min;
 					return (
@@ -341,7 +325,7 @@ export const ModalLoot: Component<{ loot: LootTable }> = (props) => {
 			<button
 				class={utils.btn}
 				onClick={() => {
-					let arr = state.modalMessages.slice();
+					const arr = state.modalMessages.slice();
 					arr.shift();
 					setState("modalMessages", arr);
 				}}
@@ -389,30 +373,30 @@ export type ModalMessageType =
 	| ChooseAspectModal
 	| LootModal;
 
-export type TextModal = {
+export interface TextModal {
 	type: "Text";
 	content: string;
-};
+}
 
-export type ChooseModalState = {
+export interface ChooseModalState {
 	type: "Choose";
 	store: string;
 	items: any[];
-};
+}
 
-export type ChooseTechniqueModal = {
+export interface ChooseTechniqueModal {
 	type: "ChooseTechnique";
-};
+}
 
-export type ChooseAspectModal = {
+export interface ChooseAspectModal {
 	type: "ChooseAspect";
-};
+}
 
-export type ChooseMeditationTechniqueModal = {
+export interface ChooseMeditationTechniqueModal {
 	type: "ChooseMeditationTechnique";
-};
+}
 
-export type LootModal = {
+export interface LootModal {
 	type: "Loot";
 	loot: LootTable;
-};
+}

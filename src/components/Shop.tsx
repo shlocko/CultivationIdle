@@ -25,7 +25,7 @@ export const Shop: Component = () => {
 					</button>
 				)}
 			</For>
-			<div class={utils.top_auto}></div>
+			<div class={utils.top_auto} />
 		</Template>
 	);
 };

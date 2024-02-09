@@ -55,7 +55,7 @@ export const Combat: Component = () => {
 					</p>
 					<p> Mana per turn: {tickMana().toFixed(2)} </p>
 					<div class={styles.action_container}>
-						<div class={styles.action_col}></div>
+						<div class={styles.action_col} />
 						<div class={styles.action_col}>
 							<For each={state.techniques}>
 								{(item, i) => (
@@ -173,7 +173,7 @@ export const Combat: Component = () => {
 								Punch
 							</button>
 						</div>
-						<div class={styles.action_col}></div>
+						<div class={styles.action_col} />
 					</div>
 					<button
 						class={utils.btn}
