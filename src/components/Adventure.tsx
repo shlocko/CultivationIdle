@@ -11,7 +11,7 @@ export const Adventure: Component = () => {
     <>
       <Template>
         <h2> Adventure </h2>
-        <Show when={state.action === "Combat"}>
+        <Show when={state.state === "Combat"}>
           <Combat />
         </Show>
         <button

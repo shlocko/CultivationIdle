@@ -12,6 +12,8 @@ import { Template } from "./Template";
 import {
   activeTechniqueCount,
   clearNotOngoing,
+  combatState,
+  damageToTarget,
   findFight,
   opponent,
   resetActiveTechniques,
@@ -24,12 +26,21 @@ import {
 } from "../state/store";
 import { sendModal } from "../state/modalMessages";
 import styles from "../styles/Combat.module.css";
+import { endTurn, enemyTurn } from "../functions/combatMethods";
 
 export const [choice, setChoice] = createSignal(-1);
 export const Combat: Component = () => {
   return (
     <>
       <p> You are fighting a {opponent.name}! </p>
+      <For each={combatState.opponents}>
+        {(item, i) => (
+          <p>
+            {" "}
+            {item.name}: {item.health} HP{" "}
+          </p>
+        )}
+      </For>
       <Switch>
         <Match when={state.combat.turn === 1}>
           <h2> Opponent's Turn </h2>
@@ -38,7 +49,7 @@ export const Combat: Component = () => {
           <button
             class={utils.btn}
             onClick={() => {
-              setPause(false);
+              enemyTurn();
             }}
           >
             <p>Next</p>
@@ -48,6 +59,7 @@ export const Combat: Component = () => {
           <h2> Your Turn </h2>
           <p class={utils.top_auto}> Opponent: {opponent.health} HP. </p>
           <p> Mana per turn: {tickMana().toFixed(2)} </p>
+          <p> Damage: {damageToTarget()} </p>
           <div class={styles.action_container}>
             <div class={styles.action_col}></div>
             <div class={styles.action_col}>
@@ -145,7 +157,7 @@ export const Combat: Component = () => {
             class={utils.btn}
             onClick={() => {
               if (tickMana() <= state.mana) {
-                setPause(false);
+                endTurn();
               } else {
                 sendModal("You are out of mana!");
               }

@@ -20,7 +20,6 @@ import {
   setAction,
   findFight,
   tickMana,
-  effectMultiplier,
   addCoins,
   hasItem,
   inventoryRemove,
@@ -34,6 +33,7 @@ import {
 } from "./techniqueMethods";
 import { beginnerArea } from "../state/events";
 import { enemyList } from "../state/enemies";
+import { effectMultiplier } from "./combatMethods";
 //import { advancementMethods } from "./advanceMethods";
 
 // Happens every tick

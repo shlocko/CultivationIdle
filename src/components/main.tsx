@@ -10,6 +10,7 @@ import {
   sendTechniqueChoice,
 } from "../state/modalMessages";
 import { techniques } from "../state/techniques";
+import { init } from "../functions/combatMethods";
 //import { testModal } from "../state/modalMessages";
 
 export const Main: Component = () => {
@@ -34,6 +35,15 @@ export const Main: Component = () => {
             </button>
           )}
         </For>
+
+        <button
+          class={(utils.btn, utils.top_auto)}
+          onClick={() => {
+            init(["bandit", "bandit", "waderingKnight"]);
+          }}
+        >
+          <p>test</p>
+        </button>
         <button
           class={(utils.btn, utils.top_auto)}
           onClick={() => setAction("Meditate")}

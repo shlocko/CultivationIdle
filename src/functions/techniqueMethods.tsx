@@ -2,12 +2,12 @@ import {
   setOpponent,
   state,
   setState,
-  effectMultiplier,
   maxHealth,
   opponent,
   Technique,
 } from "../state/store";
 import { techniques } from "../state/techniques";
+import { effectMultiplier } from "./combatMethods";
 
 export const techniqueCustomEffect = {
   // Fire techniques
