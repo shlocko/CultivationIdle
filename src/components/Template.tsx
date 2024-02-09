@@ -9,6 +9,7 @@ import {
 	persist,
 	combatState,
 	setCombatState,
+	changeState,
 } from "../state/store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
@@ -27,7 +28,7 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 		}
 		// Check for pending modals, if so go to modal state
 		if (state.modalMessages.length > 0) {
-			setState("state", "Modal");
+			changeState("Modal");
 		}
 		// state machine behavior
 		if (state.state === "Tick") {
@@ -41,7 +42,7 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 			}
 		} else if (state.state === "Modal") {
 			if (state.modalMessages.length === 0) {
-				setState("state", "Tick");
+				setState("state", state.previousState);
 			}
 		} else if (state.state === "Combat") {
 			combatState.opponents.forEach((e, i) => {
@@ -52,7 +53,8 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 				}
 			});
 			if (combatState.opponents.length === 0) {
-				setState("state", "Tick");
+				console.log(`zero ${combatState.opponents.length}`);
+				changeState(state.previousState);
 			}
 		}
 	}, 10);

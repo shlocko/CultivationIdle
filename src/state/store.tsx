@@ -81,6 +81,7 @@ export interface Technique {
 	customEffect: undefined | keyof typeof techniqueCustomEffect;
 	onGoing: boolean; // whether the technique is an ongoing effect vs a one time use
 	active: boolean; // Whether the technique is currently active
+	continuous: boolean;
 	description: string;
 	mastery: number;
 	multiplier: number;
@@ -157,6 +158,7 @@ export const [state, setState] = createStore({
 	version: 5,
 	// State machine state
 	state: "Tick" as State,
+	previousState: "Tick" as State,
 	//Gamedata on the various actions
 	meditate: {
 		tickSpeed: 0.5,
@@ -208,6 +210,11 @@ export const [state, setState] = createStore({
 	autoAdventure: false,
 	weaponDamageBuff: 0,
 });
+
+export const changeState = (newState: State) => {
+	setState("previousState", state.state);
+	setState("state", newState);
+};
 
 //********************************************************
 // Combat State

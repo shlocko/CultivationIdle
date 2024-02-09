@@ -13,11 +13,13 @@ import {
 	activeTechniqueCount,
 	clearNotOngoing,
 	combatState,
+	damageToArea,
 	damageToTarget,
 	findFight,
 	opponent,
 	resetActiveTechniques,
 	setAction,
+	setCombatState,
 	setPause,
 	setState,
 	state,
@@ -35,10 +37,24 @@ export const Combat: Component = () => {
 			<p> You are fighting a {opponent.name}! </p>
 			<For each={combatState.opponents}>
 				{(item, i) => (
-					<p>
-						{" "}
-						{item.name}: {item.health} HP{" "}
-					</p>
+					<>
+						<p>
+							{" "}
+							{item.name}: {item.health} HP{" "}
+							<button
+								classList={{
+									[utils.btn]: true,
+									[utils.btn_active]:
+										combatState.activeEnemy === i(),
+								}}
+								onClick={() => {
+									setCombatState("activeEnemy", i());
+								}}
+							>
+								Target
+							</button>
+						</p>
+					</>
 				)}
 			</For>
 			<Switch>
@@ -65,7 +81,8 @@ export const Combat: Component = () => {
 						Opponent: {opponent.health} HP.{" "}
 					</p>
 					<p> Mana per turn: {tickMana().toFixed(2)} </p>
-					<p> Damage: {damageToTarget()} </p>
+					<p> Damage to target: {damageToTarget()} </p>
+					<p> Damage to area: {damageToArea()} </p>
 					<div class={styles.action_container}>
 						<div class={styles.action_col}></div>
 						<div class={styles.action_col}>

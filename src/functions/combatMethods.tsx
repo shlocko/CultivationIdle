@@ -1,12 +1,14 @@
 import { cloneDeep } from "lodash";
 import { Enemies, Enemy, enemyList } from "../state/enemies";
 import {
+	changeState,
 	combatState,
 	damageToArea,
 	damageToTarget,
 	setCombatState,
 	setOpponent,
 	setState,
+	state,
 } from "../state/store";
 import toast from "solid-toast";
 
@@ -37,7 +39,11 @@ export const init = (enemies: Enemies[]) => {
 	});
 	setCombatState("opponents", arr);
 	console.log(combatState.opponents[combatState.activeEnemy]);
-	setState("state", "Combat");
+	changeState("Combat");
+	state.techniques.forEach((e, i) => {
+		setState("techniques", i, "active", false);
+		setState("techniques", i, "onGoing", false);
+	});
 };
 
 export const endTurn = () => {
@@ -45,6 +51,14 @@ export const endTurn = () => {
 	dealAreaDamage();
 	toast("Damage dealt");
 	setState("combat", "turn", 1);
+	state.techniques.forEach((e, i) => {
+		if (e.active && e.continuous) {
+			setState("techniques", i, "onGoing", true);
+		}
+	});
+	state.techniques.forEach((e, i) => {
+		setState("techniques", i, "active", false);
+	});
 };
 
 export const enemyTurn = () => {
