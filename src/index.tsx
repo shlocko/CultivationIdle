@@ -17,31 +17,33 @@ import { Adventure } from "./components/Adventure";
 const root = document.getElementById("root");
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
-  throw new Error(
-    "Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got misspelled?",
-  );
+	throw new Error(
+		"Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got misspelled?",
+	);
 }
 
 render(
-  () => (
-    <>
-      <Toaster />
-      <Modal
-        isOpen={state.state === "Modal" && state.modalMessages.length > 0}
-        onCloseRequest={() => {
-          setPause(false);
-        }}
-      >
-        <ModalMessage />
-      </Modal>
-      <HashRouter base="/CultivationIdle">
-        <Route path="/" component={Main} />
-        <Route path="/train" component={Train} />
-        <Route path="/adventure" component={Adventure} />
-        <Route path="/inventory" component={Inventory} />
-        <Route path="/shop" component={Shop} />
-      </HashRouter>
-    </>
-  ),
-  root!,
+	() => (
+		<>
+			<Toaster />
+			<Modal
+				isOpen={
+					state.state === "Modal" && state.modalMessages.length > 0
+				}
+				onCloseRequest={() => {
+					setPause(false);
+				}}
+			>
+				<ModalMessage />
+			</Modal>
+			<HashRouter base="/CultivationIdle">
+				<Route path="/" component={Main} />
+				<Route path="/train" component={Train} />
+				<Route path="/adventure" component={Adventure} />
+				<Route path="/inventory" component={Inventory} />
+				<Route path="/shop" component={Shop} />
+			</HashRouter>
+		</>
+	),
+	root!,
 );
