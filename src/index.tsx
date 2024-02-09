@@ -36,7 +36,7 @@ render(
 			>
 				<ModalMessage />
 			</Modal>
-			<HashRouter base="/CultivationIdle">
+			<HashRouter base="/">
 				<Route path="/" component={Main} />
 				<Route path="/train" component={Train} />
 				<Route path="/adventure" component={Adventure} />

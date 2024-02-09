@@ -50,14 +50,6 @@ export const rankInfo = [
 ];
 
 // Available aspects at CoreFormation rank
-export type AspectOld =
-	| "Fire"
-	| "Water"
-	| "Stone"
-	| "Wind"
-	| "Sword"
-	| "Pure"
-	| "Shadow";
 
 export type Aspect = (typeof aspects)[number];
 
@@ -158,7 +150,7 @@ export type Area = "BeginnerArea" | "SecondArea";
 // state
 //********************************************************
 
-export type State = "Modal" | "Tick";
+export type State = "Modal" | "Tick" | "Combat";
 export const [pause, setPause] = createSignal(false);
 export const [opponent, setOpponent] = createStore(cloneDeep(enemyList.bandit));
 

@@ -40,7 +40,9 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 			if (state.modalMessages.length === 0) {
 				setState("state", "Tick");
 			}
-		}
+		} else if (state.state === "Combat") {
+      // TODO
+    }
 	}, 10);
 	onCleanup(() => {
 		clearInterval(timer);
