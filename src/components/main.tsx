@@ -39,14 +39,6 @@ export const Main: Component = () => {
 
 				<button
 					class={(utils.btn, utils.top_auto)}
-					onClick={() => {
-						init(["bandit", "bandit", "waderingKnight"]);
-					}}
-				>
-					<p>test</p>
-				</button>
-				<button
-					class={(utils.btn, utils.top_auto)}
 					onClick={() => setAction("Meditate")}
 				>
 					<p>Meditate</p>

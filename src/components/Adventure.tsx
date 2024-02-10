@@ -19,7 +19,14 @@ export const Adventure: Component = () => {
 					<button
 						class={(utils.btn, utils.top_auto)}
 						onClick={() => {
-							init(["bandit", "bandit", "waderingKnight"]);
+							init([
+								"bandit",
+								"bandit",
+								"bandit",
+								"bear",
+								"bear",
+								"waderingKnight",
+							]);
 						}}
 					>
 						<p>test</p>

@@ -10,6 +10,7 @@ import {
 	combatState,
 	setCombatState,
 	changeState,
+	opponent,
 } from "../state/store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
@@ -48,19 +49,9 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 		} else if (state.state === "Combat") {
 			combatState.opponents.forEach((e, i) => {
 				if (e.health <= 0) {
-					let arr = cloneDeep(combatState.opponents);
-					console.log("preded");
-					console.log(e.health);
-					console.log(i);
-					console.log(combatState.opponents);
-					console.log(e);
-					arr.splice(i, 1);
-					setCombatState("opponents", arr);
-					console.log("ded");
-					console.log(e.health);
-					console.log(i);
-					console.log(combatState.opponents);
-					console.log(e);
+					setCombatState("opponents", (opponents) =>
+						opponents.filter((opponent) => opponent.health > 0),
+					);
 				}
 			});
 			if (combatState.opponents.length === 0) {
