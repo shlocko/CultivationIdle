@@ -247,6 +247,7 @@ export const damageToArea = createMemo(() => {
 export const [combatState, setCombatState] = createStore({
 	opponents: [] as Enemy[],
 	activeEnemy: 0,
+	returnState: "Tick" as State,
 });
 
 //********************************************************

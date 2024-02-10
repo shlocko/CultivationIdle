@@ -1,6 +1,7 @@
 import { cloneDeep } from "lodash";
 import { Enemies, Enemy, enemyList } from "../state/enemies";
 import {
+	State,
 	changeState,
 	combatState,
 	damageToArea,
@@ -38,6 +39,7 @@ export const init = (enemies: Enemies[]) => {
 		arr.push(cloneDeep(enemyList[e]));
 	});
 	setCombatState("opponents", arr);
+	setCombatState("returnState", state.state);
 	console.log(combatState.opponents[combatState.activeEnemy]);
 	changeState("Combat");
 	state.techniques.forEach((e, i) => {

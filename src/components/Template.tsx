@@ -27,7 +27,7 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 			persist();
 		}
 		// Check for pending modals, if so go to modal state
-		if (state.modalMessages.length > 0) {
+		if (state.modalMessages.length > 0 && state.state !== "Modal") {
 			changeState("Modal");
 		}
 		// state machine behavior
@@ -49,13 +49,23 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 			combatState.opponents.forEach((e, i) => {
 				if (e.health <= 0) {
 					let arr = cloneDeep(combatState.opponents);
+					console.log("preded");
+					console.log(e.health);
+					console.log(i);
+					console.log(combatState.opponents);
+					console.log(e);
 					arr.splice(i, 1);
 					setCombatState("opponents", arr);
+					console.log("ded");
+					console.log(e.health);
+					console.log(i);
+					console.log(combatState.opponents);
+					console.log(e);
 				}
 			});
 			if (combatState.opponents.length === 0) {
 				console.log(`zero ${combatState.opponents.length}`);
-				changeState(state.previousState);
+				changeState(combatState.returnState);
 			}
 		}
 	}, 10);
