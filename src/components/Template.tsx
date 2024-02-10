@@ -43,6 +43,7 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 		} else if (state.state === "Modal") {
 			if (state.modalMessages.length === 0) {
 				setState("state", state.previousState);
+				// ignore
 			}
 		} else if (state.state === "Combat") {
 			combatState.opponents.forEach((e, i) => {
