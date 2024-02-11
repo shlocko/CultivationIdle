@@ -74,7 +74,7 @@ export const beginnerArea = {
 	uncommonEvents: [
 		{
 			name: "a few bandits",
-			isUnlocked: () => state.rank >= 1,
+			isUnlocked: () => state.rank >= 3,
 			activation: () => {
 				init(
 					["bandit", "bandit", "bandit"],
@@ -105,7 +105,7 @@ export const beginnerArea = {
 		} as Event,
 		{
 			name: "a wandering knight",
-			isUnlocked: () => state.rank >= 1,
+			isUnlocked: () => state.rank >= 4,
 			activation: () => {
 				init(
 					["wanderingKnight"],
@@ -129,8 +129,8 @@ export const beginnerArea = {
 							max: 1,
 						},
 					],
-					100,
-					500,
+					1000,
+					2500,
 				);
 			},
 		} as Event,
