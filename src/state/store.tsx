@@ -169,7 +169,7 @@ export const [opponent, setOpponent] = createStore(cloneDeep(enemyList.bandit));
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
 	// State version for ensuring compatibility with save data
-	version: 5,
+	version: 6,
 	// State machine state
 	state: "Tick" as State,
 	previousState: "Tick" as State,
