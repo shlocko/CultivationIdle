@@ -11,6 +11,7 @@ import {
 	setCombatState,
 	changeState,
 	opponent,
+	addCoins,
 } from "../state/store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
@@ -54,6 +55,7 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 			);
 			if (combatState.opponents.length === 0) {
 				sendLoot(pickLoot(combatState.loot));
+				addCoins(combatState.coinMin, combatState.coinMax);
 				changeState(combatState.returnState);
 			}
 		}

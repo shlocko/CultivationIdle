@@ -44,7 +44,7 @@ export const pickLoot = (table: LootTable): LootCollection => {
 			let amt =
 				Math.floor(Math.random() * (item.max - item.min + 1)) +
 				item.min;
-			return { name: item.name, count: amt! };
+			return { name: item.item.name, count: amt };
 		}
 	});
 	collection = collection.filter((item) => item !== null);

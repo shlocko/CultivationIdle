@@ -49,6 +49,10 @@ export const rankInfo = [
 	{ name: "CoreFormation", advMana: 81 },
 	{ name: "RedCore", advMana: 243 },
 	{ name: "GreenCore", advMana: 729 },
+	{ name: "GoldCore", advMana: 2187 },
+	{ name: "SilverCore", advMana: 6561 },
+	{ name: "WhiteCore", advMana: 19683 },
+	{ name: "Enlightened", advMana: 59049 },
 ];
 
 // Available aspects at CoreFormation rank
@@ -144,15 +148,31 @@ export type Material = {
 
 export type Item = Weapon | Material | Consumable;
 
-export type LootTable = {
-	name: Item;
+export type LootTableItem = {
+	item: Item;
 	chance: number;
 	min: number;
 	max: number;
-}[];
+};
+
+export type LootTable = LootTableItem[];
+
+export const lootEntry = (
+	name: ItemNames,
+	chance: number,
+	max: number,
+	min: number,
+): LootTableItem => {
+	return {
+		item: items[name],
+		chance: chance,
+		min: min,
+		max: max,
+	};
+};
 
 export type LootCollection = Array<{
-	name: Item;
+	name: ItemNames;
 	count: number;
 }>;
 
@@ -169,7 +189,7 @@ export const [opponent, setOpponent] = createStore(cloneDeep(enemyList.bandit));
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
 	// State version for ensuring compatibility with save data
-	version: 6,
+	version: 7,
 	// State machine state
 	state: "Tick" as State,
 	previousState: "Tick" as State,
@@ -189,9 +209,9 @@ export const [state, setState] = createStore({
 		area: "BeginnerArea" as Area,
 	},
 	// Player's current mana
-	mana: 80,
+	mana: 9,
 	// Player's maximum mana
-	maxMana: 80,
+	maxMana: 9,
 	// Player's passive mana regeneration
 	passiveManaRegen: 1,
 	// Current % of tick bar

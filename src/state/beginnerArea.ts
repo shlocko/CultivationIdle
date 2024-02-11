@@ -2,11 +2,10 @@ import { init } from "../functions/combatMethods";
 import { Enemies } from "./enemies";
 import { Event } from "./events";
 import { sendModal } from "./modalMessages";
-import { setAction, setState, state } from "./store";
+import { Item, lootEntry, setAction, setState, state } from "./store";
+import { items } from "./items";
 
 export const beginnerArea = {
-	enemies: ["bandit", "bear"] as Enemies[],
-	hardEnemies: ["waderingKnight"] as Enemies[],
 	commonEvents: [
 		{
 			name: "a bandit",
@@ -15,24 +14,9 @@ export const beginnerArea = {
 				init(
 					["bandit"],
 					[
-						{
-							name: "Health Potion",
-							chance: 50,
-							min: 1,
-							max: 5,
-						},
-						{
-							name: "Mana Potion",
-							chance: 50,
-							min: 1,
-							max: 5,
-						},
-						{
-							name: "Sword",
-							chance: 10,
-							min: 1,
-							max: 1,
-						},
+						lootEntry("Health Potion", 50, 1, 5),
+						lootEntry("Mana Potion", 50, 1, 5),
+						lootEntry("Dagger", 10, 1, 1),
 					],
 					10,
 					100,
@@ -46,24 +30,9 @@ export const beginnerArea = {
 				init(
 					["bear"],
 					[
-						{
-							name: "Health Potion",
-							chance: 50,
-							min: 1,
-							max: 5,
-						},
-						{
-							name: "Mana Potion",
-							chance: 50,
-							min: 1,
-							max: 5,
-						},
-						{
-							name: "Sword",
-							chance: 10,
-							min: 1,
-							max: 1,
-						},
+						lootEntry("Health Potion", 50, 1, 5),
+						lootEntry("Mana Potion", 50, 1, 5),
+						lootEntry("Berry", 90, 1, 1),
 					],
 					10,
 					100,
@@ -79,24 +48,9 @@ export const beginnerArea = {
 				init(
 					["bandit", "bandit", "bandit"],
 					[
-						{
-							name: "Health Potion",
-							chance: 70,
-							min: 1,
-							max: 7,
-						},
-						{
-							name: "Mana Potion",
-							chance: 70,
-							min: 1,
-							max: 7,
-						},
-						{
-							name: "Sword",
-							chance: 10,
-							min: 1,
-							max: 1,
-						},
+						lootEntry("Health Potion", 70, 1, 7),
+						lootEntry("Mana Potion", 70, 1, 7),
+						lootEntry("Dagger", 20, 1, 3),
 					],
 					100,
 					500,
@@ -110,24 +64,9 @@ export const beginnerArea = {
 				init(
 					["wanderingKnight"],
 					[
-						{
-							name: "Health Potion",
-							chance: 70,
-							min: 1,
-							max: 7,
-						},
-						{
-							name: "Mana Potion",
-							chance: 70,
-							min: 1,
-							max: 7,
-						},
-						{
-							name: "Sword",
-							chance: 10,
-							min: 1,
-							max: 1,
-						},
+						lootEntry("Health Potion", 70, 1, 7),
+						lootEntry("Mana Potion", 70, 1, 7),
+						lootEntry("Sword", 10, 1, 1),
 					],
 					1000,
 					2500,

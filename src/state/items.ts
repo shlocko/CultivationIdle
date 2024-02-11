@@ -1,6 +1,10 @@
 import { Item } from "./store";
 
-export const items = {
+type Items = {
+	[key: string]: Item;
+};
+
+export const items: Items = {
 	// Materials
 	Herb: {
 		name: "Herb",
@@ -37,5 +41,9 @@ export const items = {
 };
 
 export type ItemNames = keyof typeof items;
+
+export const getItem = (name: ItemNames): Item => {
+	return items[name];
+};
 
 //export const itemByName = (string: typeof (items));
