@@ -183,6 +183,9 @@ export const adventureTick = () => {
 			);
 			if (beginnerArea.uncommonEvents[pick].isUnlocked()) {
 				beginnerArea.uncommonEvents[pick].activation();
+				sendModal(
+					`You encounter a ${beginnerArea.uncommonEvents[pick].name}!`,
+				);
 			}
 		} else if (eventRoll >= 50) {
 			const pick = Math.floor(
@@ -190,6 +193,9 @@ export const adventureTick = () => {
 			);
 			if (beginnerArea.commonEvents[pick].isUnlocked()) {
 				beginnerArea.commonEvents[pick].activation();
+				sendModal(
+					`You encounter a ${beginnerArea.commonEvents[pick].name}!`,
+				);
 			}
 		}
 	}

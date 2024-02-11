@@ -8,6 +8,7 @@ import {
 	combatState,
 	damageToArea,
 	damageToTarget,
+	manaGainFromTechniques,
 	setCombatState,
 	setOpponent,
 	setState,
@@ -66,6 +67,7 @@ export const init = (
 	setCombatState("coinMin", coinMin);
 	setCombatState("coinMax", coinMax);
 	setCombatState("returnState", state.state);
+	setState("combat", "turn", 0);
 	changeState("Combat");
 	state.techniques.forEach((e, i) => {
 		setState("techniques", i, "active", false);
@@ -77,6 +79,7 @@ export const endTurn = () => {
 	dealTargetDamage();
 	dealAreaDamage();
 	setState("mana", (mana) => mana - tickMana());
+	setState("maxMana", (mana) => mana + manaGainFromTechniques());
 	toast("Damage dealt");
 	setState("combat", "turn", 1);
 	state.techniques.forEach((e, i) => {

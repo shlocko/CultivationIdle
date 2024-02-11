@@ -251,6 +251,17 @@ export const damageToArea = createMemo(() => {
 	return count;
 });
 
+export const manaGainFromTechniques = createMemo(() => {
+	let count = 0;
+	state.techniques.forEach((e, i) => {
+		if (e.active || e.onGoing) {
+			let multiplier = effectMultiplier(e.multiplier);
+			count += 1.2 * multiplier;
+		}
+	});
+	return count;
+});
+
 export const [combatState, setCombatState] = createStore({
 	opponents: [] as Enemy[],
 	activeEnemy: 0,

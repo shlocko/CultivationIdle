@@ -16,6 +16,7 @@ import {
 	combatState,
 	damageToArea,
 	damageToTarget,
+	manaGainFromTechniques,
 	opponent,
 	resetActiveTechniques,
 	setAction,
@@ -79,6 +80,7 @@ export const Combat: Component = () => {
 					<p> Mana per turn: {tickMana().toFixed(2)} </p>
 					<p> Damage to target: {damageToTarget()} </p>
 					<p> Damage to area: {damageToArea()} </p>
+					<p> Max Mana Gain: {manaGainFromTechniques()} </p>
 					<div class={styles.action_container}>
 						<div class={styles.action_col}></div>
 						<div class={styles.action_col}>
