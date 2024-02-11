@@ -11,6 +11,7 @@ import {
 } from "solid-js";
 import {
 	Aspect,
+	LootCollection,
 	LootTable,
 	Technique,
 	aspects,
@@ -81,7 +82,7 @@ export const sendAspectChoice = () => {
 	setState("modalMessages", arr);
 };
 
-export const sendLoot = (loot: LootTable) => {
+export const sendLoot = (loot: LootCollection) => {
 	const msg = {
 		type: "Loot",
 		loot: loot,
@@ -291,37 +292,51 @@ export const ModalChooseAspect: Component = () => {
 	);
 };
 
-export const ModalLoot: Component<{ loot: LootTable }> = (props) => {
+export const ModalLoot: Component<{ loot: LootCollection }> = (props) => {
 	const [loot, setLoot] = createStore(props.loot.slice(0));
 	return (
 		<div class={utils.container}>
 			<p> Loot: </p>
 			<For each={loot}>
 				{(item, i) => {
-					const chanceRoll = Math.floor(Math.random() * 100) + 1;
-					setLoot(i(), "show", chanceRoll <= item.chance);
-					const quantity =
-						Math.floor(Math.random() * (item.max - item.min + 1)) +
-						item.min;
-					return (
-						<Show when={item.show}>
+					if (item) {
+						return (
 							<button
 								class={utils.btn}
 								onClick={() => {
-									inventoryAdd(item.name, quantity);
-									toast(`${quantity} ${item.name} added`);
-									setLoot(i(), "show", false);
+									inventoryAdd(item.name, item.count);
+									toast(`${item.count} ${item.name} added`);
+									let newLoot = loot.slice();
+									newLoot.splice(i(), 1);
+									setLoot(newLoot);
 								}}
 							>
 								<p>
 									{" "}
-									{quantity} {item.name}{" "}
+									{item.count} {item.name}{" "}
 								</p>
 							</button>
-						</Show>
-					);
+						);
+					}
 				}}
 			</For>
+			<button
+				class={utils.btn}
+				onClick={() => {
+					console.log(loot);
+					loot.forEach((item) => {
+						if (item) {
+							inventoryAdd(item.name, item.count);
+							toast(`${item.count} ${item.name} added`);
+						}
+					});
+					const arr = state.modalMessages.slice();
+					arr.shift();
+					setState("modalMessages", arr);
+				}}
+			>
+				<p>Loot All</p>
+			</button>
 			<button
 				class={utils.btn}
 				onClick={() => {
@@ -398,5 +413,5 @@ export interface ChooseMeditationTechniqueModal {
 
 export interface LootModal {
 	type: "Loot";
-	loot: LootTable;
+	loot: LootCollection;
 }

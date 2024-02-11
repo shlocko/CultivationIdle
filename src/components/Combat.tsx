@@ -11,11 +11,11 @@ import utils from "../styles/utils.module.css";
 import { Template } from "./Template";
 import {
 	activeTechniqueCount,
+	changeState,
 	clearNotOngoing,
 	combatState,
 	damageToArea,
 	damageToTarget,
-	findFight,
 	opponent,
 	resetActiveTechniques,
 	setAction,
@@ -30,11 +30,10 @@ import { sendModal } from "../state/modalMessages";
 import styles from "../styles/Combat.module.css";
 import { endTurn, enemyTurn } from "../functions/combatMethods";
 
-export const [choice, setChoice] = createSignal(-1);
+export const [actionChoice, setActionChoice] = createSignal(-1);
 export const Combat: Component = () => {
 	return (
 		<>
-			<p> You are fighting a {opponent.name}! </p>
 			<For each={combatState.opponents}>
 				{(item, i) => (
 					<>
@@ -76,10 +75,7 @@ export const Combat: Component = () => {
 				</Match>
 				<Match when={state.combat.turn === 0}>
 					<h2> Your Turn </h2>
-					<p class={utils.top_auto}>
-						{" "}
-						Opponent: {opponent.health} HP.{" "}
-					</p>
+					<p class={utils.top_auto}> </p>
 					<p> Mana per turn: {tickMana().toFixed(2)} </p>
 					<p> Damage to target: {damageToTarget()} </p>
 					<p> Damage to area: {damageToArea()} </p>
@@ -127,7 +123,7 @@ export const Combat: Component = () => {
 														);
 													}
 												}
-												setChoice(-1);
+												setActionChoice(-1);
 											}}
 										>
 											{item.name} x{item.multiplier}
@@ -168,10 +164,10 @@ export const Combat: Component = () => {
 							<button
 								classList={{
 									[utils.btn]: true,
-									[utils.btn_active]: choice() === 1,
+									[utils.btn_active]: actionChoice() === 1,
 								}}
 								onClick={() => {
-									setChoice(1);
+									setActionChoice(1);
 									clearNotOngoing();
 								}}
 							>
@@ -180,10 +176,10 @@ export const Combat: Component = () => {
 							<button
 								classList={{
 									[utils.btn]: true,
-									[utils.btn_active]: choice() === 2,
+									[utils.btn_active]: actionChoice() === 2,
 								}}
 								onClick={() => {
-									setChoice(2);
+									setActionChoice(2);
 									clearNotOngoing();
 								}}
 							>
@@ -192,10 +188,10 @@ export const Combat: Component = () => {
 							<button
 								classList={{
 									[utils.btn]: true,
-									[utils.btn_active]: choice() === 3,
+									[utils.btn_active]: actionChoice() === 3,
 								}}
 								onClick={() => {
-									setChoice(3);
+									setActionChoice(3);
 									clearNotOngoing();
 								}}
 							>
@@ -218,6 +214,15 @@ export const Combat: Component = () => {
 					</button>
 				</Match>
 			</Switch>
+			<button
+				class={utils.btn}
+				onClick={() => {
+					changeState("Tick");
+					setAction("Meditate");
+				}}
+			>
+				Flee
+			</button>
 		</>
 	);
 };

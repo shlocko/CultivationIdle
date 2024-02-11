@@ -1,5 +1,5 @@
 import { from } from "solid-js";
-import { choice } from "../components/Combat";
+import { actionChoice } from "../components/Combat";
 import {
 	sendAspectChoice,
 	sendLoot,
@@ -18,7 +18,6 @@ import {
 	advance,
 	meditationTechniques,
 	setAction,
-	findFight,
 	tickMana,
 	addCoins,
 	hasItem,
@@ -31,7 +30,7 @@ import {
 	techniqueEffects,
 	useTechnique,
 } from "./techniqueMethods";
-import { beginnerArea } from "../state/events";
+import { beginnerArea } from "../state/beginnerArea";
 import { enemyList } from "../state/enemies";
 import { effectMultiplier } from "./combatMethods";
 //import { advancementMethods } from "./advanceMethods";
@@ -97,95 +96,88 @@ export const meditateTick = () => {
 };
 
 // To be entiruely reworked
-export const combatTick = () => {
-	setPause(true);
-	console.log(enemyList);
-	if (opponent.health <= 0 || !opponent.alive) {
-		setOpponent("health", 0);
-		setOpponent("alive", false);
-		sendLoot(opponent.loot);
-		addCoins(opponent.coinMin, opponent.coinMax);
-		setState("action", state.previousAction);
-		state.techniques.forEach((e, i) => {
-			setState("techniques", i, "active", false);
-			setState("techniques", i, "onGoing", false);
-		});
-		setPause(false);
-	} else if (state.health <= 0) {
-		sendModal("You lost! Meditate on your failures, and try again!");
-		setState("action", "Meditate");
-		setPause(false);
-	} else {
-		if (state.combat.turn === 0) {
-			setState("weaponDamageBuff", 0);
-			state.techniques.forEach((e, i) => {
-				if (e.onGoing) {
-					setState(
-						"maxMana",
-						(m) => m + 0.3 * effectMultiplier(e.multiplier),
-					);
-					console.log("ongoing");
-					useTechnique(e);
-				}
-			});
-			if (choice() === -1) {
-				state.techniques.forEach((e, i) => {
-					if (e.active) {
-						setState(
-							"maxMana",
-							(m) => m + 0.3 * effectMultiplier(e.multiplier),
-						);
-						//setState("mana", (m) => m - tickMana());
-						console.log(e.effect);
-						useTechnique(e);
-						setState("techniques", i, "active", false);
-					}
-				});
-			} else if (choice() >= 0) {
-				switch (choice()) {
-					case 1:
-						if (hasItem("Health Potion")) {
-							inventoryRemoveQuantity("Health Potion", 1);
-							setState("health", (h) => h + 10);
-						}
-						break;
-					case 2:
-						if (hasItem("Mana Potion")) {
-							inventoryRemoveQuantity("Mana Potion", 1);
-							setState("mana", (h) => h + 20);
-						}
-						break;
-					case 3:
-						const buff = state.weaponDamageBuff;
-						console.log(`buff: ${buff}`);
-						setOpponent("health", (h) => h - (5 + buff));
-						setState("weaponDamageBuff", 0);
-						break;
-				}
-			}
-			setState("combat", "turn", 1);
-		} else if (state.combat.turn === 1) {
-			setState("health", (hp) => hp - opponent.damage);
-			setState("combat", "turn", 0);
-		} else {
-			setState("combat", "turn", 0);
-		}
-	}
-};
+/* export const combatTick = () => {
+    setPause(true);
+    console.log(enemyList);
+    if (opponent.health <= 0 || !opponent.alive) {
+        setOpponent("health", 0);
+        setOpponent("alive", false);
+        sendLoot(opponent.loot);
+        addCoins(opponent.coinMin, opponent.coinMax);
+        setState("action", state.previousAction);
+        state.techniques.forEach((e, i) => {
+            setState("techniques", i, "active", false);
+            setState("techniques", i, "onGoing", false);
+        });
+        setPause(false);
+    } else if (state.health <= 0) {
+        sendModal("You lost! Meditate on your failures, and try again!");
+        setState("action", "Meditate");
+        setPause(false);
+    } else {
+        if (state.combat.turn === 0) {
+            setState("weaponDamageBuff", 0);
+            state.techniques.forEach((e, i) => {
+                if (e.onGoing) {
+                    setState(
+                        "maxMana",
+                        (m) => m + 0.3 * effectMultiplier(e.multiplier),
+                    );
+                    console.log("ongoing");
+                    useTechnique(e);
+                }
+            });
+            if (choice() === -1) {
+                state.techniques.forEach((e, i) => {
+                    if (e.active) {
+                        setState(
+                            "maxMana",
+                            (m) => m + 0.3 * effectMultiplier(e.multiplier),
+                        );
+                        //setState("mana", (m) => m - tickMana());
+                        console.log(e.effect);
+                        useTechnique(e);
+                        setState("techniques", i, "active", false);
+                    }
+                });
+            } else if (choice() >= 0) {
+                switch (choice()) {
+                    case 1:
+                        if (hasItem("Health Potion")) {
+                            inventoryRemoveQuantity("Health Potion", 1);
+                            setState("health", (h) => h + 10);
+                        }
+                        break;
+                    case 2:
+                        if (hasItem("Mana Potion")) {
+                            inventoryRemoveQuantity("Mana Potion", 1);
+                            setState("mana", (h) => h + 20);
+                        }
+                        break;
+                    case 3:
+                        const buff = state.weaponDamageBuff;
+                        console.log(`buff: ${buff}`);
+                        setOpponent("health", (h) => h - (5 + buff));
+                        setState("weaponDamageBuff", 0);
+                        break;
+                }
+            }
+            setState("combat", "turn", 1);
+        } else if (state.combat.turn === 1) {
+            setState("health", (hp) => hp - opponent.damage);
+            setState("combat", "turn", 0);
+        } else {
+            setState("combat", "turn", 0);
+        }
+    }
+};*/
 
 export const adventureTick = () => {
 	console.log("adventure");
 	const eventRoll = Math.random() * 100 + 1;
 	console.log(eventRoll);
 	if (state.adventure.area === "BeginnerArea") {
-		if (eventRoll >= 90) {
-			const pick = Math.floor(
-				Math.random() * beginnerArea.uncommonEvents.length,
-			);
-			if (beginnerArea.rareEvents[pick].isUnlocked()) {
-				beginnerArea.rareEvents[pick].activation();
-			}
-		} else if (eventRoll >= 80) {
+		if (eventRoll >= 80) {
 			const pick = Math.floor(
 				Math.random() * beginnerArea.uncommonEvents.length,
 			);

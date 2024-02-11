@@ -17,6 +17,8 @@ import { QuickInfo } from "./QuickInfo";
 import { Toaster } from "solid-toast";
 import { perTick } from "../functions/tickMethods";
 import { cloneDeep } from "lodash";
+import { pickLoot } from "../functions/combatMethods";
+import { sendLoot } from "../state/modalMessages";
 
 export const Template: Component<{ children: JSXElement }> = (props) => {
 	const [saveTimer, setSaveTimer] = createSignal(0);
@@ -47,15 +49,11 @@ export const Template: Component<{ children: JSXElement }> = (props) => {
 				// ignore
 			}
 		} else if (state.state === "Combat") {
-			combatState.opponents.forEach((e, i) => {
-				if (e.health <= 0) {
-					setCombatState("opponents", (opponents) =>
-						opponents.filter((opponent) => opponent.health > 0),
-					);
-				}
-			});
+			setCombatState("opponents", (opponents) =>
+				opponents.filter((opponent) => opponent.health > 0),
+			);
 			if (combatState.opponents.length === 0) {
-				console.log(`zero ${combatState.opponents.length}`);
+				sendLoot(pickLoot(combatState.loot));
 				changeState(combatState.returnState);
 			}
 		}

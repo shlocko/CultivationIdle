@@ -1,6 +1,8 @@
 import { cloneDeep } from "lodash";
 import { Enemies, Enemy, enemyList } from "../state/enemies";
 import {
+	LootCollection,
+	LootTable,
 	State,
 	changeState,
 	combatState,
@@ -10,6 +12,7 @@ import {
 	setOpponent,
 	setState,
 	state,
+	tickMana,
 } from "../state/store";
 import toast from "solid-toast";
 
@@ -33,14 +36,36 @@ const dealAreaDamage = () => {
 	});
 };
 
-export const init = (enemies: Enemies[]) => {
+export const pickLoot = (table: LootTable): LootCollection => {
+	let collection = table.map((item) => {
+		let roll = Math.random() * 100 + 1;
+		if (roll >= item.chance) {
+			let amt =
+				Math.floor(Math.random() * (item.max - item.min + 1)) +
+				item.min;
+			return { name: item.name, count: amt! };
+		}
+	});
+	collection = collection.filter((item) => item !== null);
+	return collection as LootCollection;
+};
+
+export const init = (
+	enemies: Enemies[],
+	loot: LootTable,
+	coinMin: number,
+	coinMax: number,
+) => {
 	let arr = [] as Enemy[];
 	enemies.forEach((e, i) => {
 		arr.push(cloneDeep(enemyList[e]));
 	});
 	setCombatState("opponents", arr);
 	setCombatState("returnState", state.state);
-	console.log(combatState.opponents[combatState.activeEnemy]);
+	setCombatState("loot", loot);
+	setCombatState("coinMin", coinMin);
+	setCombatState("coinMax", coinMax);
+	setCombatState("returnState", state.state);
 	changeState("Combat");
 	state.techniques.forEach((e, i) => {
 		setState("techniques", i, "active", false);
@@ -51,6 +76,7 @@ export const init = (enemies: Enemies[]) => {
 export const endTurn = () => {
 	dealTargetDamage();
 	dealAreaDamage();
+	setState("mana", (mana) => mana - tickMana());
 	toast("Damage dealt");
 	setState("combat", "turn", 1);
 	state.techniques.forEach((e, i) => {
@@ -64,6 +90,8 @@ export const endTurn = () => {
 };
 
 export const enemyTurn = () => {
-	setState("health", (hp) => hp - 5);
+	combatState.opponents.forEach((e) => {
+		setState("health", (hp) => hp - e.damage);
+	});
 	setState("combat", "turn", 0);
 };

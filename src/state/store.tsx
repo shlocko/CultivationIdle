@@ -2,7 +2,6 @@ import { createSignal, createMemo, JSXElement } from "solid-js";
 import { createStore } from "solid-js/store";
 import {
 	adventureTick,
-	combatTick,
 	meditateTick,
 	trainTick,
 } from "../functions/tickMethods";
@@ -20,6 +19,7 @@ import {
 import { Enemy, enemyList } from "./enemies";
 import { cloneDeep } from "lodash";
 import { effectMultiplier } from "../functions/combatMethods";
+import { actionChoice } from "../components/Combat";
 
 type Action = "Meditate" | "Train" | "Combat" | "Adventure";
 
@@ -139,8 +139,12 @@ export type LootTable = {
 	chance: number;
 	min: number;
 	max: number;
-	show: boolean;
 }[];
+
+export type LootCollection = Array<{
+	name: Item;
+	count: number;
+}>;
 
 export type Area = "BeginnerArea" | "SecondArea";
 
@@ -229,6 +233,9 @@ export const damageToTarget = createMemo(() => {
 			}
 		}
 	});
+	if (actionChoice() === 3) {
+		count += 3;
+	}
 	return count;
 });
 
@@ -247,6 +254,9 @@ export const damageToArea = createMemo(() => {
 export const [combatState, setCombatState] = createStore({
 	opponents: [] as Enemy[],
 	activeEnemy: 0,
+	loot: [] as LootTable,
+	coinMin: 0,
+	coinMax: 0,
 	returnState: "Tick" as State,
 });
 
@@ -389,19 +399,6 @@ export const setAction = (action: Action) => {
 	setState("previousAction", state.action);
 	setState("action", action);
 	setPause(false);
-};
-
-export const findFight = (enemy: Enemy) => {
-	setOpponent({
-		alive: true,
-		health: enemy.health,
-		damage: enemy.damage,
-		name: enemy.name,
-		loot: enemy.loot,
-		coinMax: enemy.coinMax,
-		coinMin: enemy.coinMin,
-	});
-	setState("combat", "turn", -1);
 };
 
 export const resetActiveTechniques = () => {

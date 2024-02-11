@@ -1,13 +1,21 @@
 import { type Component, createSignal, Show } from "solid-js";
 import utils from "../styles/utils.module.css";
 import { Template } from "./Template";
-import { setAction, setState, state } from "../state/store";
+import { LootTable, setAction, setState, state } from "../state/store";
 import { sendModal } from "../state/modalMessages";
 import styles from "../styles/Combat.module.css";
 import { Combat } from "./Combat";
 import { init } from "../functions/combatMethods";
 
 export const Adventure: Component = () => {
+	let testTable: LootTable = [
+		{
+			name: "Health Potion",
+			min: 1,
+			max: 5,
+			chance: 50,
+		},
+	];
 	return (
 		<>
 			<Template>
@@ -19,14 +27,7 @@ export const Adventure: Component = () => {
 					<button
 						class={(utils.btn, utils.top_auto)}
 						onClick={() => {
-							init([
-								"bandit",
-								"bandit",
-								"bandit",
-								"bear",
-								"bear",
-								"waderingKnight",
-							]);
+							init(["bandit", "bear"], testTable, 10, 100);
 						}}
 					>
 						<p>test</p>
