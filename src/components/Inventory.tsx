@@ -3,6 +3,7 @@ import { Template } from "./Template";
 import { state, inventoryRemove, inventoryAdd } from "../state/store";
 import utils from "../styles/utils.module.css";
 import toast from "solid-toast";
+import { ItemNames } from "../state/items";
 
 export const Inventory: Component = () => {
 	return (
@@ -14,14 +15,16 @@ export const Inventory: Component = () => {
 						<>
 							<p>
 								{" "}
-								{item.item} x {item.quantity}
+								{item.item.name} x {item.quantity}
 							</p>
 							<button
 								class={utils.btn}
 								onClick={() => {
-									inventoryRemove(item.item);
+									inventoryRemove(
+										item.item.name as ItemNames,
+									);
 									toast(
-										`${item.quantity} ${item.item} removed`,
+										`${item.quantity} ${item.item.name} removed`,
 									);
 								}}
 							>
@@ -39,10 +42,10 @@ export const Inventory: Component = () => {
 				</button>
 				<button
 					onClick={() => {
-						inventoryAdd("Iron Bar", 3);
+						inventoryAdd("Dagger", 1);
 					}}
 				>
-					Add 3 Iron Bar
+					Add Dagger
 				</button>
 				<div class={utils.top_auto} />
 			</Template>

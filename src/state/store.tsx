@@ -20,6 +20,7 @@ import { Enemy, enemyList } from "./enemies";
 import { cloneDeep } from "lodash";
 import { effectMultiplier } from "../functions/combatMethods";
 import { actionChoice } from "../components/Combat";
+import { ItemNames, items } from "./items";
 
 type Action = "Meditate" | "Train" | "Combat" | "Adventure";
 
@@ -123,16 +124,25 @@ export const meditationTechniques: meditationTechnique[] = [
 // items
 //********************************************************
 
-export type Item =
-	| "Health Potion"
-	| "Mana Potion"
-	| "Herb"
-	| "Iron Bar"
-	| "Sword"
-	| "Berry"
-	| "Fireroot"
-	| "Blueleaf"
-	| "Glass Bottle";
+export type ItemType = "consumable" | "weapon" | "material";
+
+export type Weapon = {
+	name: string;
+	type: "weapon";
+	damage: number;
+};
+
+export type Consumable = {
+	name: string;
+	type: "consumable";
+};
+
+export type Material = {
+	name: string;
+	type: "material";
+};
+
+export type Item = Weapon | Material | Consumable;
 
 export type LootTable = {
 	name: Item;
@@ -203,10 +213,19 @@ export const [state, setState] = createStore({
 	health: 20,
 	// Player's inventory, item name - item count
 	inventory: [
-		{ item: "Health Potion", quantity: 1 },
-		{ item: "Mana Potion", quantity: 3 },
-		{ item: "Herb", quantity: 4 },
-	] as { item: Item; quantity: number }[],
+		{ item: items["Health Potion"], quantity: 3 },
+		{
+			item: items["Mana Potion"],
+			quantity: 3,
+		},
+		{
+			item: items["Sword"],
+			quantity: 1,
+		},
+	] as {
+		item: Item;
+		quantity: number;
+	}[],
 	inventoryCapacity: 20,
 	coins: 0,
 	// Queue of modal's to appear
@@ -223,6 +242,8 @@ export const changeState = (newState: State) => {
 //********************************************************
 // Combat State
 //********************************************************
+
+export type combatAction = "technique" | "item" | "weapon";
 
 export const damageToTarget = createMemo(() => {
 	let count = 0;
@@ -265,6 +286,7 @@ export const manaGainFromTechniques = createMemo(() => {
 export const [combatState, setCombatState] = createStore({
 	opponents: [] as Enemy[],
 	activeEnemy: 0,
+	action: 0,
 	loot: [] as LootTable,
 	coinMin: 0,
 	coinMax: 0,
@@ -311,28 +333,28 @@ export const maxHealth = () => {
 	return state.rank * 10;
 };
 
-export const hasItem = (item: Item) => {
+export const hasItem = (item: ItemNames) => {
 	let has = false;
 	state.inventory.forEach((e) => {
-		if (e.item === item) {
+		if (e.item.name === item) {
 			has = true;
 		}
 	});
 	return has;
 };
 
-export const howManyOfItem = (item: Item) => {
+export const howManyOfItem = (item: ItemNames) => {
 	let count = 0;
 	state.inventory.forEach((e) => {
-		if (e.item === item) {
+		if (e.item.name === item) {
 			count = e.quantity;
 		}
 	});
 };
 
-export const inventoryRemove = (item: Item) => {
+export const inventoryRemove = (item: ItemNames) => {
 	state.inventory.forEach((e, i) => {
-		if (e.item === item) {
+		if (e.item.name === item) {
 			const arr = state.inventory.slice();
 			arr.splice(i, 1);
 			setState("inventory", arr);
@@ -340,12 +362,12 @@ export const inventoryRemove = (item: Item) => {
 	});
 };
 
-export const inventoryRemoveQuantity = (item: Item, quantity: number) => {
+export const inventoryRemoveQuantity = (item: ItemNames, quantity: number) => {
 	state.inventory.forEach((e, i) => {
-		if (e.item === item) {
+		if (e.item.name === item) {
 			setState("inventory", i, "quantity", (q) => q - quantity);
 			if (state.inventory[i].quantity <= 0) {
-				inventoryRemove(e.item);
+				inventoryRemove(e.item.name);
 			}
 		}
 	});
@@ -355,13 +377,13 @@ export const inventoryAtCapacity = () => {
 	return state.inventory.length > state.inventoryCapacity;
 };
 
-export const inventoryAdd = (item: Item, quantity: number) => {
+export const inventoryAdd = (item: ItemNames, quantity: number) => {
 	const arr = state.inventory.slice();
 	if (hasItem(item)) {
-		const index = arr.findIndex((e) => e.item === item);
+		const index = arr.findIndex((e) => e.item.name === item);
 		setState("inventory", index, "quantity", (num) => num + quantity);
 	} else {
-		arr.push({ item: item, quantity: quantity });
+		arr.push({ item: items[item] as Item, quantity: quantity });
 		setState("inventory", arr);
 	}
 };
