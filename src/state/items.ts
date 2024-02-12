@@ -1,10 +1,6 @@
 import { Item } from "./store";
 
-type Items = {
-	[key: string]: Item;
-};
-
-export const items: Items = {
+export const items: Record<string, Item> = {
 	// Materials
 	Herb: {
 		name: "Herb",

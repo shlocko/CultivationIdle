@@ -1,39 +1,20 @@
-import { from } from "solid-js";
-import { actionChoice } from "../components/Combat";
 import {
 	sendAspectChoice,
-	sendLoot,
 	sendMeditationTechniqueChoice,
 	sendModal,
 	sendTechniqueChoice,
 } from "../state/modalMessages";
 import {
-	setPause,
 	setState,
 	state,
 	opponent,
 	setOpponent,
 	canAdvance,
-	rankInfo,
 	advance,
-	meditationTechniques,
-	setAction,
-	tickMana,
-	addCoins,
-	hasItem,
-	inventoryRemove,
-	inventoryRemoveQuantity,
 	maxHealth,
 } from "../state/store";
-import {
-	meditationTechniqueEffect,
-	techniqueEffects,
-	useTechnique,
-} from "./techniqueMethods";
+import { meditationTechniqueEffect } from "./techniqueMethods";
 import { beginnerArea } from "../state/beginnerArea";
-import { enemyList } from "../state/enemies";
-import { effectMultiplier } from "./combatMethods";
-//import { advancementMethods } from "./advanceMethods";
 
 // Happens every tick
 export const perTick = () => {
@@ -177,25 +158,35 @@ export const adventureTick = () => {
 	const eventRoll = Math.random() * 100 + 1;
 	console.log(eventRoll);
 	if (state.adventure.area === "BeginnerArea") {
-		if (eventRoll >= 80) {
+		if (eventRoll >= 95) {
+			const pick = Math.floor(
+				Math.random() * beginnerArea.rareEvents.length,
+			);
+			if (beginnerArea.rareEvents[pick].isUnlocked()) {
+				sendModal(
+					`You encounter ${beginnerArea.rareEvents[pick].name}!`,
+				);
+				beginnerArea.rareEvents[pick].activation();
+			}
+		} else if (eventRoll >= 80) {
 			const pick = Math.floor(
 				Math.random() * beginnerArea.uncommonEvents.length,
 			);
 			if (beginnerArea.uncommonEvents[pick].isUnlocked()) {
-				beginnerArea.uncommonEvents[pick].activation();
 				sendModal(
-					`You encounter a ${beginnerArea.uncommonEvents[pick].name}!`,
+					`You encounter ${beginnerArea.uncommonEvents[pick].name}!`,
 				);
+				beginnerArea.uncommonEvents[pick].activation();
 			}
-		} else if (eventRoll >= 50) {
+		} else if (eventRoll >= 30) {
 			const pick = Math.floor(
 				Math.random() * beginnerArea.commonEvents.length,
 			);
 			if (beginnerArea.commonEvents[pick].isUnlocked()) {
-				beginnerArea.commonEvents[pick].activation();
 				sendModal(
-					`You encounter a ${beginnerArea.commonEvents[pick].name}!`,
+					`You encounter ${beginnerArea.commonEvents[pick].name}!`,
 				);
+				beginnerArea.commonEvents[pick].activation();
 			}
 		}
 	}

@@ -84,7 +84,7 @@ export const techniqueEffects = {
 export const meditationTechniqueEffect = {
 	manaregen: (level: number) => {
 		if (state.mana < state.maxMana) {
-			setState("mana", (m) => m + 4 * level);
+			setState("mana", (m) => m + Math.pow(2, level));
 		}
 	},
 	healthregen: (level: number) => {

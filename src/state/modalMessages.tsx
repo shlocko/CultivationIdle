@@ -176,6 +176,7 @@ export const ModalChooseTechnique: Component = () => {
 export const ModalChooseMeditationTechnique: Component = () => {
 	const [choice, setChoice] = createSignal(-1);
 	const techniqueList = meditationTechniques;
+	console.log(state.meditationTechniques);
 	return (
 		<>
 			<p> Choose </p>
@@ -198,7 +199,16 @@ export const ModalChooseMeditationTechnique: Component = () => {
 								)}
 							>
 								<p>
-									Upgrade: {item.level} =&gt {item.level + 1}
+									Upgrade:{" "}
+									{
+										state.meditationTechniques.find(
+											(e) => e.name === item.name,
+										)!.level
+									}{" "}
+									=&gt
+									{state.meditationTechniques.find(
+										(e) => e.name === item.name,
+									)!.level + 1}{" "}
 								</p>
 							</Show>
 							<p>{item.name}</p>

@@ -1,8 +1,8 @@
-import { init } from "../functions/combatMethods";
+import { init, pickLoot } from "../functions/combatMethods";
 import { Enemies } from "./enemies";
 import { Event } from "./events";
-import { sendModal } from "./modalMessages";
-import { Item, lootEntry, setAction, setState, state } from "./store";
+import { ModalMessage, sendLoot, sendModal } from "./modalMessages";
+import { Item, addCoins, lootEntry, setAction, setState, state } from "./store";
 import { items } from "./items";
 
 export const beginnerArea = {
@@ -20,6 +20,22 @@ export const beginnerArea = {
 					],
 					10,
 					100,
+				);
+			},
+		} as Event,
+		{
+			name: "a couple goblins",
+			isUnlocked: () => state.rank >= 1,
+			activation: () => {
+				init(
+					["goblin", "goblin"],
+					[
+						lootEntry("Health Potion", 50, 1, 5),
+						lootEntry("Mana Potion", 50, 1, 5),
+						lootEntry("Dagger", 10, 1, 1),
+					],
+					40,
+					150,
 				);
 			},
 		} as Event,
@@ -74,5 +90,20 @@ export const beginnerArea = {
 			},
 		} as Event,
 	],
-	rareEvents: [],
+	rareEvents: [
+		{
+			name: "a small cache of loot",
+			isUnlocked: () => true,
+			activation: () => {
+				addCoins(100, 1000);
+				sendLoot(
+					pickLoot([
+						lootEntry("Health Potion", 70, 1, 3),
+						lootEntry("Mana Potion", 70, 1, 3),
+						lootEntry("Herb", 100, 1, 10),
+					]),
+				);
+			},
+		},
+	],
 };
