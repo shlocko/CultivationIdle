@@ -86,6 +86,18 @@ export const endTurn = () => {
 		if (e.active && e.continuous) {
 			setState("techniques", i, "onGoing", true);
 		}
+		if (e.effect === "buildingPhysicalBonus") {
+			if (e.active || e.onGoing) {
+				setState(
+					"techniques",
+					i,
+					"aggregateEffect",
+					(ae) => ae + e.magnitude * effectMultiplier(e.multiplier),
+				);
+			} else {
+				setState("techniques", i, "aggregateEffect", 0);
+			}
+		}
 	});
 	state.techniques.forEach((e, i) => {
 		setState("techniques", i, "active", false);

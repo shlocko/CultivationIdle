@@ -82,6 +82,7 @@ export interface Technique {
 	currentCost: number;
 	minCost: number;
 	magnitude: number;
+	aggregateEffect: number;
 	effect: undefined | EffectType;
 	customEffect: undefined | keyof typeof techniqueCustomEffect;
 	onGoing: boolean; // whether the technique is an ongoing effect vs a one time use
@@ -189,7 +190,7 @@ export const [opponent, setOpponent] = createStore(cloneDeep(enemyList.bandit));
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
 	// State version for ensuring compatibility with save data
-	version: 7,
+	version: 8,
 	// State machine state
 	state: "Tick" as State,
 	previousState: "Tick" as State,
@@ -203,6 +204,7 @@ export const [state, setState] = createStore({
 	combat: {
 		tickSpeed: 0.0001,
 		turn: 0,
+		dodgeChance: 0,
 	},
 	adventure: {
 		tickSpeed: 1,
@@ -266,18 +268,25 @@ export const changeState = (newState: State) => {
 export type combatAction = "technique" | "item" | "weapon";
 
 export const damageToTarget = createMemo(() => {
-	let count = 0;
+	let damageCount = 0;
+	let physicalBonus = 0;
 	state.techniques.forEach((e, i) => {
 		if (e.active || e.onGoing) {
 			if (e.effect === "damage") {
-				count += e.magnitude * effectMultiplier(e.multiplier);
+				damageCount += e.magnitude * effectMultiplier(e.multiplier);
+			} else if (e.effect === "buildingPhysicalBonus") {
+				physicalBonus += e.aggregateEffect;
+			} else if (e.effect === "enhanceWeapon") {
+				physicalBonus += e.magnitude * effectMultiplier(e.multiplier);
 			}
 		}
 	});
+
+	console.log(`physical bonus: ${physicalBonus}`);
 	if (actionChoice() === 3) {
-		count += 3;
+		damageCount += 3 + physicalBonus;
 	}
-	return count;
+	return damageCount;
 });
 
 export const damageToArea = createMemo(() => {
