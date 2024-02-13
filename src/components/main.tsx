@@ -16,34 +16,32 @@ import { init } from "../functions/combatMethods";
 export const Main: Component = () => {
 	return (
 		<>
-			<Template>
-				<Show when={!state.aspect && state.rank >= 1}>
-					<ChooseAspect />
-				</Show>
-				<For each={state.meditationTechniques}>
-					{(item, i) => (
-						<button
-							classList={{
-								[utils.btn]: true,
-								[utils.btn_active]:
-									i() === state.activeMeditationTechnique,
-							}}
-							onClick={() => {
-								setState("activeMeditationTechnique", i());
-							}}
-						>
-							<p> {item.name} </p>
-						</button>
-					)}
-				</For>
+			<Show when={!state.aspect && state.rank >= 1}>
+				<ChooseAspect />
+			</Show>
+			<For each={state.meditationTechniques}>
+				{(item, i) => (
+					<button
+						classList={{
+							[utils.btn]: true,
+							[utils.btn_active]:
+								i() === state.activeMeditationTechnique,
+						}}
+						onClick={() => {
+							setState("activeMeditationTechnique", i());
+						}}
+					>
+						<p> {item.name} </p>
+					</button>
+				)}
+			</For>
 
-				<button
-					class={(utils.btn, utils.top_auto)}
-					onClick={() => setAction("Meditate")}
-				>
-					<p>Meditate</p>
-				</button>
-			</Template>
+			<button
+				class={(utils.btn, utils.top_auto)}
+				onClick={() => setAction("Meditate")}
+			>
+				<p>Meditate</p>
+			</button>
 		</>
 	);
 };

@@ -10,16 +10,10 @@ import {
 	onMount,
 } from "solid-js";
 import {
-	Aspect,
 	LootCollection,
-	LootTable,
-	Technique,
 	aspects,
 	inventoryAdd,
-	meditationTechnique,
 	meditationTechniques,
-	opponent,
-	setOpponent,
 	setState,
 	state,
 } from "./store";
@@ -99,11 +93,14 @@ export const testModalList = <T extends { name: string }>(arr: T[]) => {
 };
 
 export const ModalText: Component = () => {
-	const text = (state.modalMessages[0] as TextModal).content;
+	const text = createMemo(
+		() => (state.modalMessages[0] as TextModal).content,
+	);
+	console.log(text);
 
 	return (
 		<>
-			<p> {text} </p>
+			<p> {text()} </p>
 			<button
 				class={utils.btn}
 				onClick={() => {

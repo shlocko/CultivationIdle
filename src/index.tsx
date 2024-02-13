@@ -13,6 +13,8 @@ import { state, setState, setPause } from "./state/store";
 import { ModalMessage } from "./state/modalMessages";
 import { Shop } from "./components/Shop";
 import { Adventure } from "./components/Adventure";
+import { Template } from "./components/Template";
+import utils from "./styles/utils.module.css";
 
 const root = document.getElementById("root");
 
@@ -24,7 +26,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(
 	() => (
-		<>
+		<div class={utils.max}>
 			<Toaster />
 			<Modal
 				isOpen={
@@ -36,14 +38,14 @@ render(
 			>
 				<ModalMessage />
 			</Modal>
-			<HashRouter base="/">
+			<HashRouter root={Template} base="/">
 				<Route path="/" component={Main} />
 				<Route path="/train" component={Train} />
 				<Route path="/adventure" component={Adventure} />
 				<Route path="/inventory" component={Inventory} />
 				<Route path="/shop" component={Shop} />
 			</HashRouter>
-		</>
+		</div>
 	),
 	root!,
 );

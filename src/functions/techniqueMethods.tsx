@@ -24,7 +24,8 @@ export type EffectType =
 	| "enhanceWeapon"
 	| "buildingPhysicalBonus"
 	| "thorns"
-	| "increasingTargetCountDamage";
+	| "increasingTargetCountDamage"
+	| "increasingTargetCountCloneWeapon";
 
 // Old and to be removed
 /*export const techniqueEffects = {

@@ -1,4 +1,4 @@
-import { createSignal, createMemo, JSXElement } from "solid-js";
+import { createSignal, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
 import {
 	adventureTick,
@@ -6,12 +6,7 @@ import {
 	trainTick,
 } from "../functions/tickMethods";
 import toast from "solid-toast";
-import {
-	ChooseModalState,
-	ModalMessageType,
-	TextModal,
-	sendModal,
-} from "./modalMessages";
+import { ModalMessageType, sendModal } from "./modalMessages";
 import {
 	EffectType,
 	techniqueCustomEffect,
@@ -21,8 +16,9 @@ import { cloneDeep } from "lodash";
 import { effectMultiplier } from "../functions/combatMethods";
 import { actionChoice } from "../components/Combat";
 import { ItemNames, items } from "./items";
+import { intro } from "../functions/sequenceMethods";
 
-type Action = "Meditate" | "Train" | "Combat" | "Adventure";
+type Action = "Meditate" | "Train" | "Adventure";
 
 // Old, here for reference to rank names until I finish rankInfo
 type Rank =
@@ -42,10 +38,7 @@ type Rank =
 
 // Gamedata on the ranks of advancement
 export const rankInfo = [
-	{
-		name: "Foundation",
-		advMana: 27,
-	},
+	{ name: "Foundation", advMana: 27 },
 	{ name: "CoreFormation", advMana: 81 },
 	{ name: "RedCore", advMana: 243 },
 	{ name: "GreenCore", advMana: 729 },
@@ -271,22 +264,16 @@ export const changeState = (newState: State) => {
 
 export type combatAction = "technique" | "item" | "weapon";
 
-export const damageToTarget = createMemo(() => {
+export const damageFromWeapon = createMemo(() => {
 	let damageCount = 0;
 	let physicalBonus = 0;
 	state.techniques.forEach((e, i) => {
-		if (e.active || e.onGoing) {
-			if (e.effect === "damage") {
-				damageCount += e.magnitude * effectMultiplier(e.multiplier);
-			} else if (e.effect === "buildingPhysicalBonus") {
-				physicalBonus += e.aggregateEffect;
-			} else if (e.effect === "enhanceWeapon") {
-				physicalBonus += e.magnitude * effectMultiplier(e.multiplier);
-			}
+		if (e.effect === "buildingPhysicalBonus") {
+			physicalBonus += e.aggregateEffect;
+		} else if (e.effect === "enhanceWeapon") {
+			physicalBonus += e.magnitude * effectMultiplier(e.multiplier);
 		}
 	});
-
-	console.log(`physical bonus: ${physicalBonus}`);
 	if (actionChoice() === 3) {
 		if (state.equippedWeapon !== undefined) {
 			damageCount += state.equippedWeapon.damage + physicalBonus;
@@ -294,6 +281,20 @@ export const damageToTarget = createMemo(() => {
 			damageCount += 3 + physicalBonus;
 		}
 	}
+	return damageCount;
+});
+
+export const damageToTarget = createMemo(() => {
+	let damageCount = 0;
+	state.techniques.forEach((e, i) => {
+		if (e.active || e.onGoing) {
+			if (e.effect === "damage") {
+				damageCount += e.magnitude * effectMultiplier(e.multiplier);
+			}
+		}
+	});
+	damageCount += damageFromWeapon();
+
 	return damageCount;
 });
 
@@ -394,9 +395,7 @@ export const load = () => {
 if (localStorage.getItem("state")) {
 	load();
 } else {
-	sendModal(
-		"You are embarking down a new path, one of magic and danger. You must train yourself and advance to prepare for what lies ahead!",
-	);
+	intro();
 }
 
 export const clear = () => {
@@ -470,8 +469,6 @@ export const tickSpeed = () => {
 			return state.meditate.tickSpeed;
 		case "Train":
 			return state.train.tickSpeed;
-		case "Combat":
-			return state.combat.tickSpeed;
 		case "Adventure":
 			return state.adventure.tickSpeed;
 	}
@@ -484,9 +481,6 @@ export const tick = {
 	},
 	Meditate: () => {
 		meditateTick();
-	},
-	Combat: () => {
-		combatTick();
 	},
 	Adventure: () => {
 		adventureTick();

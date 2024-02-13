@@ -19,40 +19,38 @@ export const Adventure: Component = () => {
 	];
 	return (
 		<>
-			<Template>
-				<h2> Adventure </h2>
-				<Show when={state.state === "Combat"}>
-					<Combat />
-				</Show>
-				<Show when={state.state !== "Combat"}>
-					<button
-						class={(utils.btn, utils.top_auto)}
-						onClick={() => {
-							init(
-								[
-									"wanderingKnight",
-									"wanderingKnight",
-									"wanderingKnight",
-									"wanderingKnight",
-								],
-								testTable,
-								10,
-								100,
-							);
-						}}
-					>
-						<p>test</p>
-					</button>
-				</Show>
+			<h2> Adventure </h2>
+			<Show when={state.state === "Combat"}>
+				<Combat />
+			</Show>
+			<Show when={state.state !== "Combat"}>
 				<button
 					class={(utils.btn, utils.top_auto)}
 					onClick={() => {
-						setAction("Adventure");
+						init(
+							[
+								"wanderingKnight",
+								"wanderingKnight",
+								"wanderingKnight",
+								"wanderingKnight",
+							],
+							testTable,
+							10,
+							100,
+						);
 					}}
 				>
-					<p> Adventure </p>
+					<p>test</p>
 				</button>
-			</Template>
+			</Show>
+			<button
+				class={(utils.btn, utils.top_auto)}
+				onClick={() => {
+					setAction("Adventure");
+				}}
+			>
+				<p> Adventure </p>
+			</button>
 		</>
 	);
 };

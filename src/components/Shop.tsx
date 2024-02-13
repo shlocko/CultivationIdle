@@ -7,7 +7,7 @@ import toast from "solid-toast";
 
 export const Shop: Component = () => {
 	return (
-		<Template>
+		<>
 			<h2> Shop </h2>
 			<For each={basicShop}>
 				{(item, i) => (
@@ -16,16 +16,16 @@ export const Shop: Component = () => {
 						onClick={() => {
 							if (state.coins >= item.cost) {
 								setState("coins", (c) => c - item.cost);
-								inventoryAdd(item.item, 1);
+								inventoryAdd(item.item.name, 1);
 								toast(`${item.item} purchased`);
 							}
 						}}
 					>
-						{item.item}
+						{item.item.name}: ${item.cost}
 					</button>
 				)}
 			</For>
 			<div class={utils.top_auto} />
-		</Template>
+		</>
 	);
 };

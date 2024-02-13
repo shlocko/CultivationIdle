@@ -1,3 +1,4 @@
+import { getItem } from "./items";
 import { Item } from "./store";
 
 export interface ShopItem {
@@ -7,15 +8,15 @@ export interface ShopItem {
 
 export const basicShop: ShopItem[] = [
 	{
-		item: "Health Potion",
+		item: getItem("Health Potion"),
 		cost: 50,
 	},
 	{
-		item: "Mana Potion",
+		item: getItem("Mana Potion"),
 		cost: 50,
 	},
 	{
-		item: "Herb",
+		item: getItem("Herb"),
 		cost: 10,
 	},
 ];

@@ -6,22 +6,20 @@ import {
 	State,
 	changeState,
 	combatState,
+	damageFromWeapon,
 	damageThorns,
 	damageToArea,
 	damageToTarget,
 	manaGainFromTechniques,
 	setCombatState,
-	setOpponent,
 	setState,
 	state,
 	targetsIncreasingTargetCount,
 	tickMana,
 } from "../state/store";
 import toast from "solid-toast";
-import { effect } from "solid-js/web";
 
 export const effectMultiplier = (mult: number) => {
-	//return 5 * Math.pow(mult + 10, 0.5779) - 19;
 	return Math.pow(mult, 2);
 };
 
@@ -59,6 +57,24 @@ const dealIncreasingTargetDamage = () => {
 							hp -
 							technique.magnitude *
 								effectMultiplier(technique.multiplier),
+					);
+				}
+			} else if (
+				technique.effect === "increasingTargetCountCloneWeapon" &&
+				targetsIncreasingTargetCount(technique.multiplier + 1).find(
+					(element) => element === ei,
+				) !== undefined
+			) {
+				if (
+					(technique.active || technique.onGoing) &&
+					ei !== combatState.activeEnemy
+				) {
+					console.log(`weapon multi`);
+					setCombatState(
+						"opponents",
+						ei,
+						"health",
+						(hp) => hp - damageFromWeapon(),
 					);
 				}
 			}

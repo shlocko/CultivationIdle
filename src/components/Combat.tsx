@@ -1,14 +1,5 @@
-import {
-	Show,
-	type Component,
-	Switch,
-	Match,
-	For,
-	JSXElement,
-	createSignal,
-} from "solid-js";
+import { type Component, Switch, Match, For, createSignal } from "solid-js";
 import utils from "../styles/utils.module.css";
-import { Template } from "./Template";
 import {
 	activeTechniqueCount,
 	changeState,
@@ -20,13 +11,10 @@ import {
 	damageToTarget,
 	manaGainFromTechniques,
 	opponent,
-	resetActiveTechniques,
 	setAction,
 	setCombatState,
-	setPause,
 	setState,
 	state,
-	tick,
 	tickMana,
 } from "../state/store";
 import { sendModal } from "../state/modalMessages";
@@ -79,6 +67,15 @@ export const Combat: Component = () => {
 				<Match when={state.combat.turn === 0}>
 					<h2> Your Turn </h2>
 					<p class={utils.top_auto}> </p>
+					<p> Mana per turn: {tickMana().toFixed(2)} </p>
+					<p> Mana per turn: {tickMana().toFixed(2)} </p>
+					<p> Mana per turn: {tickMana().toFixed(2)} </p>
+					<p> Mana per turn: {tickMana().toFixed(2)} </p>
+					<p> Mana per turn: {tickMana().toFixed(2)} </p>
+					<p> Mana per turn: {tickMana().toFixed(2)} </p>
+					<p> Mana per turn: {tickMana().toFixed(2)} </p>
+					<p> Mana per turn: {tickMana().toFixed(2)} </p>
+					<p> Mana per turn: {tickMana().toFixed(2)} </p>
 					<p> Mana per turn: {tickMana().toFixed(2)} </p>
 					<p> Damage to target: {damageToTarget()} </p>
 					<p> Damage to area: {damageToArea()} </p>

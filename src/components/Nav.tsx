@@ -30,6 +30,7 @@ export const Nav: Component = () => {
 				Pause/Unpause
 			</button>
 			<button
+				class={styles.nav_item}
 				onClick={() => {
 					load();
 				}}
@@ -37,6 +38,7 @@ export const Nav: Component = () => {
 				<p>Load</p>
 			</button>
 			<button
+				class={styles.nav_item}
 				onClick={() => {
 					persist();
 				}}
@@ -44,6 +46,7 @@ export const Nav: Component = () => {
 				<p>Save</p>
 			</button>
 			<button
+				class={styles.nav_item}
 				onClick={() => {
 					clear();
 				}}

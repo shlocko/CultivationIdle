@@ -20,8 +20,9 @@ import { perTick } from "../functions/tickMethods";
 import { cloneDeep } from "lodash";
 import { pickLoot } from "../functions/combatMethods";
 import { sendLoot } from "../state/modalMessages";
+import { RouteSectionProps } from "@solidjs/router";
 
-export const Template: Component<{ children: JSXElement }> = (props) => {
+export const Template: Component<RouteSectionProps> = (props) => {
 	const [saveTimer, setSaveTimer] = createSignal(0);
 	const timer = setInterval(() => {
 		// Timer for auto saves

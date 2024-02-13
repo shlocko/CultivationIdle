@@ -71,7 +71,7 @@ export const techniques = {
 			mastery: 1,
 			multiplier: 1,
 		},
-	] as Technique[],
+	],
 	Water: [
 		{
 			name: "Water Whip",
@@ -90,7 +90,7 @@ export const techniques = {
 			mastery: 1,
 			multiplier: 1,
 		},
-	] as Technique[],
+	],
 	Sword: [
 		{
 			name: "Flying Slash",
@@ -177,5 +177,22 @@ export const techniques = {
 			mastery: 1,
 			multiplier: 1,
 		},
-	] as Technique[],
+		{
+			name: "Mirror Weapon",
+			onGoing: false,
+			active: false,
+			continuous: true,
+			aspect: "sword",
+			baseCost: 6,
+			minCost: 2,
+			effect: "increasingTargetCountCloneWeapon",
+			customEffect: undefined,
+			magnitude: 1,
+			aggregateEffect: 0,
+			description:
+				"Clone your weapon with sword mana, duplicating it to hit more targets",
+			mastery: 1,
+			multiplier: 1,
+		},
+	],
 };
