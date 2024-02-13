@@ -27,12 +27,20 @@ export const items: Record<string, Item> = {
 	Sword: {
 		name: "Sword",
 		type: "weapon",
-		damage: 6,
+		damage: 8,
+		weaponType: "Sword",
+	},
+	Axe: {
+		name: "Axe",
+		type: "weapon",
+		damage: 10,
+		weaponType: "Axe",
 	},
 	Dagger: {
 		name: "Dagger",
 		type: "weapon",
 		damage: 4,
+		weaponType: "Dagger",
 	},
 };
 

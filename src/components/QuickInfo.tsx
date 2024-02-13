@@ -16,6 +16,7 @@ export const QuickInfo: Component = () => {
 			<p> Coins: {state.coins} </p>
 			<p> State: {state.state} </p>
 			<p> Prev State: {state.previousState} </p>
+			<p> Weapon: {state.equippedWeapon?.name} </p>
 		</div>
 	);
 };

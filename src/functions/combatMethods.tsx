@@ -46,7 +46,7 @@ const dealIncreasingTargetDamage = () => {
 		state.techniques.forEach((technique, ti) => {
 			if (
 				technique.effect === "increasingTargetCountDamage" &&
-				targetsIncreasingTargetCount(technique).find(
+				targetsIncreasingTargetCount(technique.multiplier).find(
 					(element) => element === ei,
 				) !== undefined
 			) {

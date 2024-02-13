@@ -1,6 +1,13 @@
-import { For, type Component } from "solid-js";
+import { For, type Component, Show } from "solid-js";
 import { Template } from "./Template";
-import { state, inventoryRemove, inventoryAdd } from "../state/store";
+import {
+	state,
+	inventoryRemove,
+	inventoryAdd,
+	setState,
+	Weapon,
+	inventoryRemoveQuantity,
+} from "../state/store";
 import utils from "../styles/utils.module.css";
 import toast from "solid-toast";
 import { ItemNames } from "../state/items";
@@ -30,6 +37,31 @@ export const Inventory: Component = () => {
 							>
 								X
 							</button>
+							<Show when={item.item.type === "weapon"}>
+								<button
+									class={utils.btn}
+									onClick={() => {
+										if (
+											state.equippedWeapon !== undefined
+										) {
+											inventoryAdd(
+												state.equippedWeapon.name,
+												1,
+											);
+										}
+										setState(
+											"equippedWeapon",
+											item.item as Weapon,
+										);
+										inventoryRemoveQuantity(
+											item.item.name,
+											1,
+										);
+									}}
+								>
+									<p> Equip </p>
+								</button>
+							</Show>
 						</>
 					)}
 				</For>

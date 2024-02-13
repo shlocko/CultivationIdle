@@ -131,10 +131,13 @@ export const meditationTechniques: meditationTechnique[] = [
 
 export type ItemType = "consumable" | "weapon" | "material";
 
+export type WeaponType = "Sword" | "Dagger" | "Axe" | "LongSword";
+
 export type Weapon = {
 	name: string;
 	type: "weapon";
 	damage: number;
+	weaponType: WeaponType;
 };
 
 export type Consumable = {
@@ -211,9 +214,9 @@ export const [state, setState] = createStore({
 		area: "BeginnerArea" as Area,
 	},
 	// Player's current mana
-	mana: 9,
+	mana: 90,
 	// Player's maximum mana
-	maxMana: 9,
+	maxMana: 90,
 	// Player's passive mana regeneration
 	passiveManaRegen: 1,
 	// Current % of tick bar
@@ -249,6 +252,7 @@ export const [state, setState] = createStore({
 		quantity: number;
 	}[],
 	inventoryCapacity: 20,
+	equippedWeapon: undefined as Weapon | undefined,
 	coins: 0,
 	// Queue of modal's to appear
 	modalMessages: [] as ModalMessageType[],
@@ -284,7 +288,11 @@ export const damageToTarget = createMemo(() => {
 
 	console.log(`physical bonus: ${physicalBonus}`);
 	if (actionChoice() === 3) {
-		damageCount += 3 + physicalBonus;
+		if (state.equippedWeapon !== undefined) {
+			damageCount += state.equippedWeapon.damage + physicalBonus;
+		} else {
+			damageCount += 3 + physicalBonus;
+		}
 	}
 	return damageCount;
 });
@@ -336,10 +344,10 @@ export const damageIncreasingTargetCount = () => {
 	return count;
 };
 
-export const targetsIncreasingTargetCount = (technique: Technique) => {
+export const targetsIncreasingTargetCount = (targetCount: number) => {
 	let targets: number[] = [];
 	targets.push(combatState.activeEnemy);
-	for (let i = 0; i < technique.multiplier; i++) {
+	for (let i = 0; i < targetCount; i++) {
 		if (i === combatState.activeEnemy) {
 		} else {
 			targets.push(i);
