@@ -22,7 +22,9 @@ export type EffectType =
 	| "heal"
 	| "ongoingAreaDamage"
 	| "enhanceWeapon"
-	| "buildingPhysicalBonus";
+	| "buildingPhysicalBonus"
+	| "thorns"
+	| "increasingTargetCountDamage";
 
 // Old and to be removed
 /*export const techniqueEffects = {

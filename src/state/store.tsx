@@ -190,7 +190,7 @@ export const [opponent, setOpponent] = createStore(cloneDeep(enemyList.bandit));
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
 	// State version for ensuring compatibility with save data
-	version: 8,
+	version: 9,
 	// State machine state
 	state: "Tick" as State,
 	previousState: "Tick" as State,
@@ -301,6 +301,18 @@ export const damageToArea = createMemo(() => {
 	return count;
 });
 
+export const damageThorns = createMemo(() => {
+	let count = 0;
+	state.techniques.forEach((e, i) => {
+		if (e.active || e.onGoing) {
+			if (e.effect === "thorns") {
+				count += e.magnitude * effectMultiplier(e.multiplier);
+			}
+		}
+	});
+	return count;
+});
+
 export const manaGainFromTechniques = createMemo(() => {
 	let count = 0;
 	state.techniques.forEach((e, i) => {
@@ -311,6 +323,32 @@ export const manaGainFromTechniques = createMemo(() => {
 	});
 	return count;
 });
+
+export const damageIncreasingTargetCount = () => {
+	let count = 0;
+	state.techniques.forEach((e, i) => {
+		if (e.active || e.onGoing) {
+			if (e.effect === "increasingTargetCountDamage") {
+				count += e.magnitude * effectMultiplier(e.multiplier);
+			}
+		}
+	});
+	return count;
+};
+
+export const targetsIncreasingTargetCount = (technique: Technique) => {
+	let targets: number[] = [];
+	targets.push(combatState.activeEnemy);
+	for (let i = 0; i < technique.multiplier; i++) {
+		if (i === combatState.activeEnemy) {
+		} else {
+			targets.push(i);
+		}
+	}
+	console.log("Targets");
+	console.log(targets);
+	return targets;
+};
 
 export const [combatState, setCombatState] = createStore({
 	opponents: [] as Enemy[],

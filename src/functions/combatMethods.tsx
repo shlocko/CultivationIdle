@@ -6,6 +6,7 @@ import {
 	State,
 	changeState,
 	combatState,
+	damageThorns,
 	damageToArea,
 	damageToTarget,
 	manaGainFromTechniques,
@@ -13,9 +14,11 @@ import {
 	setOpponent,
 	setState,
 	state,
+	targetsIncreasingTargetCount,
 	tickMana,
 } from "../state/store";
 import toast from "solid-toast";
+import { effect } from "solid-js/web";
 
 export const effectMultiplier = (mult: number) => {
 	//return 5 * Math.pow(mult + 10, 0.5779) - 19;
@@ -34,6 +37,32 @@ const dealTargetDamage = () => {
 const dealAreaDamage = () => {
 	combatState.opponents.forEach((e, i) => {
 		setCombatState("opponents", i, "health", (hp) => hp - damageToArea());
+	});
+};
+
+const dealIncreasingTargetDamage = () => {
+	console.log("increasing target");
+	combatState.opponents.forEach((enemy, ei) => {
+		state.techniques.forEach((technique, ti) => {
+			if (
+				technique.effect === "increasingTargetCountDamage" &&
+				targetsIncreasingTargetCount(technique).find(
+					(element) => element === ei,
+				) !== undefined
+			) {
+				if (technique.active || technique.onGoing) {
+					setCombatState(
+						"opponents",
+						ei,
+						"health",
+						(hp) =>
+							hp -
+							technique.magnitude *
+								effectMultiplier(technique.multiplier),
+					);
+				}
+			}
+		});
 	});
 };
 
@@ -78,6 +107,7 @@ export const init = (
 export const endTurn = () => {
 	dealTargetDamage();
 	dealAreaDamage();
+	dealIncreasingTargetDamage();
 	setState("mana", (mana) => mana - tickMana());
 	setState("maxMana", (mana) => mana + manaGainFromTechniques());
 	toast("Damage dealt");
@@ -105,8 +135,9 @@ export const endTurn = () => {
 };
 
 export const enemyTurn = () => {
-	combatState.opponents.forEach((e) => {
-		setState("health", (hp) => hp - e.damage);
+	combatState.opponents.forEach((enemy, ei) => {
+		setCombatState("opponents", ei, "health", (hp) => hp - damageThorns());
+		setState("health", (hp) => hp - enemy.damage);
 	});
 	setState("combat", "turn", 0);
 };

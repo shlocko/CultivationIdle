@@ -14,6 +14,8 @@ import {
 	changeState,
 	clearNotOngoing,
 	combatState,
+	damageIncreasingTargetCount,
+	damageThorns,
 	damageToArea,
 	damageToTarget,
 	manaGainFromTechniques,
@@ -80,6 +82,12 @@ export const Combat: Component = () => {
 					<p> Mana per turn: {tickMana().toFixed(2)} </p>
 					<p> Damage to target: {damageToTarget()} </p>
 					<p> Damage to area: {damageToArea()} </p>
+					<p> Thorns Damage: {damageThorns()} </p>
+					<p>
+						{" "}
+						Increasing target Damage:{" "}
+						{damageIncreasingTargetCount()}{" "}
+					</p>
 					<p> Max Mana Gain: {manaGainFromTechniques()} </p>
 					<div class={styles.action_container}>
 						<div class={styles.action_col}></div>
