@@ -66,7 +66,7 @@ export const beginnerArea = {
 					[
 						lootEntry("Health Potion", 70, 1, 7),
 						lootEntry("Mana Potion", 70, 1, 7),
-						lootEntry("Dagger", 20, 1, 3),
+						lootEntry("Sword", 20, 1, 3),
 					],
 					100,
 					500,
@@ -82,7 +82,7 @@ export const beginnerArea = {
 					[
 						lootEntry("Health Potion", 70, 1, 7),
 						lootEntry("Mana Potion", 70, 1, 7),
-						lootEntry("Sword", 10, 1, 1),
+						lootEntry("Axe", 10, 1, 1),
 					],
 					1000,
 					2500,

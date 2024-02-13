@@ -33,7 +33,7 @@ export const items: Record<string, Item> = {
 	Axe: {
 		name: "Axe",
 		type: "weapon",
-		damage: 10,
+		damage: 12,
 		weaponType: "Axe",
 	},
 	Dagger: {
