@@ -476,7 +476,7 @@ export const tickMana = createMemo(() => {
 		if (e.active || e.onGoing) {
 			const cost =
 				(e.baseCost - (e.mastery / 3000) * (e.baseCost - e.minCost)) *
-				e.multiplier;
+				Math.pow(e.multiplier, 3);
 			setState("techniques", i, "currentCost", cost);
 			total += cost;
 		}

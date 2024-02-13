@@ -19,7 +19,7 @@ import toast from "solid-toast";
 
 export const effectMultiplier = (mult: number) => {
 	//return 5 * Math.pow(mult + 10, 0.5779) - 19;
-	return Math.pow(mult, 0.9);
+	return Math.pow(mult, 2);
 };
 
 const dealTargetDamage = () => {
