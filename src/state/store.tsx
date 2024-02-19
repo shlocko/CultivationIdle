@@ -205,6 +205,9 @@ export const [state, setState] = createStore({
 	adventure: {
 		tickSpeed: 1,
 		area: "BeginnerArea" as Area,
+		areaTickCounts: {
+			BeginnerArea: 0,
+		},
 	},
 	// Player's current mana
 	mana: 90,

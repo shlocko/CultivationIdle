@@ -6,6 +6,7 @@ import { Item, addCoins, lootEntry, setAction, setState, state } from "./store";
 import { items } from "./items";
 
 export const beginnerArea = {
+	tickCount: 0,
 	commonEvents: [
 		{
 			name: "a bandit",
@@ -103,6 +104,15 @@ export const beginnerArea = {
 						lootEntry("Herb", 100, 1, 10),
 					]),
 				);
+			},
+		},
+	],
+	epicEvents: [
+		{
+			name: "Intermediate Area",
+			isUnlocked: () => beginnerArea.tickCount >= 500,
+			activation: () => {
+				sendModal("You found the Intermediate area!");
 			},
 		},
 	],
