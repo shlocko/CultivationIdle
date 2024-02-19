@@ -70,7 +70,16 @@ export const Template: Component<RouteSectionProps> = (props) => {
 			<progress max="100" value={state.bar}>
 				{state.bar}/100
 			</progress>
-			{props.children}
+			<div
+				style={{
+					"flex-grow": 1,
+					"overflow-y": "auto",
+					display: "flex",
+					"flex-direction": "column",
+				}}
+			>
+				{props.children}
+			</div>
 			<Nav />
 		</div>
 	);

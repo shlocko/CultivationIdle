@@ -268,10 +268,12 @@ export const damageFromWeapon = createMemo(() => {
 	let damageCount = 0;
 	let physicalBonus = 0;
 	state.techniques.forEach((e, i) => {
-		if (e.effect === "buildingPhysicalBonus") {
-			physicalBonus += e.aggregateEffect;
-		} else if (e.effect === "enhanceWeapon") {
-			physicalBonus += e.magnitude * effectMultiplier(e.multiplier);
+		if (e.active === true || e.onGoing === true) {
+			if (e.effect === "buildingPhysicalBonus") {
+				physicalBonus += e.aggregateEffect;
+			} else if (e.effect === "enhanceWeapon") {
+				physicalBonus += e.magnitude * effectMultiplier(e.multiplier);
+			}
 		}
 	});
 	if (actionChoice() === 3) {
