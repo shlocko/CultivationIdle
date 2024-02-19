@@ -50,10 +50,6 @@ export const Combat: Component = () => {
 			<Switch>
 				<Match when={state.combat.turn === 1}>
 					<h2> Opponent's Turn </h2>
-					<p class={utils.top_auto}>
-						{" "}
-						Opponent: {opponent.health} HP.{" "}
-					</p>
 					<p> Mana per turn: {tickMana()} </p>
 					<button
 						class={utils.btn}
@@ -67,15 +63,6 @@ export const Combat: Component = () => {
 				<Match when={state.combat.turn === 0}>
 					<h2> Your Turn </h2>
 					<p class={utils.top_auto}> </p>
-					<p> Mana per turn: {tickMana().toFixed(2)} </p>
-					<p> Mana per turn: {tickMana().toFixed(2)} </p>
-					<p> Mana per turn: {tickMana().toFixed(2)} </p>
-					<p> Mana per turn: {tickMana().toFixed(2)} </p>
-					<p> Mana per turn: {tickMana().toFixed(2)} </p>
-					<p> Mana per turn: {tickMana().toFixed(2)} </p>
-					<p> Mana per turn: {tickMana().toFixed(2)} </p>
-					<p> Mana per turn: {tickMana().toFixed(2)} </p>
-					<p> Mana per turn: {tickMana().toFixed(2)} </p>
 					<p> Mana per turn: {tickMana().toFixed(2)} </p>
 					<p> Damage to target: {damageToTarget()} </p>
 					<p> Damage to area: {damageToArea()} </p>

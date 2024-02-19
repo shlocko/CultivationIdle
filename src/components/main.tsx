@@ -3,15 +3,6 @@ import utils from "../styles/utils.module.css";
 import { state, setState, setAction } from "../state/store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
-import {
-	sendAspectChoice,
-	sendChoice,
-	sendModal,
-	sendTechniqueChoice,
-} from "../state/modalMessages";
-import { techniques } from "../state/techniques";
-import { init } from "../functions/combatMethods";
-//import { testModal } from "../state/modalMessages";
 
 export const Main: Component = () => {
 	return (
