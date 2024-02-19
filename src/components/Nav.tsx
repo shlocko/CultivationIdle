@@ -7,19 +7,19 @@ export const Nav: Component = () => {
 	return (
 		<div class={styles.nav}>
 			<A class={styles.nav_item} href="/">
-				Meditate
+				<p>Meditate</p>
 			</A>
 			<A class={styles.nav_item} href="/train">
-				Train
+				<p>Train</p>
 			</A>
 			<A class={styles.nav_item} href="/adventure">
-				Adventure
+				<p>Adventure</p>
 			</A>
 			<A class={styles.nav_item} href="/inventory">
-				Inventory
+				<p>Inventory</p>
 			</A>
 			<A class={styles.nav_item} href="/shop">
-				Shop
+				<p>Shop</p>
 			</A>
 			<button
 				class={styles.nav_item}
@@ -35,7 +35,7 @@ export const Nav: Component = () => {
 					load();
 				}}
 			>
-				<p>Load</p>
+				Load
 			</button>
 			<button
 				class={styles.nav_item}
@@ -43,7 +43,7 @@ export const Nav: Component = () => {
 					persist();
 				}}
 			>
-				<p>Save</p>
+				Save
 			</button>
 			<button
 				class={styles.nav_item}
@@ -51,7 +51,7 @@ export const Nav: Component = () => {
 					clear();
 				}}
 			>
-				<p>Clear</p>
+				Clear
 			</button>
 		</div>
 	);
