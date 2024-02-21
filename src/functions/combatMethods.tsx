@@ -101,11 +101,17 @@ export const init = (
 	loot: LootTable,
 	coinMin: number,
 	coinMax: number,
+	returnFunction?: () => void,
 ) => {
 	let arr = [] as Enemy[];
 	enemies.forEach((e, i) => {
 		arr.push(cloneDeep(enemyList[e]));
 	});
+	if (returnFunction) {
+		setCombatState("returnFunction", returnFunction);
+	} else {
+		setCombatState("returnFunction", undefined);
+	}
 	setCombatState("opponents", arr);
 	setCombatState("returnState", state.state);
 	setCombatState("loot", loot);
@@ -117,6 +123,7 @@ export const init = (
 	state.techniques.forEach((e, i) => {
 		setState("techniques", i, "active", false);
 		setState("techniques", i, "onGoing", false);
+		setState("techniques", i, "aggregateEffect", 0);
 	});
 };
 

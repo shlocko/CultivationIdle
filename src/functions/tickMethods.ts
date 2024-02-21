@@ -83,7 +83,7 @@ export const adventureTick = () => {
 	console.log(eventRoll);
 	if (state.adventure.area === "BeginnerArea") {
 		setState("adventure", "areaTickCounts", "BeginnerArea", (tc) => tc + 1);
-		if (eventRoll >= 99) {
+		/*if (eventRoll >= 99) {
 		} else if (eventRoll >= 95) {
 			const pick = Math.floor(
 				Math.random() * beginnerArea.rareEvents.length,
@@ -104,10 +104,13 @@ export const adventureTick = () => {
 				);
 				beginnerArea.uncommonEvents[pick].activation();
 			}
-		} else if (eventRoll >= 30) {
-			const pick = Math.floor(
+		} else*/ if (eventRoll >= 0) {
+			console.log("roll");
+			let pick = Math.floor(
 				Math.random() * beginnerArea.commonEvents.length,
 			);
+			pick = 0;
+			console.log(pick);
 			if (beginnerArea.commonEvents[pick].isUnlocked()) {
 				sendModal(
 					`You encounter ${beginnerArea.commonEvents[pick].name}!`,

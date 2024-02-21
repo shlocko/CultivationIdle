@@ -204,15 +204,17 @@ export const [state, setState] = createStore({
 	},
 	adventure: {
 		tickSpeed: 1,
+		unlockedAreas: ["BeginnerArea"] as Area[],
 		area: "BeginnerArea" as Area,
 		areaTickCounts: {
-			BeginnerArea: 0,
-		},
+			BeginnerArea: 500,
+		} as Record<Area, number>,
+		areaBossesBeaten: [] as Area[],
 	},
 	// Player's current mana
-	mana: 90,
+	mana: 900,
 	// Player's maximum mana
-	maxMana: 90,
+	maxMana: 900,
 	// Player's passive mana regeneration
 	passiveManaRegen: 1,
 	// Current % of tick bar
@@ -372,6 +374,7 @@ export const [combatState, setCombatState] = createStore({
 	coinMin: 0,
 	coinMax: 0,
 	returnState: "Tick" as State,
+	returnFunction: undefined as undefined | (() => void),
 });
 
 //********************************************************

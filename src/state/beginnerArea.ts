@@ -4,10 +4,43 @@ import { Event } from "./events";
 import { ModalMessage, sendLoot, sendModal } from "./modalMessages";
 import { Item, addCoins, lootEntry, setAction, setState, state } from "./store";
 import { items } from "./items";
+import { cloneDeep, uniq } from "lodash";
+import { beginnerBoss } from "../functions/sequenceMethods";
 
 export const beginnerArea = {
-	tickCount: 0,
+	nextArea: 500,
 	commonEvents: [
+		{
+			name: "the Boss",
+			isUnlocked: () => {
+				if (
+					state.adventure.areaTickCounts.BeginnerArea >=
+					beginnerArea.nextArea
+				) {
+					return true;
+				} else {
+					return false;
+				}
+			},
+			activation: () => {
+				console.log("activation");
+				beginnerBoss();
+			},
+		},
+		{
+			name: "Second Area",
+			isUnlocked: () => {
+				state.adventure.areaTickCounts.BeginnerArea >=
+					beginnerArea.nextArea &&
+					state.adventure.areaBossesBeaten.indexOf("BeginnerArea") !==
+						-1;
+			},
+			activation: () => {
+				let arr = cloneDeep(state.adventure.unlockedAreas);
+				arr.push("SecondArea");
+				setState("adventure", "unlockedAreas", arr);
+			},
+		},
 		{
 			name: "a bandit",
 			isUnlocked: () => state.rank >= 1,
@@ -107,13 +140,5 @@ export const beginnerArea = {
 			},
 		},
 	],
-	epicEvents: [
-		{
-			name: "Intermediate Area",
-			isUnlocked: () => beginnerArea.tickCount >= 500,
-			activation: () => {
-				sendModal("You found the Intermediate area!");
-			},
-		},
-	],
+	epicEvents: [],
 };

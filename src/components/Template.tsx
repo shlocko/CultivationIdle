@@ -58,6 +58,9 @@ export const Template: Component<RouteSectionProps> = (props) => {
 				sendLoot(pickLoot(combatState.loot));
 				addCoins(combatState.coinMin, combatState.coinMax);
 				changeState(combatState.returnState);
+				if (combatState.returnFunction) {
+					//combatState.returnFunction();
+				}
 			}
 		}
 	}, 10);

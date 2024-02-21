@@ -18,7 +18,11 @@ export const Adventure: Component = () => {
 	return (
 		<>
 			<h2> Adventure </h2>
-			<p> Progress: {state.adventure.areaTickCounts.BeginnerArea}/500</p>
+			<p>
+				{" "}
+				Progress: {state.adventure.areaTickCounts[state.adventure.area]}
+				/500
+			</p>
 			<Show when={state.state === "Combat"}>
 				<Combat />
 			</Show>
