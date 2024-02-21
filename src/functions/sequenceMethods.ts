@@ -36,6 +36,7 @@ export const beginnerBoss = () => {
 		1000,
 		10000,
 		() => {
+			console.trace();
 			if (combatState.opponents.length === 0) {
 				console.log(combatState.opponents.length);
 				console.log("sequence");
