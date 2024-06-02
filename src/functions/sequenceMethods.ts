@@ -35,11 +35,11 @@ export const beginnerBoss = () => {
 		[lootEntry("Axe", 100, 1, 1), lootEntry("Health Potion", 100, 5, 20)],
 		1000,
 		10000,
-		() => {
-			console.trace();
+		() => () => {
+			//console.trace();
 			if (combatState.opponents.length === 0) {
-				console.log(combatState.opponents.length);
-				console.log("sequence");
+				//console.log(combatState.opponents.length);
+				//console.log("sequence");
 				sendModal("You win!");
 				sendModal("You may now find the next area.");
 				if (

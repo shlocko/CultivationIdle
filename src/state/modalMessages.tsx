@@ -96,7 +96,7 @@ export const ModalText: Component = () => {
 	const text = createMemo(
 		() => (state.modalMessages[0] as TextModal).content,
 	);
-	console.log(text);
+	//console.log(text);
 
 	return (
 		<>
@@ -330,7 +330,7 @@ export const ModalLoot: Component<{ loot: LootCollection }> = (props) => {
 			<button
 				class={utils.btn}
 				onClick={() => {
-					console.log(loot);
+					//console.log(loot);
 					loot.forEach((item) => {
 						if (item) {
 							inventoryAdd(item.name, item.count);

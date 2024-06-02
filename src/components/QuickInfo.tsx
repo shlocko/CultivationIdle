@@ -8,7 +8,7 @@ export const QuickInfo: Component = () => {
 			<p>
 				Mana: {state.mana.toFixed(1)} of {state.maxMana.toFixed(1)}
 			</p>
-			<p> Rank: {rankInfo[state.rank].name} </p>
+			<p> Rank: {rankInfo[state.rank].name}, {state.rank} </p>
 			<p> Action: {state.action} </p>
 			<p> Next Advancement: {rankInfo[state.rank].advMana} </p>
 			<p> Aspect: {state.aspect ? state.aspect : "Pure"} </p>

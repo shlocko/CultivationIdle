@@ -1,8 +1,9 @@
 import { createSignal, type Component, Show, For } from "solid-js";
 import utils from "../styles/utils.module.css";
-import { state, setState, setAction } from "../state/store";
+import { state, setState, setAction,} from "../state/store";
 import { Template } from "./Template";
 import { ChooseAspect } from "./ChooseAspect";
+import { sendModal } from "../state/modalMessages";
 
 export const Main: Component = () => {
 	return (

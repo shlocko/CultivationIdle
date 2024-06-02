@@ -207,14 +207,14 @@ export const [state, setState] = createStore({
 		unlockedAreas: ["BeginnerArea"] as Area[],
 		area: "BeginnerArea" as Area,
 		areaTickCounts: {
-			BeginnerArea: 500,
+			BeginnerArea: 0,
 		} as Record<Area, number>,
 		areaBossesBeaten: [] as Area[],
 	},
 	// Player's current mana
-	mana: 900,
+	mana: 10,
 	// Player's maximum mana
-	maxMana: 900,
+	maxMana: 10,
 	// Player's passive mana regeneration
 	passiveManaRegen: 1,
 	// Current % of tick bar
@@ -361,8 +361,8 @@ export const targetsIncreasingTargetCount = (targetCount: number) => {
 			targets.push(i);
 		}
 	}
-	console.log("Targets");
-	console.log(targets);
+	//console.log("Targets");
+	//console.log(targets);
 	return targets;
 };
 
@@ -376,6 +376,7 @@ export const [combatState, setCombatState] = createStore({
 	returnState: "Tick" as State,
 	returnFunction: undefined as undefined | (() => void),
 });
+
 
 //********************************************************
 // helper functions

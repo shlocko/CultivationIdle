@@ -11,6 +11,7 @@ import {
 	damageToArea,
 	damageToTarget,
 	manaGainFromTechniques,
+	setAction,
 	setCombatState,
 	setState,
 	state,
@@ -39,7 +40,7 @@ const dealAreaDamage = () => {
 };
 
 const dealIncreasingTargetDamage = () => {
-	console.log("increasing target");
+	//console.log("increasing target");
 	combatState.opponents.forEach((enemy, ei) => {
 		state.techniques.forEach((technique, ti) => {
 			if (
@@ -69,7 +70,7 @@ const dealIncreasingTargetDamage = () => {
 					(technique.active || technique.onGoing) &&
 					ei !== combatState.activeEnemy
 				) {
-					console.log(`weapon multi`);
+					//console.log(`weapon multi`);
 					setCombatState(
 						"opponents",
 						ei,
@@ -162,5 +163,5 @@ export const enemyTurn = () => {
 		setCombatState("opponents", ei, "health", (hp) => hp - damageThorns());
 		setState("health", (hp) => hp - enemy.damage);
 	});
-	setState("combat", "turn", 0);
+	    setState("combat", "turn", 0);
 };

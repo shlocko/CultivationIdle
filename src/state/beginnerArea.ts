@@ -23,22 +23,27 @@ export const beginnerArea = {
 				}
 			},
 			activation: () => {
-				console.log("activation");
+				//console.log("activation");
 				beginnerBoss();
 			},
 		},
 		{
 			name: "Second Area",
 			isUnlocked: () => {
-				state.adventure.areaTickCounts.BeginnerArea >=
+				if(state.adventure.areaTickCounts.BeginnerArea >=
 					beginnerArea.nextArea &&
 					state.adventure.areaBossesBeaten.indexOf("BeginnerArea") !==
-						-1;
+						-1 && state.adventure.unlockedAreas.indexOf("SecondArea")===-1){
+                    return true;
+                }else{
+                    return false;
+                }
 			},
 			activation: () => {
 				let arr = cloneDeep(state.adventure.unlockedAreas);
 				arr.push("SecondArea");
 				setState("adventure", "unlockedAreas", arr);
+                sendModal("You unlocked the second area");
 			},
 		},
 		{
@@ -54,6 +59,9 @@ export const beginnerArea = {
 					],
 					10,
 					100,
+                    () => () => {
+                        sendModal("Bandit test")
+                    }
 				);
 			},
 		} as Event,

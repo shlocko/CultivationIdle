@@ -12,6 +12,7 @@ import {
 	changeState,
 	opponent,
 	addCoins,
+    setAction,
 } from "../state/store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
@@ -19,7 +20,7 @@ import { Toaster } from "solid-toast";
 import { perTick } from "../functions/tickMethods";
 import { cloneDeep } from "lodash";
 import { pickLoot } from "../functions/combatMethods";
-import { sendLoot } from "../state/modalMessages";
+import { sendLoot, sendModal } from "../state/modalMessages";
 import { RouteSectionProps } from "@solidjs/router";
 
 export const Template: Component<RouteSectionProps> = (props) => {
@@ -59,9 +60,13 @@ export const Template: Component<RouteSectionProps> = (props) => {
 				addCoins(combatState.coinMin, combatState.coinMax);
 				changeState(combatState.returnState);
 				if (combatState.returnFunction) {
-					//combatState.returnFunction();
+					combatState.returnFunction();
 				}
-			}
+			}else if(state.health <= 0){
+                changeState("Tick");
+                setAction("Meditate");
+                sendModal("You died! Meditate on your failures and try again!");
+            }
 		}
 	}, 10);
 	onCleanup(() => {
