@@ -35,15 +35,15 @@ export const beginnerArea = {
 					state.adventure.areaBossesBeaten.indexOf("BeginnerArea") !==
 						-1 && state.adventure.unlockedAreas.indexOf("SecondArea")===-1){
                     return true;
-                }else{
-                    return false;
-                }
+				}else{
+					return false;
+				}
 			},
 			activation: () => {
 				let arr = cloneDeep(state.adventure.unlockedAreas);
 				arr.push("SecondArea");
 				setState("adventure", "unlockedAreas", arr);
-                sendModal("You unlocked the second area");
+				sendModal("You unlocked the second area");
 			},
 		},
 		{

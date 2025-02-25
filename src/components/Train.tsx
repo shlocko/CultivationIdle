@@ -11,6 +11,7 @@ export const Train: Component = () => {
 					<button
 						classList={{
 							[utils.btn]: true,
+							[utils.wide]: true,
 							[utils.btn_active]: i() === state.trainingTechnique,
 						}}
 						onClick={() => {
@@ -25,7 +26,7 @@ export const Train: Component = () => {
 				)}
 			</For>
 			<button
-				class={(utils.btn, utils.top_auto)}
+				class={(utils.btn, utils.wide_top_auto)}
 				onClick={() => {
 					setAction("Train");
 				}}

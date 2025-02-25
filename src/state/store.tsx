@@ -168,10 +168,10 @@ export const lootEntry = (
 	};
 };
 
-export type LootCollection = Array<{
+export type LootCollection = {
 	name: ItemNames;
 	count: number;
-}>;
+}[];
 
 export type Area = "BeginnerArea" | "SecondArea";
 
