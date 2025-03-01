@@ -9,6 +9,7 @@ import {
 	damageThorns,
 	damageToArea,
 	damageToTarget,
+	hasItem,
 	manaGainFromTechniques,
 	opponent,
 	setAction,
@@ -97,9 +98,9 @@ export const Combat: Component = () => {
 												} else {
 													if (
 														activeTechniqueCount() <
-															Math.ceil(
-																state.rank / 3,
-															) &&
+														Math.ceil(
+															state.rank / 3,
+														) &&
 														!item.active
 													) {
 														setState(
@@ -189,7 +190,7 @@ export const Combat: Component = () => {
 									clearNotOngoing();
 								}}
 							>
-								Punch
+								Attack
 							</button>
 						</div>
 						<div class={styles.action_col}></div>
@@ -199,6 +200,10 @@ export const Combat: Component = () => {
 						onClick={() => {
 							if (tickMana() <= state.mana) {
 								endTurn();
+							} else if (actionChoice() === 1 && !hasItem("Health Potion")) {
+								sendModal("You do not have any Health Potions.")
+							} else if (actionChoice() === 2 && !hasItem("Mana Potion")) {
+								sendModal("You do not have any Mana Potions.")
 							} else {
 								sendModal("You are out of mana!");
 							}

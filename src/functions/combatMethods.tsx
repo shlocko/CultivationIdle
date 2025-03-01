@@ -10,7 +10,9 @@ import {
 	damageThorns,
 	damageToArea,
 	damageToTarget,
+	inventoryRemove,
 	manaGainFromTechniques,
+	maxHealth,
 	setAction,
 	setCombatState,
 	setState,
@@ -19,6 +21,7 @@ import {
 	tickMana,
 } from "../state/store";
 import toast from "solid-toast";
+import { actionChoice } from "../components/Combat";
 
 export const effectMultiplier = (mult: number) => {
 	return Math.pow(mult, 2);
@@ -57,7 +60,7 @@ const dealIncreasingTargetDamage = () => {
 						(hp) =>
 							hp -
 							technique.magnitude *
-								effectMultiplier(technique.multiplier),
+							effectMultiplier(technique.multiplier),
 					);
 				}
 			} else if (
@@ -156,6 +159,14 @@ export const endTurn = () => {
 	state.techniques.forEach((e, i) => {
 		setState("techniques", i, "active", false);
 	});
+	if (actionChoice() === 1) {
+		inventoryRemove("Health Potion")
+		setState("health", hp => Math.min(hp + 10, maxHealth()));
+	}
+	if (actionChoice() === 2) {
+		inventoryRemove("Mana Potion")
+		setState("mana", mana => Math.min(mana + 20, state.maxMana));
+	}
 };
 
 export const enemyTurn = () => {
@@ -163,5 +174,5 @@ export const enemyTurn = () => {
 		setCombatState("opponents", ei, "health", (hp) => hp - damageThorns());
 		setState("health", (hp) => hp - enemy.damage);
 	});
-	    setState("combat", "turn", 0);
+	setState("combat", "turn", 0);
 };

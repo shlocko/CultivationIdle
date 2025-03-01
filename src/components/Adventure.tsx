@@ -16,44 +16,49 @@ export const Adventure: Component = () => {
 		},
 	];
 	return (
-		<>
-			<h2> Adventure </h2>
-			<p>
-				{" "}
-				Progress: {state.adventure.areaTickCounts[state.adventure.area]}
-				/500
-			</p>
-			<Show when={state.state === "Combat"}>
-				<Combat />
-			</Show>
-			<Show when={state.state !== "Combat"}>
+		<div class={(utils.row_container)}>
+			<div></div>
+			<div classList={{
+				[utils.container]: true,
+			}}>
+				<h2> Adventure </h2>
+				<p>
+					{" "}
+					Progress: {state.adventure.areaTickCounts[state.adventure.area]}
+					/500
+				</p>
+				<Show when={state.state === "Combat"}>
+					<Combat />
+				</Show>
+				<Show when={state.state !== "Combat"}>
+					<button
+						class={(utils.btn, utils.wide_top_auto)}
+						onClick={() => {
+							init(
+								[
+									"wanderingKnight",
+									"wanderingKnight",
+									"wanderingKnight",
+									"wanderingKnight",
+								],
+								testTable,
+								10,
+								100,
+							);
+						}}
+					>
+						<p>test</p>
+					</button>
+				</Show>
 				<button
-					class={(utils.btn, utils.top_auto)}
+					class={(utils.btn, utils.wide_top_auto)}
 					onClick={() => {
-						init(
-							[
-								"wanderingKnight",
-								"wanderingKnight",
-								"wanderingKnight",
-								"wanderingKnight",
-							],
-							testTable,
-							10,
-							100,
-						);
+						setAction("Adventure");
 					}}
 				>
-					<p>test</p>
+					<p> Adventure </p>
 				</button>
-			</Show>
-			<button
-				class={(utils.btn, utils.top_auto)}
-				onClick={() => {
-					setAction("Adventure");
-				}}
-			>
-				<p> Adventure </p>
-			</button>
-		</>
+			</div>
+		</div>
 	);
 };
