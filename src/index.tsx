@@ -40,7 +40,6 @@ render(
 			</Modal>
 			<HashRouter root={Template} base="/">
 				<Route path="/" component={Main} />
-				<Route path="/train" component={Train} />
 				<Route path="/adventure" component={Adventure} />
 				<Route path="/inventory" component={Inventory} />
 				<Route path="/shop" component={Shop} />

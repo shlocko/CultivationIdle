@@ -9,9 +9,6 @@ export const Nav: Component = () => {
 			<A class={styles.nav_item} href="/">
 				<p>Meditate</p>
 			</A>
-			<A class={styles.nav_item} href="/train">
-				<p>Train</p>
-			</A>
 			<A class={styles.nav_item} href="/adventure">
 				<p>Adventure</p>
 			</A>
