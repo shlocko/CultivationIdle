@@ -204,7 +204,7 @@ export const [state, setState] = createStore({
 	},
 	adventure: {
 		tickSpeed: 1,
-		unlockedAreas: ["BeginnerArea"] as Area[],
+		unlockedAreas: ["BeginnerArea", "SecondArea"] as Area[],
 		area: "BeginnerArea" as Area,
 		areaTickCounts: {
 			BeginnerArea: 0,
@@ -556,3 +556,7 @@ export const clearNotOngoing = () => {
 		}
 	});
 };
+
+export const setArea = (area: Area) => {
+	setState("adventure", "area", area)
+}

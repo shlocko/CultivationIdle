@@ -1,6 +1,6 @@
-import { type Component, Show, createMemo } from "solid-js";
+import { type Component, Show, createMemo, For } from "solid-js";
 import utils from "../styles/utils.module.css";
-import { LootTable, setAction, state } from "../state/store";
+import { LootTable, setAction, setArea, state } from "../state/store";
 import { Combat } from "./Combat";
 import { init } from "../functions/combatMethods";
 import { getItem } from "../state/items";
@@ -17,7 +17,22 @@ export const Adventure: Component = () => {
 	];
 	return (
 		<div class={(utils.row_container)}>
-			<div></div>
+			<div class={(utils.container)}>
+				<For each={state.adventure.unlockedAreas}>
+					{(item, i) => (
+						<button classList={{
+							[utils.btn]: true,
+							[utils.btn_active]: state.adventure.area === item
+						}}
+							onClick={() => {
+								setArea(item)
+							}}
+						>
+							{item}
+						</button>
+					)}
+				</For>
+			</div>
 			<div classList={{
 				[utils.container]: true,
 			}}>
