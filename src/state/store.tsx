@@ -38,14 +38,14 @@ type Rank =
 
 // Gamedata on the ranks of advancement
 export const rankInfo = [
-	{ name: "Foundation", advMana: 27 },
-	{ name: "CoreFormation", advMana: 81 },
-	{ name: "RedCore", advMana: 243 },
-	{ name: "GreenCore", advMana: 729 },
-	{ name: "GoldCore", advMana: 2187 },
-	{ name: "SilverCore", advMana: 6561 },
-	{ name: "WhiteCore", advMana: 19683 },
-	{ name: "Enlightened", advMana: 59049 },
+	{ name: "Foundation", advMana: 20 },
+	{ name: "CoreFormation", advMana: 80 },
+	{ name: "RedCore", advMana: 250 },
+	{ name: "GreenCore", advMana: 750 },
+	{ name: "GoldCore", advMana: 2000 },
+	{ name: "SilverCore", advMana: 6500 },
+	{ name: "WhiteCore", advMana: 20000 },
+	{ name: "Enlightened", advMana: 60000 },
 ];
 
 // Available aspects at CoreFormation rank
@@ -204,7 +204,7 @@ export const [state, setState] = createStore({
 	},
 	adventure: {
 		tickSpeed: 1,
-		unlockedAreas: ["BeginnerArea", "SecondArea"] as Area[],
+		unlockedAreas: ["BeginnerArea"] as Area[],
 		area: "BeginnerArea" as Area,
 		areaTickCounts: {
 			BeginnerArea: 0,
@@ -234,7 +234,7 @@ export const [state, setState] = createStore({
 	meditationTechniques: [] as meditationTechnique[],
 	activeMeditationTechnique: 0,
 	// Player's helth points for combat
-	health: 20,
+	health: 0,
 	// Player's inventory, item name - item count
 	inventory: [
 		{ item: items["Health Potion"], quantity: 3 },
