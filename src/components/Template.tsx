@@ -12,7 +12,7 @@ import {
 	changeState,
 	opponent,
 	addCoins,
-    setAction,
+	setAction,
 } from "../state/store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
@@ -62,11 +62,11 @@ export const Template: Component<RouteSectionProps> = (props) => {
 				if (combatState.returnFunction) {
 					combatState.returnFunction();
 				}
-			}else if(state.health <= 0){
-                changeState("Tick");
-                setAction("Meditate");
-                sendModal("You died! Meditate on your failures and try again!");
-            }
+			} else if (state.health <= 0) {
+				changeState("Tick");
+				setAction("Meditate");
+				sendModal("You died! Meditate on your failures and try again!");
+			}
 		}
 	}, 10);
 	onCleanup(() => {
@@ -75,8 +75,10 @@ export const Template: Component<RouteSectionProps> = (props) => {
 	return (
 		<div class={utils.App}>
 			<QuickInfo />
-			<progress max="100" value={state.bar}>
-				{state.bar}/100
+			<progress
+				class={(utils.bar)}
+				max="100"
+				value={state.bar}>
 			</progress>
 			<div
 				style={{
