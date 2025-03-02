@@ -208,6 +208,7 @@ export const [state, setState] = createStore({
 		area: "BeginnerArea" as Area,
 		areaTickCounts: {
 			BeginnerArea: 0,
+			SecondArea: 0,
 		} as Record<Area, number>,
 		areaBossesBeaten: [] as Area[],
 	},

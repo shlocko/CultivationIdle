@@ -30,12 +30,12 @@ export const beginnerArea = {
 		{
 			name: "Second Area",
 			isUnlocked: () => {
-				if(state.adventure.areaTickCounts.BeginnerArea >=
+				if (state.adventure.areaTickCounts.BeginnerArea >=
 					beginnerArea.nextArea &&
 					state.adventure.areaBossesBeaten.indexOf("BeginnerArea") !==
-						-1 && state.adventure.unlockedAreas.indexOf("SecondArea")===-1){
-                    return true;
-				}else{
+					-1 && state.adventure.unlockedAreas.indexOf("SecondArea") === -1) {
+					return true;
+				} else {
 					return false;
 				}
 			},
@@ -59,9 +59,9 @@ export const beginnerArea = {
 					],
 					10,
 					100,
-                    () => () => {
-                        sendModal("Bandit test")
-                    }
+					() => () => {
+						sendModal("Bandit test")
+					}
 				);
 			},
 		} as Event,
