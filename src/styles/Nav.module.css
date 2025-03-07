@@ -1,15 +1,15 @@
 .nav {
-    min-width: 100%;
-    min-height: 3.2em;
-    max-height: 5em;
+    width: 12em;
+    height: 100%;
     display: flex;
-    background-color: lightgray;
+	flex-direction: column;
+    /*background-color: lightgray;*/
     overflow-x: auto;
     white-space: nowrap;
+	grid-area: sidebar;
 }
 
 .nav_item {
-    height: 100%;
     padding-left: 1em;
     padding-right: 1em;
     font-weight: 600;
@@ -18,4 +18,5 @@
     flex-shrink: 0;
     text-justify: center;
     text-align: center;
+	background-color:rgba(1, 1, 1, 0.2);
 }

@@ -22,6 +22,7 @@ import { cloneDeep } from "lodash";
 import { pickLoot } from "../functions/combatMethods";
 import { sendLoot, sendModal } from "../state/modalMessages";
 import { RouteSectionProps } from "@solidjs/router";
+import { TickBar } from "./TickBar";
 
 export const Template: Component<RouteSectionProps> = (props) => {
 	const [saveTimer, setSaveTimer] = createSignal(0);
@@ -74,23 +75,20 @@ export const Template: Component<RouteSectionProps> = (props) => {
 	});
 	return (
 		<div class={utils.App}>
+			<Nav />
 			<QuickInfo />
-			<progress
-				class={(utils.bar)}
-				max="100"
-				value={state.bar}>
-			</progress>
+			<TickBar />
 			<div
 				style={{
 					"flex-grow": 1,
 					"overflow-y": "auto",
 					display: "flex",
 					"flex-direction": "column",
+					"grid-area": "main",
 				}}
 			>
 				{props.children}
 			</div>
-			<Nav />
 		</div>
 	);
 };
