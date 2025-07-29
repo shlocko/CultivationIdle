@@ -16,6 +16,7 @@ import {
 import { meditationTechniqueEffect } from "./techniqueMethods";
 import { VerdantFields } from "../areas/VerdantFields";
 import { createMemo } from "solid-js";
+import { areas } from "../areas/area";
 
 // Happens every tick
 export const perTick = () => {
@@ -81,43 +82,41 @@ export const adventureTick = () => {
 	console.log("adventure");
 	const eventRoll = Math.random() * 100 + 1;
 	console.log(eventRoll);
-	if (state.adventure.area === "BeginnerArea") {
-		setState("adventure", "areaTickCounts", "BeginnerArea", (tc) => tc + 1);
-		if (eventRoll >= 99) {
-		} else if (eventRoll >= 95) {
-			const pick = Math.floor(
-				Math.random() * VerdantFields.rareEvents.length,
+	setState("adventure", "areas", state.adventure.location, "tickCount", (tc) => tc + 1);
+	if (eventRoll >= 99) {
+	} else if (eventRoll >= 95) {
+		const pick = Math.floor(
+			Math.random() * areas[state.adventure.location].rareEvents.length,
+		);
+		if (areas[state.adventure.location].rareEvents[pick].isUnlocked()) {
+			sendModal(
+				`You encounter ${areas[state.adventure.location].rareEvents[pick].name}!`,
 			);
-			if (VerdantFields.rareEvents[pick].isUnlocked()) {
-				sendModal(
-					`You encounter ${VerdantFields.rareEvents[pick].name}!`,
-				);
-				VerdantFields.rareEvents[pick].activation();
-			}
-		} else if (eventRoll >= 80) {
-			const pick = Math.floor(
-				Math.random() * VerdantFields.uncommonEvents.length,
+			areas[state.adventure.location].rareEvents[pick].activation();
+		}
+	} else if (eventRoll >= 80) {
+		const pick = Math.floor(
+			Math.random() * areas[state.adventure.location].uncommonEvents.length,
+		);
+		console.log(pick);
+		if (areas[state.adventure.location].uncommonEvents[pick].isUnlocked()) {
+			sendModal(
+				`You encounter ${areas[state.adventure.location].uncommonEvents[pick].name}!`,
 			);
-			console.log(pick);
-			if (VerdantFields.uncommonEvents[pick].isUnlocked()) {
-				sendModal(
-					`You encounter ${VerdantFields.uncommonEvents[pick].name}!`,
-				);
-				VerdantFields.uncommonEvents[pick].activation();
-			}
-		} else if (eventRoll >= 0) {
-			console.log("roll");
-			let pick = Math.floor(
-				Math.random() * VerdantFields.commonEvents.length,
+			areas[state.adventure.location].uncommonEvents[pick].activation();
+		}
+	} else if (eventRoll >= 0) {
+		console.log("roll");
+		let pick = Math.floor(
+			Math.random() * areas[state.adventure.location].commonEvents.length,
+		);
+		//pick = 1;
+		console.log(pick);
+		if (areas[state.adventure.location].commonEvents[pick].isUnlocked()) {
+			sendModal(
+				`You encounter ${areas[state.adventure.location].commonEvents[pick].name}!`,
 			);
-			//pick = 1;
-			console.log(pick);
-			if (VerdantFields.commonEvents[pick].isUnlocked()) {
-				sendModal(
-					`You encounter ${VerdantFields.commonEvents[pick].name}!`,
-				);
-				VerdantFields.commonEvents[pick].activation();
-			}
+			areas[state.adventure.location].commonEvents[pick].activation();
 		}
 	}
 };
