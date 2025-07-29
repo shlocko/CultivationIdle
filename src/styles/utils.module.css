@@ -206,6 +206,11 @@ body {
 	background: inherit;
 }
 
+.btn:hover {
+	cursor: pointer;
+	color: purple;
+}
+
 .wide {
 	width: 100%;
 }

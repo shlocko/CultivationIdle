@@ -216,7 +216,7 @@ export const [state, setState] = createStore({
 			} as AreaState,
 			"HollowWoods": {
 				name: "HollowWoods",
-				unlocked: true,
+				unlocked: false,
 				tickCount: 0,
 				unlocks: {
 

@@ -9,7 +9,7 @@ export const intro = () => {
 	);
 };
 
-const test = () => {
+/*const test = () => {
 	if (combatState.opponents.length === 0) {
 		sendModal("You win!");
 		sendModal("You may now find the next area.");
@@ -24,12 +24,12 @@ const test = () => {
 	} else {
 		sendModal("You lose! Try again!");
 	}
-};
+};*/
 
 export const beginnerBoss = () => {
 	sendModal("You face the boss of the beginner area! Beat it to progress.");
 	init(
-		["wanderingKnight", "wanderingKnight", "wanderingKnight"],
+		["wanderingKnight"],
 		[lootEntry("Axe", 100, 1, 1), lootEntry("Health Potion", 100, 5, 20)],
 		1000,
 		10000,
@@ -40,15 +40,7 @@ export const beginnerBoss = () => {
 				//console.log("sequence");
 				sendModal("You win!");
 				sendModal("You may now find the next area.");
-				if (
-					state.adventure.areaBossesBeaten.indexOf(
-						"BeginnerArea" as Area,
-					) === -1
-				) {
-					let arr = cloneDeep(state.adventure.areaBossesBeaten);
-					arr.push("BeginnerArea");
-					setState("adventure", "areaBossesBeaten", arr);
-				}
+				setState("adventure", "areas", "VerdantFields", "unlocks", "bossBeaten", true)
 			} else {
 				sendModal("You lose! Try again!");
 			}

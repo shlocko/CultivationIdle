@@ -10,7 +10,7 @@ import { Area } from "./area";
 
 export const VerdantFields: Area = {
 	unlockThresholds: {
-		"nextArea": 500,
+		"nextArea": 5,
 	},
 	commonEvents: [
 		{
@@ -18,7 +18,7 @@ export const VerdantFields: Area = {
 			isUnlocked: () => {
 				if (
 					state.adventure.areas["VerdantFields"].tickCount >=
-					VerdantFields.unlockThresholds["nextArea"]
+					VerdantFields.unlockThresholds["nextArea"] && state.adventure.areas.VerdantFields.unlocks.bossBeaten == false
 				) {
 					return true;
 				} else {
@@ -31,12 +31,12 @@ export const VerdantFields: Area = {
 			},
 		},
 		{
-			name: "Second Area",
+			name: "Hollow Woods",
 			isUnlocked: () => {
 				if (state.adventure.areas["VerdantFields"].tickCount >=
 					VerdantFields.unlockThresholds["nextArea"] &&
-					state.adventure.areas["VerdantFields"].unlocks["bossBeaten"] !==
-					true && state.adventure.areas["SecondArea"].unlocked === false) {
+					state.adventure.areas["VerdantFields"].unlocks["bossBeaten"] ==
+					true && state.adventure.areas["HollowWoods"].unlocked === false) {
 					return true;
 				} else {
 					return false;
@@ -44,7 +44,6 @@ export const VerdantFields: Area = {
 			},
 			activation: () => {
 				setState("adventure", "areas", "HollowWoods", "unlocked", true);
-				sendModal("You unlocked the second area");
 			},
 		},
 		{

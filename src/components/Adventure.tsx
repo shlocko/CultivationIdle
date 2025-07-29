@@ -17,22 +17,24 @@ export const Adventure: Component = () => {
 	];
 	return (
 		<div class={(utils.row_container)}>
-			<div class={(utils.container)}>
-				<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked)}>
-					{(item, i) => (
-						<button classList={{
-							[utils.btn]: true,
-							[utils.btn_active]: state.adventure.location === item
-						}}
-							onClick={() => {
-								setArea(item)
+			<Show when={state.state !== "Combat"}>
+				<div class={(utils.container)}>
+					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked)}>
+						{(item, i) => (
+							<button classList={{
+								[utils.btn]: true,
+								[utils.btn_active]: state.adventure.location === item
 							}}
-						>
-							{item}
-						</button>
-					)}
-				</For>
-			</div>
+								onClick={() => {
+									setArea(item)
+								}}
+							>
+								{item}
+							</button>
+						)}
+					</For>
+				</div>
+			</Show>
 			<div classList={{
 				[utils.container]: true,
 			}}>
