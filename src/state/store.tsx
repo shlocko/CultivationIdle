@@ -479,6 +479,7 @@ export const inventoryAdd = (item: ItemNames, quantity: number) => {
 		const index = arr.findIndex((e) => e.item.name === item);
 		setState("inventory", index, "quantity", (num) => num + quantity);
 	} else {
+		console.log(item)
 		arr.push({ item: items[item] as Item, quantity: quantity });
 		setState("inventory", arr);
 	}

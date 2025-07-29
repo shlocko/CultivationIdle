@@ -190,6 +190,10 @@ body {
 
 }
 
+.manabar * {
+	border-radius: 0.2rem;
+}
+
 .btn {
 	display: inline-block;
 	font-weight: 600;

@@ -198,14 +198,14 @@ export const Combat: Component = () => {
 					<button
 						class={utils.btn}
 						onClick={() => {
-							if (tickMana() <= state.mana) {
-								endTurn();
-							} else if (actionChoice() === 1 && !hasItem("Health Potion")) {
+							if (actionChoice() === 1 && !hasItem("Health Potion")) {
 								sendModal("You do not have any Health Potions.")
 							} else if (actionChoice() === 2 && !hasItem("Mana Potion")) {
 								sendModal("You do not have any Mana Potions.")
-							} else {
+							} else if (tickMana() >= state.mana) {
 								sendModal("You are out of mana!");
+							} else {
+								endTurn();
 							}
 						}}
 					>

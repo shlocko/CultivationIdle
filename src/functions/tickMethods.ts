@@ -20,9 +20,7 @@ import { areas } from "../areas/area";
 
 // Happens every tick
 export const perTick = () => {
-	if (state.mana < state.maxMana) {
-		setState("mana", (m) => m + state.passiveManaRegen);
-	}
+	setState("mana", (m) => m + state.passiveManaRegen);
 	if (state.health > maxHealth()) {
 		setState("health", maxHealth());
 	}
