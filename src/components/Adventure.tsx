@@ -49,7 +49,7 @@ export const Adventure: Component = () => {
 				</Show>
 				<Show when={state.state !== "Combat"}>
 					<button
-						class={(utils.btn, utils.wide_top_auto)}
+						class={`${utils.btn} ${utils.wide_top_auto}`}
 						onClick={() => {
 							init(
 								[
@@ -68,7 +68,7 @@ export const Adventure: Component = () => {
 					</button>
 				</Show>
 				<button
-					class={(utils.btn, utils.wide_top_auto)}
+					class={`${utils.btn} ${utils.wide_top_auto}`}
 					onClick={() => {
 						setAction("Adventure");
 					}}

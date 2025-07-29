@@ -23,3 +23,8 @@
 	border: 15px solid transparent;
 	border-image: url(../assets/box-button1.png) 90 stretch;
 }
+
+.nav_item:hover {
+	cursor: pointer;
+	color: purple;
+}

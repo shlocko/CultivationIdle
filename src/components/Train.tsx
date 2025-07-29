@@ -26,7 +26,7 @@ export const Train: Component = () => {
 				)}
 			</For>
 			<button
-				class={(utils.btn, utils.wide_top_auto)}
+				class={`${utils.btn} ${utils.wide_top_auto}`}
 				onClick={() => {
 					setAction("Train");
 				}}
