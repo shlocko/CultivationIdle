@@ -80,7 +80,6 @@ export const Template: Component<RouteSectionProps> = (props) => {
 		<div class={utils.App}>
 			<Nav />
 			<QuickInfo />
-			<TickBar />
 			<div
 				style={{
 					"flex-grow": 1,
@@ -92,6 +91,7 @@ export const Template: Component<RouteSectionProps> = (props) => {
 			>
 				{props.children}
 			</div>
+			<TickBar />
 		</div>
 	);
 };

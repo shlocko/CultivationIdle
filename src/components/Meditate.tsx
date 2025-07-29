@@ -28,9 +28,9 @@ export const Meditate: Component = () => {
 			</For>
 
 			<button
+				class={`${utils.btn} ${utils.wide_top_auto}`}
 				classList={{
-					[utils.btn]: true,
-					[utils.wide_top_auto]: true
+					[utils.btn_active]: state.action === "Meditate"
 				}}
 				onClick={() => setAction("Meditate")}
 			>

@@ -21,7 +21,9 @@ export const HealthBar: Component = () => {
 			"background-size": "15rem 4rem",
 			"background-repeat": "no-repeat",
 		}}>
-			<div>{state.health}/{maxHealth()}</div>
+			<div style={{
+				//"text-shadow": "-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff",
+			}}>{state.health}/{maxHealth()}</div>
 		</div>
 	)
 }

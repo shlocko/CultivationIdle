@@ -69,6 +69,9 @@ export const Adventure: Component = () => {
 				</Show>
 				<button
 					class={`${utils.btn} ${utils.wide_top_auto}`}
+					classList={{
+						[utils.btn_active]: state.action === "Adventure"
+					}}
 					onClick={() => {
 						setAction("Adventure");
 					}}

@@ -23,7 +23,14 @@ export const QuickInfo: Component = () => {
 	);*/
 	return (
 		<div class={utils.quickinfo}>
-			<HealthBar />
+			<div style={{
+				"display": "flex",
+				"flex-direction": "row",
+				"column-gap": "1rem",
+			}}>
+				<HealthBar />
+				<p> Level: {state.rank}</p>
+			</div>
 			<ManaBar />
 		</div>
 	)

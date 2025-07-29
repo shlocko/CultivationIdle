@@ -44,6 +44,8 @@ export const ManaBar: Component = () => {
 				"transform": "translateX(-50%)",
 				"bottom": "1rem",
 
+				//"text-shadow": "-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff",
+
 			}}>Mana: {state.mana.toFixed(1)}/{state.maxMana.toFixed(1)}/{rankInfo[state.rank].advMana}</div>
 		</div >
 	)
