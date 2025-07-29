@@ -4,7 +4,7 @@ import { LootTable, setAction, setArea, state } from "../state/store";
 import { Combat } from "./Combat";
 import { init } from "../functions/combatMethods";
 import { getItem } from "../state/items";
-import { beginnerArea } from "../state/beginnerArea";
+import { VerdantFields } from "../areas/VerdantFields";
 
 export const Adventure: Component = () => {
 	let testTable: LootTable = [
@@ -18,11 +18,11 @@ export const Adventure: Component = () => {
 	return (
 		<div class={(utils.row_container)}>
 			<div class={(utils.container)}>
-				<For each={state.adventure.unlockedAreas}>
+				<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked)}>
 					{(item, i) => (
 						<button classList={{
 							[utils.btn]: true,
-							[utils.btn_active]: state.adventure.area === item
+							[utils.btn_active]: state.adventure.location === item
 						}}
 							onClick={() => {
 								setArea(item)
@@ -39,7 +39,7 @@ export const Adventure: Component = () => {
 				<h2> Adventure </h2>
 				<p>
 					{" "}
-					Progress: {state.adventure.areaTickCounts[state.adventure.area]}
+					Progress: {state.adventure.areas[state.adventure.location].tickCount}
 					/500
 				</p>
 				<Show when={state.state === "Combat"}>

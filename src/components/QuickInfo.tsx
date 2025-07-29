@@ -1,9 +1,11 @@
 import { type Component } from "solid-js";
 import utils from "../styles/utils.module.css";
 import { state, rankInfo } from "../state/store";
+import { HealthBar } from "./HealthBar";
+import { ManaBar } from "./ManaBar";
 
 export const QuickInfo: Component = () => {
-	return (
+	/*return (
 		<div class={utils.quickinfo}>
 			<p> HP: {state.health} </p>
 			<p>
@@ -18,5 +20,11 @@ export const QuickInfo: Component = () => {
 			<p> Prev State: {state.previousState} </p>
 			<p> Weapon: {state.equippedWeapon?.name} </p>
 		</div>
-	);
+	);*/
+	return (
+		<div class={utils.quickinfo}>
+			<HealthBar />
+			<ManaBar />
+		</div>
+	)
 };

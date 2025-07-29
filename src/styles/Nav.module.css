@@ -1,22 +1,25 @@
 .nav {
-    width: 12em;
-    height: 100%;
-    display: flex;
+	width: 12em;
+	height: 100%;
+	display: flex;
 	flex-direction: column;
-    /*background-color: lightgray;*/
-    overflow-x: auto;
-    white-space: nowrap;
+	/*background-color: lightgray;*/
+	overflow-x: auto;
+	white-space: nowrap;
 	grid-area: sidebar;
 }
 
 .nav_item {
-    padding-left: 1em;
-    padding-right: 1em;
-    font-weight: 600;
-    text-decoration: none;
-    color: #135aa7;
-    flex-shrink: 0;
-    text-justify: center;
-    text-align: center;
-	background-color:rgba(1, 1, 1, 0.2);
+	padding-left: 1em;
+	padding-right: 1em;
+	font-weight: 600;
+	text-decoration: none;
+	color: #135aa7;
+	flex-shrink: 0;
+	text-justify: center;
+	text-align: center;
+	--background-color: rgba(1, 1, 1, 0.2);
+	background: inherit;
+	border: 15px solid transparent;
+	border-image: url(../assets/box-button1.png) 90 stretch;
 }

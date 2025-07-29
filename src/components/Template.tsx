@@ -44,8 +44,8 @@ export const Template: Component<RouteSectionProps> = (props) => {
 			}
 			if (state.bar > 100) {
 				setState("bar", 0.0);
-				tick[state.action]();
 				perTick();
+				tick[state.action]();
 			}
 		} else if (state.state === "Modal") {
 			if (state.modalMessages.length === 0) {

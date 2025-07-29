@@ -14,7 +14,7 @@ import {
 	maxHealth,
 } from "../state/store";
 import { meditationTechniqueEffect } from "./techniqueMethods";
-import { beginnerArea } from "../state/beginnerArea";
+import { VerdantFields } from "../areas/VerdantFields";
 import { createMemo } from "solid-js";
 
 // Happens every tick
@@ -86,37 +86,37 @@ export const adventureTick = () => {
 		if (eventRoll >= 99) {
 		} else if (eventRoll >= 95) {
 			const pick = Math.floor(
-				Math.random() * beginnerArea.rareEvents.length,
+				Math.random() * VerdantFields.rareEvents.length,
 			);
-			if (beginnerArea.rareEvents[pick].isUnlocked()) {
+			if (VerdantFields.rareEvents[pick].isUnlocked()) {
 				sendModal(
-					`You encounter ${beginnerArea.rareEvents[pick].name}!`,
+					`You encounter ${VerdantFields.rareEvents[pick].name}!`,
 				);
-				beginnerArea.rareEvents[pick].activation();
+				VerdantFields.rareEvents[pick].activation();
 			}
 		} else if (eventRoll >= 80) {
 			const pick = Math.floor(
-				Math.random() * beginnerArea.uncommonEvents.length,
+				Math.random() * VerdantFields.uncommonEvents.length,
 			);
-            console.log(pick);
-			if (beginnerArea.uncommonEvents[pick].isUnlocked()) {
+			console.log(pick);
+			if (VerdantFields.uncommonEvents[pick].isUnlocked()) {
 				sendModal(
-					`You encounter ${beginnerArea.uncommonEvents[pick].name}!`,
+					`You encounter ${VerdantFields.uncommonEvents[pick].name}!`,
 				);
-				beginnerArea.uncommonEvents[pick].activation();
+				VerdantFields.uncommonEvents[pick].activation();
 			}
 		} else if (eventRoll >= 0) {
 			console.log("roll");
 			let pick = Math.floor(
-				Math.random() * beginnerArea.commonEvents.length,
+				Math.random() * VerdantFields.commonEvents.length,
 			);
 			//pick = 1;
 			console.log(pick);
-			if (beginnerArea.commonEvents[pick].isUnlocked()) {
+			if (VerdantFields.commonEvents[pick].isUnlocked()) {
 				sendModal(
-					`You encounter ${beginnerArea.commonEvents[pick].name}!`,
+					`You encounter ${VerdantFields.commonEvents[pick].name}!`,
 				);
-				beginnerArea.commonEvents[pick].activation();
+				VerdantFields.commonEvents[pick].activation();
 			}
 		}
 	}

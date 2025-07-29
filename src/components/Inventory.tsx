@@ -71,6 +71,13 @@ export const Inventory: Component = () => {
 			>
 				Add Dagger
 			</button>
+			<button
+				onClick={() => {
+					inventoryAdd("Sword", 1);
+				}}
+			>
+				Add Sword
+			</button>
 			<div class={utils.top_auto} />
 		</>
 	);

@@ -1,13 +1,29 @@
+@font-face {
+	font-family: "CultivationIdle";
+	src: url("./assets/Cultivationidlefont-Regular.ttf") format("truetype-variations");
+	/* Adjust path and format as needed */
+	font-weight: normal;
+	font-style: normal;
+}
+
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+	font-family: "CultivationIdle", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
 		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
 		"Helvetica Neue", sans-serif;
+	font-size: 1.4em;
+	font-weight: bold;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-		monospace;
+	font-family: "CultivationIdle", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+		"Helvetica Neue", sans-serif;
+}
+
+button {
+	font-family: inherit;
+	font-size: inherit;
 }

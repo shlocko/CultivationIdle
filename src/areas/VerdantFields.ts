@@ -1,21 +1,24 @@
 import { init, pickLoot } from "../functions/combatMethods";
-import { Enemies } from "./enemies";
-import { Event } from "./events";
-import { ModalMessage, sendLoot, sendModal } from "./modalMessages";
-import { Item, addCoins, lootEntry, setAction, setState, state } from "./store";
-import { items } from "./items";
+import { Enemies } from "../state/enemies";
+import { Event } from "../state/events";
+import { ModalMessage, sendLoot, sendModal } from "../state/modalMessages";
+import { Item, addCoins, lootEntry, setAction, setState, state } from "../state/store";
+import { items } from "../state/items";
 import { cloneDeep, uniq } from "lodash";
 import { beginnerBoss } from "../functions/sequenceMethods";
+import { Area } from "./area";
 
-export const beginnerArea = {
-	nextArea: 500,
+export const VerdantFields: Area = {
+	unlockThresholds: {
+		"nextArea": 500,
+	},
 	commonEvents: [
 		{
 			name: "the Boss",
 			isUnlocked: () => {
 				if (
-					state.adventure.areaTickCounts.BeginnerArea >=
-					beginnerArea.nextArea
+					state.adventure.areas["VerdantFields"].tickCount >=
+					VerdantFields.unlockThresholds["nextArea"]
 				) {
 					return true;
 				} else {
@@ -30,19 +33,17 @@ export const beginnerArea = {
 		{
 			name: "Second Area",
 			isUnlocked: () => {
-				if (state.adventure.areaTickCounts.BeginnerArea >=
-					beginnerArea.nextArea &&
-					state.adventure.areaBossesBeaten.indexOf("BeginnerArea") !==
-					-1 && state.adventure.unlockedAreas.indexOf("SecondArea") === -1) {
+				if (state.adventure.areas["VerdantFields"].tickCount >=
+					VerdantFields.unlockThresholds["nextArea"] &&
+					state.adventure.areas["VerdantFields"].unlocks["bossBeaten"] !==
+					true && state.adventure.areas["SecondArea"].unlocked === false) {
 					return true;
 				} else {
 					return false;
 				}
 			},
 			activation: () => {
-				let arr = cloneDeep(state.adventure.unlockedAreas);
-				arr.push("SecondArea");
-				setState("adventure", "unlockedAreas", arr);
+				setState("adventure", "areas", "HollowWoods", "unlocked", true);
 				sendModal("You unlocked the second area");
 			},
 		},

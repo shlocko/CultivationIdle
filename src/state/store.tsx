@@ -17,6 +17,7 @@ import { effectMultiplier } from "../functions/combatMethods";
 import { actionChoice } from "../components/Combat";
 import { ItemNames, items } from "./items";
 import { intro } from "../functions/sequenceMethods";
+import { AreaNames, AreaState, areas } from "../areas/area";
 
 type Action = "Meditate" | "Train" | "Adventure";
 
@@ -173,7 +174,6 @@ export type LootCollection = {
 	count: number;
 }[];
 
-export type Area = "BeginnerArea" | "SecondArea";
 
 //********************************************************
 // state
@@ -204,13 +204,25 @@ export const [state, setState] = createStore({
 	},
 	adventure: {
 		tickSpeed: 1,
-		unlockedAreas: ["BeginnerArea"] as Area[],
-		area: "BeginnerArea" as Area,
-		areaTickCounts: {
-			BeginnerArea: 0,
-			SecondArea: 0,
-		} as Record<Area, number>,
-		areaBossesBeaten: [] as Area[],
+		location: "VerdantFields" as AreaNames,
+		areas: {
+			"VerdantFields": {
+				name: "VerdantFields",
+				unlocked: true,
+				tickCount: 0,
+				unlocks: {
+					bossBeaten: false,
+				}
+			} as AreaState,
+			"HollowWoods": {
+				name: "HollowWoods",
+				unlocked: true,
+				tickCount: 0,
+				unlocks: {
+
+				}
+			} as AreaState,
+		} as Record<AreaNames, AreaState>,
 	},
 	// Player's current mana
 	mana: 10,
@@ -558,6 +570,6 @@ export const clearNotOngoing = () => {
 	});
 };
 
-export const setArea = (area: Area) => {
-	setState("adventure", "area", area)
+export const setArea = (area: AreaNames) => {
+	setState("adventure", "location", area)
 }
