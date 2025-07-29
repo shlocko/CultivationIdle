@@ -158,18 +158,17 @@ body {
 }
 
 .quickinfo {
-	min-height: 10em;
+	min-height: 6em;
 	/*background-color: lightgray;*/
 	display: grid;
 	--grid-template-columns: 1fr 1fr 1fr 1fr;
 	grid-template-columns: 1fr;
-	grid-template-rows: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
 	grid-area: header;
 }
 
 
 .healthbar {
-	--border: 1px solid green;
 	height: 4rem;
 	width: 15rem;
 	display: flex;
@@ -181,6 +180,14 @@ body {
 
 .healthbar div {
 	padding: 0.5rem;
+}
+
+.manabar {
+	height: 4rem;
+	width: 100%;
+	max-width: 100rem;
+	position: relative;
+
 }
 
 .btn {

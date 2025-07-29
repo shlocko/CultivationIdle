@@ -46,6 +46,9 @@ export const Template: Component<RouteSectionProps> = (props) => {
 				setState("bar", 0.0);
 				perTick();
 				tick[state.action]();
+				if (state.mana > state.maxMana) {
+					setState("mana", state.maxMana);
+				}
 			}
 		} else if (state.state === "Modal") {
 			if (state.modalMessages.length === 0) {

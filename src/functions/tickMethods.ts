@@ -23,9 +23,6 @@ export const perTick = () => {
 	if (state.mana < state.maxMana) {
 		setState("mana", (m) => m + state.passiveManaRegen);
 	}
-	if (state.mana > state.maxMana) {
-		setState("mana", state.maxMana);
-	}
 	if (state.health > maxHealth()) {
 		setState("health", maxHealth());
 	}
