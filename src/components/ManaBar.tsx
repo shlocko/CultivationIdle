@@ -11,12 +11,27 @@ export const ManaBar: Component = () => {
 	console.log(maxManaPercent())
 	return (
 		<div class={utils.manabar}>
+
 			<div style={{
 				"position": "absolute",
 				"top": "0",
 				"left": "0",
 				"z-index": "0",
-				"background-image": `url(${starLong}), url(${manaBlue})`,
+				"background-image": `url(${manaPurple})`,
+				"background-size": "100rem 100%",
+				"background-repeat": "no-repeat",
+				"width": `100%`,
+				"height": "100%",
+				"transition": "width 0.3s ease-in-out",
+				"filter": "grayscale(1) opacity(0.4)",
+			}}>
+			</div>
+			<div style={{
+				"position": "absolute",
+				"top": "0",
+				"left": "0",
+				"z-index": "0",
+				"background-image": `url(${starLong}), url(${manaPurple})`,
 				"background-size": "100rem 100%",
 				"background-repeat": "no-repeat",
 				"width": `${maxManaPercent()}%`,
@@ -28,7 +43,7 @@ export const ManaBar: Component = () => {
 					"top": "0",
 					"left": "0",
 					"z-index": "0",
-					"background-image": ` url(${manaPurple})`,
+					"background-image": ` url(${manaBlue})`,
 					"background-size": "100rem 100%",
 					"background-repeat": "no-repeat",
 					"width": `${manaPercent()}%`,

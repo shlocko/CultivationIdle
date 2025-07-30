@@ -9,8 +9,11 @@ export const Main: Component = () => {
 			<div classList={{
 				[utils.row_container]: true
 			}}>
-				<div classList={{ [utils.container]: true }}><Meditate /></div>
-				<div classList={{ [utils.container]: true }}><Train /></div>
+				<div classList={{ [utils.container]: true }}>
+					<Meditate />
+					<Train />
+				</div>
+				<div classList={{ [utils.container]: true }}></div>
 			</div>
 		</>
 	);

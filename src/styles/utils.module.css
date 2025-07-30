@@ -1,4 +1,5 @@
 * {
+	font-family: "CultivationIdle";
 	box-sizing: border-box;
 	--text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 	--webkit-text-stroke: 1px white;
@@ -40,7 +41,6 @@ body,
 	max-width: none;
 	margin: 0;
 	padding: 0;
-	font-family: "CultivationIdle";
 }
 
 body {
@@ -178,8 +178,20 @@ body {
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr 1fr;
 	grid-area: header;
+	border: 15px solid transparent;
+	border-image: url(../assets/box-button1.png) 90 stretch;
+	background: inherit;
 }
 
+.train {
+	width: 100%;
+	display: flex;
+}
+
+.meditate {
+	width: 100%;
+	display: flex;
+}
 
 .healthbar {
 	height: 4rem;
@@ -222,6 +234,13 @@ body {
 .btn:hover {
 	cursor: pointer;
 	color: purple;
+}
+
+.dropdown {
+	border: 15px solid transparent;
+	border-image: url(../assets/box-button1.png) 90 stretch;
+	background: inherit;
+	height: 100%;
 }
 
 .wide {
