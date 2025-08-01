@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import solidPlugin from "vite-plugin-solid";
 // import devtools from 'solid-devtools/vite';
+import viteImagemin from "@vheemstra/vite-plugin-imagemin";
+import imageminPngquant from "imagemin-pngquant";
 
 export default defineConfig({
 	plugins: [
@@ -10,6 +12,11 @@ export default defineConfig({
     */
 		// devtools(),
 		solidPlugin(),
+		viteImagemin({
+			plugins: {
+				png: imageminPngquant(),
+			},
+		}),
 	],
 	server: {
 		port: 3000,
@@ -17,5 +24,5 @@ export default defineConfig({
 	build: {
 		target: "esnext",
 	},
-	base: "CultivationIdle",
+	base: "/CultivationIdle",
 });

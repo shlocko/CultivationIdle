@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "CultivationIdle";
-	src: url("./assets/Cultivationidlefont-Regular.ttf") format("truetype-variations");
+	src: url("/CultivationIdle/Cultivationidlefont-Regular.ttf") format("truetype-variations");
 	/* Adjust path and format as needed */
 	font-weight: normal;
 	font-style: normal;
