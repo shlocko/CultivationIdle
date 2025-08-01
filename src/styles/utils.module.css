@@ -132,10 +132,11 @@ body {
 }
 
 .row_container {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(25em, 100%), 1fr));
+	/*display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(25em, 100%), 1fr));*/
 	gap: 1em;
 	overflow-y: auto;
+	display: flex;
 	flex-direction: row;
 	height: 100%;
 	width: 100%;

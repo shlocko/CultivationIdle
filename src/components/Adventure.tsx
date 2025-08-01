@@ -17,27 +17,33 @@ export const Adventure: Component = () => {
 	];
 	return (
 		<div class={(utils.row_container)}>
-			<Show when={state.state !== "Combat"}>
-				<div class={(utils.container)}>
-					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked)}>
-						{(item, i) => (
-							<button classList={{
-								[utils.btn]: true,
-								[utils.btn_active]: state.adventure.location === item
+			<div class={(utils.container)}
+				style={{
+					"flex": "0 0 15rem",
+				}}
+			>
+				<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked)}>
+					{(item, i) => (
+						<button classList={{
+							[utils.btn]: true,
+							[utils.btn_active]: state.adventure.location === item
+						}}
+							onClick={() => {
+								setArea(item)
 							}}
-								onClick={() => {
-									setArea(item)
-								}}
-							>
-								{item}
-							</button>
-						)}
-					</For>
-				</div>
-			</Show>
+						>
+							{item}
+						</button>
+					)}
+				</For>
+			</div>
 			<div classList={{
 				[utils.container]: true,
-			}}>
+			}}
+				style={{
+					"--flex": "0 0 15rem",
+				}}
+			>
 				<h2> Adventure </h2>
 				<p>
 					{" "}
@@ -79,6 +85,16 @@ export const Adventure: Component = () => {
 					<p> Adventure </p>
 				</button>
 			</div>
+
+			<Show when={state.state !== "Combat"}>
+				<div class={(utils.container)}
+					style={{
+						"flex": "0 0 20rem",
+					}}
+				>
+					<p>Area Info</p>
+				</div>
+			</Show>
 		</div>
 	);
 };
