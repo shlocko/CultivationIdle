@@ -73,7 +73,6 @@ export interface Technique {
 	aspect: Aspect;
 	type: TechniqueType;
 	baseCost: number;
-	currentCost: number;
 	minCost: number;
 	magnitude: number;
 	aggregateEffect: number;
@@ -196,6 +195,7 @@ export const [state, setState] = createStore({
 	},
 	train: {
 		tickSpeed: 1,
+		active: false,
 	},
 	combat: {
 		tickSpeed: 0.0001,
@@ -524,7 +524,17 @@ export const setAction = (action: Action) => {
 	setState("previousAction", state.action);
 	setState("action", action);
 	setPause(false);
+
 };
+
+export const actionButton = (action: Action) => {
+	setAction(action)
+	if (action === "Train") {
+		setState("train", "active", true)
+	} else {
+		setState("train", "active", false)
+	}
+}
 
 export const resetActiveTechniques = () => {
 	state.techniques.forEach((item, i) => {

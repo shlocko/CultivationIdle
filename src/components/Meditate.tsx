@@ -1,6 +1,6 @@
 import { type Component, Show, For } from "solid-js";
 import utils from "../styles/utils.module.css";
-import { state, setState, setAction, } from "../state/store";
+import { state, setState, setAction, actionButton, } from "../state/store";
 import { ChooseAspect } from "./ChooseAspect";
 
 export const Meditate: Component = () => {
@@ -31,7 +31,7 @@ export const Meditate: Component = () => {
 					"min-width": "15rem"
 				}}
 				onClick={() => {
-					setAction("Meditate");
+					actionButton("Meditate");
 				}}
 			>
 				<p>Meditate</p>

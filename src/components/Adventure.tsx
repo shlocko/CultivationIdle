@@ -1,6 +1,6 @@
 import { type Component, Show, createMemo, For } from "solid-js";
 import utils from "../styles/utils.module.css";
-import { LootTable, setAction, setArea, state } from "../state/store";
+import { LootTable, actionButton, setAction, setArea, state } from "../state/store";
 import { Combat } from "./Combat";
 import { init } from "../functions/combatMethods";
 import { getItem } from "../state/items";
@@ -79,7 +79,7 @@ export const Adventure: Component = () => {
 						[utils.btn_active]: state.action === "Adventure"
 					}}
 					onClick={() => {
-						setAction("Adventure");
+						actionButton("Adventure");
 					}}
 				>
 					<p> Adventure </p>

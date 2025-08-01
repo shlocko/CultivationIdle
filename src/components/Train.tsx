@@ -1,5 +1,5 @@
 import { createSignal, type Component, For } from "solid-js";
-import { state, setState, setAction } from "../state/store";
+import { state, setState, setAction, actionButton } from "../state/store";
 import utils from "../styles/utils.module.css";
 import { Template } from "./Template";
 
@@ -30,7 +30,7 @@ export const Train: Component = () => {
 					"min-width": "15rem"
 				}}
 				onClick={() => {
-					setAction("Train");
+					actionButton("Train");
 				}}
 			>
 				<p>Train</p>

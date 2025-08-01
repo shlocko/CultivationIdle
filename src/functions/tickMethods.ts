@@ -12,6 +12,7 @@ import {
 	canAdvance,
 	advance,
 	maxHealth,
+	setAction,
 } from "../state/store";
 import { meditationTechniqueEffect } from "./techniqueMethods";
 import { VerdantFields } from "../areas/VerdantFields";
@@ -52,7 +53,7 @@ export const trainTick = () => {
 			setState("techniques", num, "mastery", (x) => x + 1);
 		}
 	} else {
-		setState("action", "Meditate");
+		setAction("Meditate")
 	}
 };
 
@@ -70,6 +71,9 @@ export const meditateTick = () => {
 	}
 	if (state.health < maxHealth()) {
 		setState("health", (h) => h + 1);
+	}
+	if (state.health >= maxHealth() && state.mana >= state.maxMana && state.train.active === true) {
+		setAction("Train")
 	}
 };
 
