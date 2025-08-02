@@ -516,7 +516,8 @@ export const canAdvance = () => {
 
 export const advance = () => {
 	if (canAdvance()) {
-		setState("rank", (rank) => rank + 1);
+		setState("rank", (rank) => rank + 1)
+		setState("train", "active", false)
 	}
 };
 

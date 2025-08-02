@@ -158,6 +158,7 @@ export const ModalChooseTechnique: Component = () => {
 						const techniquesKnown = state.techniques.slice();
 						techniquesKnown.push(techniqueList[choice()]);
 						setState("techniques", techniquesKnown);
+						setState("trainingTechnique", 0)
 						setChoice(-1)
 						const arr = state.modalMessages.slice();
 						arr.shift();
@@ -174,7 +175,6 @@ export const ModalChooseTechnique: Component = () => {
 export const ModalChooseMeditationTechnique: Component = () => {
 	const [choice, setChoice] = createSignal(-1);
 	const techniqueList = meditationTechniques;
-	console.log(state.meditationTechniques);
 	return (
 		<>
 			<p> Choose </p>
