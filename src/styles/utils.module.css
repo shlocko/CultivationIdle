@@ -127,7 +127,7 @@ body {
 	width: 100%;
 	padding: 1em;
 	border: 10px solid transparent;
-	border-image: url(../assets/box1.png) 150 stretch;
+	border-image: url(/CultivationIdle/box1.png) 150 stretch;
 	/*background-color: rgb(192, 193, 196);*/
 }
 
@@ -180,7 +180,7 @@ body {
 	grid-template-rows: 1fr 1fr;
 	grid-area: header;
 	border: 15px solid transparent;
-	border-image: url(../assets/box-button1.png) 90 stretch;
+	border-image: url(/box-button1.png) 90 stretch;
 	background: inherit;
 }
 
@@ -228,7 +228,7 @@ body {
 	line-height: 1.5;
 	color: black;
 	border: 15px solid transparent;
-	border-image: url(../assets/box-button1.png) 90 stretch;
+	border-image: url(/box-button1.png) 90 stretch;
 	background: inherit;
 }
 
@@ -239,7 +239,7 @@ body {
 
 .dropdown {
 	border: 15px solid transparent;
-	border-image: url(../assets/box-button1.png) 90 stretch;
+	border-image: url(/box-button1.png) 90 stretch;
 	background: inherit;
 	height: 100%;
 }

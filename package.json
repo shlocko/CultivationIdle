@@ -1,5 +1,6 @@
 {
 	"name": "vite-template-solid",
+	"type": "module",
 	"version": "0.0.0",
 	"description": "",
 	"scripts": {
@@ -12,22 +13,26 @@
 	},
 	"license": "MIT",
 	"devDependencies": {
+		"@types/imagemin-webp": "^7.0.3",
+		"@types/lodash": "^4.14.202",
 		"@typescript-eslint/eslint-plugin": "^6.21.0",
 		"@typescript-eslint/parser": "^6.21.0",
+		"@vheemstra/vite-plugin-imagemin": "^2.2.0",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.1.3",
 		"eslint-plugin-solid": "^0.13.1",
+		"imagemin-pngquant": "^10.0.0",
 		"prettier": "^3.2.5",
 		"solid-devtools": "^0.29.3",
 		"typescript": "^5.3.3",
 		"vite": "^5.0.11",
+		"vite-plugin-compression2": "^2.2.0",
 		"vite-plugin-solid": "^2.8.2"
 	},
 	"dependencies": {
 		"@lutaok/solid-modal": "^0.1.1",
 		"@solidjs/router": "^0.10.9",
-		"@types/lodash": "^4.14.202",
 		"lodash": "^4.17.21",
 		"solid-js": "^1.8.11",
 		"solid-toast": "^0.5.0"
