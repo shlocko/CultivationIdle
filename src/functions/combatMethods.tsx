@@ -43,7 +43,6 @@ const dealAreaDamage = () => {
 };
 
 const dealIncreasingTargetDamage = () => {
-	//console.log("increasing target");
 	combatState.opponents.forEach((enemy, ei) => {
 		state.techniques.forEach((technique, ti) => {
 			if (

@@ -51,6 +51,7 @@ body {
 	--grid-color: darkgray;
 	--paper-color: #fffbd8;
 	--paper-color-2: #fffff0;
+	--paper-color-dark: #000000;
 
 	background-color: var(--paper-color-2);
 	--background-size: var(--grid-size, --grid-size);

@@ -1,6 +1,6 @@
 import { Technique } from "./store";
 
-export const techniques = {
+export const techniques: Record<string, Technique[]> = {
 	Fire: [
 		{
 			name: "Fire Bolt",

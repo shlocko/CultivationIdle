@@ -71,7 +71,7 @@ export type TechniqueType = "Shaper" | "Enhancement" | "Range" | "Area";
 export interface Technique {
 	name: string;
 	aspect: Aspect;
-	type: TechniqueType;
+	type?: TechniqueType;
 	baseCost: number;
 	minCost: number;
 	magnitude: number;
@@ -366,16 +366,12 @@ export const damageIncreasingTargetCount = () => {
 };
 
 export const targetsIncreasingTargetCount = (targetCount: number) => {
+	// TODO: fix targetting, currently alwaysa targets from the top
 	let targets: number[] = [];
-	targets.push(combatState.activeEnemy);
+	//targets.push(combatState.activeEnemy);
 	for (let i = 0; i < targetCount; i++) {
-		if (i === combatState.activeEnemy) {
-		} else {
-			targets.push(i);
-		}
+		targets.push(i);
 	}
-	//console.log("Targets");
-	//console.log(targets);
 	return targets;
 };
 

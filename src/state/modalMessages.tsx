@@ -154,17 +154,16 @@ export const ModalChooseTechnique: Component = () => {
 			<button
 				class={utils.btn}
 				onClick={() => {
-					if (choice() >= 0) {
-						const techniquesKnown = state.techniques.slice();
-						techniquesKnown.push(techniqueList[choice()]);
-						setState("techniques", techniquesKnown);
-						setState("trainingTechnique", 0)
-						setChoice(-1)
-						const arr = state.modalMessages.slice();
-						arr.shift();
-						setState("modalMessages", arr);
-					}
+					const techniquesKnown = state.techniques.slice();
+					techniquesKnown.push(techniqueList[choice()]);
+					setState("techniques", techniquesKnown);
+					setState("trainingTechnique", 0)
+					setChoice(-1)
+					const arr = state.modalMessages.slice();
+					arr.shift();
+					setState("modalMessages", arr);
 				}}
+				disabled={choice() < 0}
 			>
 				<p>Choose</p>
 			</button>
@@ -221,34 +220,33 @@ export const ModalChooseMeditationTechnique: Component = () => {
 			<button
 				class={utils.btn}
 				onClick={() => {
-					if (choice() >= 0) {
-						const techniquesKnown = cloneDeep(
-							state.meditationTechniques,
+					const techniquesKnown = cloneDeep(
+						state.meditationTechniques,
+					);
+					if (
+						techniquesKnown.find(
+							(e) => e.name === techniqueList[choice()].name,
+						) === undefined
+					) {
+						techniquesKnown.push(techniqueList[choice()]);
+					} else {
+						const tech = techniquesKnown.find(
+							(e) => e.name === techniqueList[choice()].name,
 						);
-						if (
-							techniquesKnown.find(
-								(e) => e.name === techniqueList[choice()].name,
-							) === undefined
-						) {
-							techniquesKnown.push(techniqueList[choice()]);
+						if (tech !== undefined) {
+							console.log("upgrade");
+							tech.level += 1;
 						} else {
-							const tech = techniquesKnown.find(
-								(e) => e.name === techniqueList[choice()].name,
-							);
-							if (tech !== undefined) {
-								console.log("upgrade");
-								tech.level += 1;
-							} else {
-								console.log("error upgrading");
-							}
+							console.log("error upgrading");
 						}
-						setState("meditationTechniques", techniquesKnown);
-						const arr = state.modalMessages.slice();
-						arr.shift();
-						setState("modalMessages", arr);
-						setChoice(-1)
 					}
+					setState("meditationTechniques", techniquesKnown);
+					const arr = state.modalMessages.slice();
+					arr.shift();
+					setState("modalMessages", arr);
+					setChoice(-1)
 				}}
+				disabled={choice() < 0}
 			>
 				<p>Choose</p>
 			</button>
@@ -287,13 +285,12 @@ export const ModalChooseAspect: Component = () => {
 			<button
 				class={utils.btn}
 				onClick={() => {
-					if (choice() >= 0) {
-						setState("aspect", aspects[choice()]);
-					}
+					setState("aspect", aspects[choice()]);
 					const arr = state.modalMessages.slice();
 					arr.shift();
 					setState("modalMessages", arr);
 				}}
+				disabled={choice() < 0}
 			>
 				<p>Choose</p>
 			</button>
