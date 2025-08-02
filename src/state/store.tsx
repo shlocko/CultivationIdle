@@ -400,7 +400,7 @@ export const persist = () => {
 export const load = () => {
 	const rawState = localStorage.getItem("state");
 	if (rawState) {
-		const loadState = JSON.parse(rawState);
+		const loadState = JSON.parse(rawState) as typeof state;
 		if (loadState.version === state.version) {
 			setState(loadState);
 		} else {
@@ -521,7 +521,6 @@ export const setAction = (action: Action) => {
 	setState("previousAction", state.action);
 	setState("action", action);
 	setPause(false);
-
 };
 
 export const actionButton = (action: Action) => {
@@ -531,7 +530,7 @@ export const actionButton = (action: Action) => {
 	} else {
 		setState("train", "active", false)
 	}
-}
+};
 
 export const resetActiveTechniques = () => {
 	state.techniques.forEach((item, i) => {
@@ -547,7 +546,7 @@ export const tickMana = createMemo(() => {
 			const cost =
 				(e.baseCost - (e.mastery / 3000) * (e.baseCost - e.minCost)) *
 				Math.pow(e.multiplier, 3);
-			setState("techniques", i, "currentCost", cost);
+			//setState("techniques", i, "currentCost", cost);
 			total += cost;
 		}
 	});

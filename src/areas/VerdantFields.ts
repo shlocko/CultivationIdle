@@ -17,8 +17,8 @@ export const VerdantFields: Area = {
 			name: "the Boss",
 			isUnlocked: () => {
 				if (
-					state.adventure.areas["VerdantFields"].tickCount >=
-					VerdantFields.unlockThresholds["nextArea"] && state.adventure.areas.VerdantFields.unlocks.bossBeaten == false
+					state.adventure.areas.VerdantFields.tickCount >=
+					VerdantFields.unlockThresholds.nextArea && state.adventure.areas.VerdantFields.unlocks.bossBeaten == false
 				) {
 					return true;
 				} else {

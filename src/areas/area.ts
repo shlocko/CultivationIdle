@@ -17,7 +17,7 @@ export type Area = {
 	commonEvents: Event[],
 	uncommonEvents: Event[],
 	rareEvents: Event[],
-	epicEvents: Event[]
+	epicEvents: Event[],
 
 }
 
