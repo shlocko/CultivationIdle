@@ -17,7 +17,7 @@ export const ManaBar: Component = () => {
 					left: "0",
 					"z-index": "0",
 					"background-image": `url("/CultivationIdle/mana-purple.png")`,
-					"background-size": "100rem 100%",
+					"background-size": "200rem 100%",
 					"background-repeat": "no-repeat",
 					width: `100%`,
 					height: "100%",
@@ -31,8 +31,8 @@ export const ManaBar: Component = () => {
 					top: "0",
 					left: "0",
 					"z-index": "0",
-					"background-image": `url("/CultivationIdle/star-long.png"), url("/CultivationIdle/mana-purple.png")`,
-					"background-size": "100rem 100%",
+					"background-image": `url("/CultivationIdle/mana-purple.png")`,
+					"background-size": "200rem 100%",
 					"background-repeat": "no-repeat",
 					width: `${maxManaPercent()}%`,
 					height: "100%",
@@ -46,7 +46,7 @@ export const ManaBar: Component = () => {
 						left: "0",
 						"z-index": "0",
 						"background-image": ` url("/CultivationIdle/mana-blue.png")`,
-						"background-size": "100rem 100%",
+						"background-size": "200rem 100%",
 						"background-repeat": "no-repeat",
 						width: `${manaPercent()}%`,
 						height: "100%",
@@ -65,7 +65,7 @@ export const ManaBar: Component = () => {
 					//"text-shadow": "-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff",
 				}}
 			>
-				Mana: {state.mana.toFixed(1)}/{state.maxMana.toFixed(1)}/
+				Qi: {state.mana.toFixed(1)}/{state.maxMana.toFixed(1)}/
 				{rankInfo[state.rank].advMana}
 			</div>
 		</div>

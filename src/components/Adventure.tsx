@@ -2,7 +2,7 @@ import { type Component, Show, createMemo, For } from "solid-js";
 import utils from "../styles/utils.module.css";
 import { LootTable, actionButton, setAction, setArea, state } from "../state/store";
 import { Combat } from "./Combat";
-import { init } from "../functions/combatMethods";
+import { initCombat } from "../functions/combatMethods";
 import { getItem } from "../state/items";
 import { VerdantFields } from "../areas/VerdantFields";
 
@@ -44,20 +44,20 @@ export const Adventure: Component = () => {
 					"--flex": "0 0 15rem",
 				}}
 			>
-				<h2> Adventure </h2>
-				<p>
-					{" "}
-					Progress: {state.adventure.areas[state.adventure.location].tickCount}
-					/500
-				</p>
 				<Show when={state.state === "Combat"}>
 					<Combat />
 				</Show>
 				<Show when={state.state !== "Combat"}>
+					<h2> Adventure </h2>
+					<p>
+						{" "}
+						Progress: {state.adventure.areas[state.adventure.location].tickCount}
+						/500
+					</p>
 					<button
 						class={`${utils.btn} ${utils.wide_top_auto}`}
 						onClick={() => {
-							init(
+							initCombat(
 								[
 									"wanderingKnight",
 									"wanderingKnight",
