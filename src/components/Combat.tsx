@@ -22,8 +22,10 @@ import { sendModal } from "../state/modalMessages";
 import styles from "../styles/Combat.module.css";
 import { endTurn, enemyTurn } from "../functions/combatMethods";
 import { CombatEnemyCard } from "./CombatEnemyCard";
+import { CombatActionsCard } from "./CombatActionsCard";
 
 export const [actionChoice, setActionChoice] = createSignal(-1);
+export const [combatLog, setCombatLog] = createSignal<string[]>([])
 export const Combat: Component = () => {
 	return (
 		<>
@@ -47,164 +49,94 @@ export const Combat: Component = () => {
 					)}
 				</For>
 			</div>
-			<h2> Your Turn </h2>
-			<p class={utils.top_auto}> </p>
-			<p> Mana per turn: {tickMana().toFixed(2)} </p>
-			<p> Damage to target: {damageToTarget()} </p>
-			<p> Damage to area: {damageToArea()} </p>
-			<p> Thorns Damage: {damageThorns()} </p>
-			<p>
-				{" "}
-				Increasing target Damage:{" "}
-				{damageIncreasingTargetCount()}{" "}
-			</p>
-			<p> Max Mana Gain: {manaGainFromTechniques()} </p>
-			<div class={styles.action_container}>
-				<div class={styles.action_col}></div>
-				<div class={styles.action_col}>
-					<For each={state.techniques}>
-						{(item, i) => (
-							<div>
+			<div
+				style={{
+					"display": "flex",
+					"width": "100%",
+					"flex-grow": "1",
+				}}
+			>
+				<Switch>
+					<Match when={state.combat.turn === 1}>
+						<h2> Opponent's Turn </h2>
+						<p> Mana per turn: {tickMana()} </p>
+						<button
+							class={utils.btn}
+							onClick={() => {
+								enemyTurn();
+							}}
+						>
+							<p>Next</p>
+						</button>
+					</Match>
+					<Match when={state.combat.turn === 0}>
+						<div class={utils.combat_card}>
+							<CombatActionsCard />
+						</div>
+						<div classList={{
+							[utils.container]: true,
+							[utils.combat_card]: true,
+						}}>
+							<div
+								class={utils.container}
+								style={{
+									"flex-grow": "1",
+									"overflow-y": "scroll",
+									"height": "10rem",
+									"display": "flex",
+									"flex-direction": "column-reverse",
+								}}>
+								<For each={combatLog()}>
+									{(item, i) => (
+										<>
+											{item}
+											<br />
+										</>
+
+									)}
+								</For>
+							</div>
+							<div
+								style={{
+									"flex-grow": "1",
+								}}>
+								Mana per turn: {tickMana().toFixed(2)} <br />
+								Damage to target: {damageToTarget()} <br />
+								Damage to area: {damageToArea()} <br />
+								Thorns Damage: {damageThorns()} <br />
+								Increasing target Damage:{" "}
+								{damageIncreasingTargetCount()}{" "} <br />
+								Max Mana Gain: {manaGainFromTechniques()} <br />
 								<button
-									classList={{
-										[utils.btn]: true,
-										[utils.btn_active]: item.active,
-										[utils.btn_ongoing]:
-											item.onGoing,
-									}}
+									class={utils.btn}
 									onClick={() => {
-										if (item.onGoing) {
-											setState(
-												"techniques",
-												i(),
-												"onGoing",
-												false,
-											);
+										if (actionChoice() === 1 && !hasItem("Health Potion")) {
+											sendModal("You do not have any Health Potions.")
+										} else if (actionChoice() === 2 && !hasItem("Mana Potion")) {
+											sendModal("You do not have any Mana Potions.")
+										} else if (tickMana() >= state.mana) {
+											sendModal("You don't have enough mana!");
 										} else {
-											if (
-												activeTechniqueCount() <
-												Math.ceil(
-													state.rank / 3,
-												) &&
-												!item.active
-											) {
-												setState(
-													"techniques",
-													i(),
-													"active",
-													true,
-												);
-											} else {
-												setState(
-													"techniques",
-													i(),
-													"active",
-													false,
-												);
-											}
+											endTurn();
 										}
-										setActionChoice(-1);
 									}}
 								>
-									{item.name} x{item.multiplier}
+									<p>Continue</p>{" "}
 								</button>
 								<button
 									class={utils.btn}
 									onClick={() => {
-										setState(
-											"techniques",
-											i(),
-											"multiplier",
-											(n) => n + 1,
-										);
+										changeState("Tick");
+										setAction("Meditate");
 									}}
 								>
-									{" "}
-									+{" "}
-								</button>
-								<button
-									class={utils.btn}
-									onClick={() => {
-										setState(
-											"techniques",
-											i(),
-											"multiplier",
-											(n) => n - 1,
-										);
-									}}
-								>
-									{" "}
-									-{" "}
+									Flee
 								</button>
 							</div>
-						)}
-					</For>
-				</div>
-				<div class={styles.action_col}>
-					<button
-						classList={{
-							[utils.btn]: true,
-							[utils.btn_active]: actionChoice() === 1,
-						}}
-						onClick={() => {
-							setActionChoice(1);
-							clearNotOngoing();
-						}}
-					>
-						Health Potion
-					</button>
-					<button
-						classList={{
-							[utils.btn]: true,
-							[utils.btn_active]: actionChoice() === 2,
-						}}
-						onClick={() => {
-							setActionChoice(2);
-							clearNotOngoing();
-						}}
-					>
-						Mana Potion
-					</button>
-					<button
-						classList={{
-							[utils.btn]: true,
-							[utils.btn_active]: actionChoice() === 3,
-						}}
-						onClick={() => {
-							setActionChoice(3);
-							clearNotOngoing();
-						}}
-					>
-						Attack
-					</button>
-				</div>
-				<div class={styles.action_col}></div>
+						</div>
+					</Match>
+				</Switch>
 			</div>
-			<button
-				class={utils.btn}
-				onClick={() => {
-					if (actionChoice() === 1 && !hasItem("Health Potion")) {
-						sendModal("You do not have any Health Potions.")
-					} else if (actionChoice() === 2 && !hasItem("Mana Potion")) {
-						sendModal("You do not have any Mana Potions.")
-					} else if (tickMana() >= state.mana) {
-						sendModal("You are out of mana!");
-					} else {
-						endTurn();
-					}
-				}}
-			>
-				<p>Continue</p>{" "}
-			</button>
-			<button
-				class={utils.btn}
-				onClick={() => {
-					changeState("Tick");
-					setAction("Meditate");
-				}}
-			>
-				Flee
-			</button>
 		</>
 	);
 };

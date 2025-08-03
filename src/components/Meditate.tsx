@@ -12,7 +12,7 @@ export const Meditate: Component = () => {
 					"line-height": "4rem",
 					"text-align": "center",
 					"font-size": "1.4rem",
-					"flex-grow": "2",
+					"flex-grow": "10",
 				}}
 					class={utils.dropdown}
 				>

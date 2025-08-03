@@ -66,6 +66,13 @@ export const Inventory: Component = () => {
 			</button>
 			<button
 				onClick={() => {
+					inventoryAdd("Mana Potion", 3);
+				}}
+			>
+				Add 3 Mana Potion
+			</button>
+			<button
+				onClick={() => {
 					inventoryAdd("Dagger", 1);
 				}}
 			>
