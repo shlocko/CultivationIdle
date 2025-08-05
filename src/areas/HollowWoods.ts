@@ -5,6 +5,8 @@ export const HollowWoods: Area = {
 	unlockThresholds: {
 		"peaksPass": 200,
 	},
+	subArea: false,
+	subAreaTo: null,
 	commonEvents: [{
 		name: "test in the woods",
 		isUnlocked: () => true,

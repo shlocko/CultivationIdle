@@ -225,9 +225,9 @@ export const [state, setState] = createStore({
 		} as Record<AreaNames, AreaState>,
 	},
 	// Player's current mana
-	mana: 10,
+	mana: 19,
 	// Player's maximum mana
-	maxMana: 10,
+	maxMana: 19,
 	// Player's passive mana regeneration
 	passiveManaRegen: 1,
 	// Current % of tick bar

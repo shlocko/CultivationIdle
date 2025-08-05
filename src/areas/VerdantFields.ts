@@ -1,4 +1,4 @@
-import { init, pickLoot } from "../functions/combatMethods";
+import { initCombat, pickLoot } from "../functions/combatMethods";
 import { Enemies } from "../state/enemies";
 import { Event } from "../state/events";
 import { ModalMessage, sendLoot, sendModal } from "../state/modalMessages";
@@ -12,6 +12,8 @@ export const VerdantFields: Area = {
 	unlockThresholds: {
 		"nextArea": 5,
 	},
+	subArea: false,
+	subAreaTo: null,
 	commonEvents: [
 		{
 			name: "the Boss",
@@ -50,7 +52,7 @@ export const VerdantFields: Area = {
 			name: "a bandit",
 			isUnlocked: () => state.rank >= 1,
 			activation: () => {
-				init(
+				initCombat(
 					["bandit"],
 					[
 						lootEntry("Health Potion", 50, 1, 5),
@@ -69,7 +71,7 @@ export const VerdantFields: Area = {
 			name: "a couple goblins",
 			isUnlocked: () => state.rank >= 1,
 			activation: () => {
-				init(
+				initCombat(
 					["goblin", "goblin"],
 					[
 						lootEntry("Health Potion", 50, 1, 5),
@@ -85,7 +87,7 @@ export const VerdantFields: Area = {
 			name: "a bear",
 			isUnlocked: () => state.rank >= 1,
 			activation: () => {
-				init(
+				initCombat(
 					["bear"],
 					[
 						lootEntry("Health Potion", 50, 1, 5),
@@ -103,7 +105,7 @@ export const VerdantFields: Area = {
 			name: "a few bandits",
 			isUnlocked: () => state.rank >= 3,
 			activation: () => {
-				init(
+				initCombat(
 					["bandit", "bandit", "bandit"],
 					[
 						lootEntry("Health Potion", 70, 1, 7),
@@ -119,7 +121,7 @@ export const VerdantFields: Area = {
 			name: "a wandering knight",
 			isUnlocked: () => state.rank >= 4,
 			activation: () => {
-				init(
+				initCombat(
 					["wanderingKnight"],
 					[
 						lootEntry("Health Potion", 70, 1, 7),

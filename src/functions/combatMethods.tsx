@@ -7,10 +7,12 @@ import {
 	changeState,
 	combatState,
 	damageFromWeapon,
+	damageIncreasingTargetCount,
 	damageThorns,
 	damageToArea,
 	damageToTarget,
 	inventoryRemove,
+	inventoryRemoveQuantity,
 	manaGainFromTechniques,
 	maxHealth,
 	setAction,
@@ -21,7 +23,7 @@ import {
 	tickMana,
 } from "../state/store";
 import toast from "solid-toast";
-import { actionChoice } from "../components/Combat";
+import { actionChoice, combatLog, setCombatLog } from "../components/Combat";
 
 export const effectMultiplier = (mult: number) => {
 	return Math.pow(mult, 2);
@@ -99,13 +101,14 @@ export const pickLoot = (table: LootTable): LootCollection => {
 	return collection as LootCollection;
 };
 
-export const init = (
+export const initCombat = (
 	enemies: Enemies[],
 	loot: LootTable,
 	coinMin: number,
 	coinMax: number,
 	returnFunction?: () => void,
 ) => {
+	setCombatLog([])
 	let arr = [] as Enemy[];
 	enemies.forEach((e, i) => {
 		arr.push(cloneDeep(enemyList[e]));
@@ -136,6 +139,7 @@ export const endTurn = () => {
 	dealIncreasingTargetDamage();
 	setState("mana", (mana) => mana - tickMana());
 	setState("maxMana", (mana) => mana + manaGainFromTechniques());
+	logDamageToEnemies()
 	toast("Damage dealt");
 	setState("combat", "turn", 1);
 	state.techniques.forEach((e, i) => {
@@ -159,12 +163,14 @@ export const endTurn = () => {
 		setState("techniques", i, "active", false);
 	});
 	if (actionChoice() === 1) {
-		inventoryRemove("Health Potion")
+		inventoryRemoveQuantity("Health Potion", 1)
 		setState("health", hp => Math.min(hp + 10, maxHealth()));
+		combatLog().push("You used a Health Potion")
 	}
 	if (actionChoice() === 2) {
-		inventoryRemove("Mana Potion")
+		inventoryRemoveQuantity("Mana Potion", 1)
 		setState("mana", mana => Math.min(mana + 20, state.maxMana));
+		combatLog().push("You used a Mana Potion")
 	}
 };
 
@@ -175,3 +181,15 @@ export const enemyTurn = () => {
 	});
 	setState("combat", "turn", 0);
 };
+
+const logDamageToEnemies = () => {
+	if (damageToTarget() > 0) {
+		combatLog().push(`You dealt ${damageToTarget()} damage to the target`)
+	}
+	if (damageToArea() > 0) {
+		combatLog().push(`You dealt ${damageToArea()} damage to all targets`)
+	}
+	if (damageIncreasingTargetCount() > 0) {
+		combatLog().push(`You dealth ${damageIncreasingTargetCount()} damage to multiple targets`)
+	}
+}

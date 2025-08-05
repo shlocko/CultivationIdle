@@ -35,6 +35,7 @@ render(
 				onCloseRequest={() => {
 					setPause(false);
 				}}
+				contentClass="modal"
 			>
 				<ModalMessage />
 			</Modal>

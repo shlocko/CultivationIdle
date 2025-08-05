@@ -14,6 +14,8 @@ export type AreaState = {
 
 export type Area = {
 	unlockThresholds: Record<string, number>,
+	subArea: boolean,
+	subAreaTo: Area | null,
 	commonEvents: Event[],
 	uncommonEvents: Event[],
 	rareEvents: Event[],

@@ -120,7 +120,7 @@ export const ModalChooseTechnique: Component = () => {
 	const techniqueList = techniques[state.aspect as keyof typeof techniques];
 	return (
 		<>
-			<p> Choose: </p>
+			<p> Choose a technique: </p>
 			<For each={techniqueList}>
 				{(item, i) => (
 					<>
@@ -143,14 +143,10 @@ export const ModalChooseTechnique: Component = () => {
 							>
 								<p>{item.name}</p>
 							</button>
-							<Show when={choice() === i()}>
-								<p> {item.description} </p>
-							</Show>
 						</Show>
 					</>
 				)}
 			</For>
-
 			<button
 				class={utils.btn}
 				onClick={() => {
@@ -167,6 +163,14 @@ export const ModalChooseTechnique: Component = () => {
 			>
 				<p>Choose</p>
 			</button>
+			<div style={{
+				"min-height": "5rem",
+			}}>
+				<Show when={techniqueList[choice()]}>
+					<p> {techniqueList[choice()].description}</p>
+				</Show>
+				<p></p>
+			</div>
 		</>
 	);
 };
@@ -176,7 +180,7 @@ export const ModalChooseMeditationTechnique: Component = () => {
 	const techniqueList = meditationTechniques;
 	return (
 		<>
-			<p> Choose </p>
+			<p> Choose a meditation technique:</p>
 			<For each={techniqueList}>
 				{(item, i) => (
 					<>
@@ -210,9 +214,6 @@ export const ModalChooseMeditationTechnique: Component = () => {
 							</Show>
 							<p>{item.name}</p>
 						</button>
-						<Show when={choice() === i()}>
-							<p> {item.description} </p>
-						</Show>
 					</>
 				)}
 			</For>
@@ -250,6 +251,14 @@ export const ModalChooseMeditationTechnique: Component = () => {
 			>
 				<p>Choose</p>
 			</button>
+			<div style={{
+				"min-height": "5rem",
+			}}>
+				<Show when={techniqueList[choice()]}>
+					<p> {techniqueList[choice()].description}</p>
+				</Show>
+				<p></p>
+			</div>
 		</>
 	);
 };
@@ -258,7 +267,7 @@ export const ModalChooseAspect: Component = () => {
 	const [choice, setChoice] = createSignal(-1);
 	return (
 		<div class={utils.container}>
-			<p> Choose </p>
+			<p> Choose an aspect for your Qi: </p>
 			<For each={aspects}>
 				{(item, i) => (
 					<>
@@ -301,7 +310,7 @@ export const ModalChooseAspect: Component = () => {
 export const ModalLoot: Component<{ loot: LootCollection }> = (props) => {
 	const [loot, setLoot] = createStore(props.loot.slice(0));
 	return (
-		<div class={utils.container}>
+		<div class={utils.loot_modal}>
 			<p> Loot: </p>
 			<For each={loot}>
 				{(item, i) => {
@@ -326,33 +335,37 @@ export const ModalLoot: Component<{ loot: LootCollection }> = (props) => {
 					}
 				}}
 			</For>
-			<button
-				class={utils.btn}
-				onClick={() => {
-					//console.log(loot);
-					loot.forEach((item) => {
-						if (item) {
-							inventoryAdd(item.name, item.count);
-							toast(`${item.count} ${item.name} added`);
-						}
-					});
-					const arr = state.modalMessages.slice();
-					arr.shift();
-					setState("modalMessages", arr);
-				}}
-			>
-				<p>Loot All</p>
-			</button>
-			<button
-				class={utils.btn}
-				onClick={() => {
-					const arr = state.modalMessages.slice();
-					arr.shift();
-					setState("modalMessages", arr);
-				}}
-			>
-				<p>Next</p>
-			</button>
+			<div style={{
+				"width": "100%",
+			}}>
+				<button
+					class={utils.btn}
+					onClick={() => {
+						//console.log(loot);
+						loot.forEach((item) => {
+							if (item) {
+								inventoryAdd(item.name, item.count);
+								toast(`${item.count} ${item.name} added`);
+							}
+						});
+						const arr = state.modalMessages.slice();
+						arr.shift();
+						setState("modalMessages", arr);
+					}}
+				>
+					<p>Loot All</p>
+				</button>
+				<button
+					class={utils.btn}
+					onClick={() => {
+						const arr = state.modalMessages.slice();
+						arr.shift();
+						setState("modalMessages", arr);
+					}}
+				>
+					<p>Leave loot behind</p>
+				</button>
+			</div>
 		</div>
 	);
 };
