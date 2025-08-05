@@ -9,7 +9,10 @@ export const ManaBar: Component = () => {
 	const manaPercent = createMemo(() => (state.mana / state.maxMana) * 100);
 	console.log(maxManaPercent());
 	return (
-		<div class={utils.manabar}>
+		<div classList={{
+			[utils.manabar]: true,
+			[utils.text_outline]: true,
+		}}>
 			<div
 				style={{
 					position: "absolute",
