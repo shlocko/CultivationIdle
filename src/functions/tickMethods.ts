@@ -13,6 +13,7 @@ import {
 	advance,
 	maxHealth,
 	setAction,
+	getLocation,
 } from "../state/store";
 import { meditationTechniqueEffect } from "./techniqueMethods";
 import { VerdantFields } from "../areas/VerdantFields";
@@ -80,6 +81,10 @@ export const adventureTick = () => {
 	const eventRoll = Math.random() * 100 + 1;
 	console.log(eventRoll);
 	setState("adventure", "areas", location, "tickCount", (tc) => tc + 1);
+	setState("adventure", "currentRun", (cr) => cr + 1)
+	if (state.adventure.currentRun > state.adventure.areas[getLocation()].longestRun) {
+		setState("adventure", "areas", getLocation(), "longestRun", state.adventure.currentRun)
+	}
 	if (eventRoll >= 99) {
 		// Epic Event
 		const pick = Math.floor(

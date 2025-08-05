@@ -11,12 +11,14 @@ export type AreaState = {
 	unlocked: boolean,
 	tickCount: number,
 	unlocks: Record<string, boolean>,
+	longestRun: number,
 }
 
 export type Area = {
 	unlockThresholds: Record<string, number>,
 	subArea: boolean,
 	subAreaTo: AreaNames | null,
+	endExploration: Function,
 	commonEvents: Event[],
 	uncommonEvents: Event[],
 	rareEvents: Event[],

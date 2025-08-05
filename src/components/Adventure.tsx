@@ -1,6 +1,6 @@
 import { type Component, Show, createMemo, For } from "solid-js";
 import utils from "../styles/utils.module.css";
-import { LootTable, actionButton, setAction, setArea, state } from "../state/store";
+import { LootTable, actionButton, getLocation, setAction, setArea, state } from "../state/store";
 import { Combat } from "./Combat";
 import { initCombat } from "../functions/combatMethods";
 import { getItem } from "../state/items";
@@ -49,11 +49,22 @@ export const Adventure: Component = () => {
 					<Combat />
 				</Show>
 				<Show when={state.state !== "Combat"}>
-					<h2> {state.adventure.subLocation || state.adventure.location} </h2>
-					<p>
-						{" "}
-						Progress: {state.adventure.areas[state.adventure.subLocation || state.adventure.location].tickCount}
-					</p>
+					<h2> {getLocation()} </h2>
+					<h4>Sub Locations</h4>
+					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location)}>
+						{(item, i) => (
+							<button classList={{
+								[utils.btn]: true,
+								[utils.btn_active]: state.adventure.subLocation === item
+							}}
+								onClick={() => {
+									setArea(item)
+								}}
+							>
+								{item}
+							</button>
+						)}
+					</For>
 					<button
 						class={`${utils.btn} ${utils.wide_top_auto}`}
 						onClick={() => {
@@ -92,21 +103,12 @@ export const Adventure: Component = () => {
 						"flex": "0 0 20rem",
 					}}
 				>
-					<p>Area Info</p>
-					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location)}>
-						{(item, i) => (
-							<button classList={{
-								[utils.btn]: true,
-								[utils.btn_active]: state.adventure.subLocation === item
-							}}
-								onClick={() => {
-									setArea(item)
-								}}
-							>
-								{item}
-							</button>
-						)}
-					</For>
+					<h2>{getLocation()}</h2>
+					<h3>Area Info</h3>
+					<p>
+						Progress: {state.adventure.areas[getLocation()].tickCount}
+					</p>
+					<p>Longest run: {state.adventure.areas[getLocation()].longestRun}</p>
 				</div>
 			</Show>
 		</div>

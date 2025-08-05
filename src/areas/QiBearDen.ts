@@ -7,6 +7,7 @@ export const QiBearDen: Area = {
 	unlockThresholds: {},
 	subArea: true,
 	subAreaTo: "VerdantFields",
+	endExploration: () => { },
 	commonEvents: [
 		{
 			name: "a Bear",

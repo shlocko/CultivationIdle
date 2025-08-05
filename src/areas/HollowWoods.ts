@@ -7,6 +7,7 @@ export const HollowWoods: Area = {
 	},
 	subArea: false,
 	subAreaTo: null,
+	endExploration: () => { },
 	commonEvents: [{
 		name: "test in the woods",
 		isUnlocked: () => true,

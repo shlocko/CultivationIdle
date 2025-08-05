@@ -14,6 +14,9 @@ export const VerdantFields: Area = {
 	},
 	subArea: false,
 	subAreaTo: null,
+	endExploration: () => {
+
+	},
 	commonEvents: [
 		{
 			name: "the Hollow Woods",

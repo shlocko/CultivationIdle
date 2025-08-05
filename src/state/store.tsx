@@ -207,24 +207,28 @@ export const [state, setState] = createStore({
 		tickSpeed: 1,
 		location: "VerdantFields" as AreaNames,
 		subLocation: undefined as AreaNames | undefined,
+		currentRun: 0,
 		areas: {
 			"VerdantFields": {
 				name: "VerdantFields",
 				unlocked: true,
 				tickCount: 0,
-				unlocks: {}
+				unlocks: {},
+				longestRun: 0,
 			},
 			"HollowWoods": {
 				name: "HollowWoods",
 				unlocked: false,
 				tickCount: 0,
-				unlocks: {}
+				unlocks: {},
+				longestRun: 0,
 			},
 			"QiBearDen": {
 				name: "QiBearDen",
 				unlocked: true,
 				tickCount: 0,
-				unlocks: {}
+				unlocks: {},
+				longestRun: 0,
 			}
 		} as Record<AreaNames, AreaState>,
 	},
@@ -545,6 +549,9 @@ export const advance = () => {
 }
 
 export const setAction = (action: Action) => {
+	if (state.action === "Adventure") {
+		areas[getLocation()].endExploration()
+	}
 	setState("previousAction", state.action);
 	setState("action", action);
 	setPause(false);
@@ -613,4 +620,8 @@ export const setArea = (area: AreaNames) => {
 		setState("adventure", "location", area)
 		setState("adventure", "subLocation", undefined)
 	}
+}
+
+export const getLocation = () => {
+	return state.adventure.subLocation || state.adventure.location
 }
