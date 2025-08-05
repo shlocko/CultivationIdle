@@ -101,12 +101,12 @@ export const Combat: Component = () => {
 									"flex-grow": "1",
 								}}>
 								Mana per turn: {tickMana().toFixed(2)} <br />
-								Damage to target: {damageToTarget()} <br />
-								Damage to area: {damageToArea()} <br />
-								Thorns Damage: {damageThorns()} <br />
+								Damage to target: {damageToTarget().toFixed(2)} <br />
+								Damage to area: {damageToArea().toFixed(2)} <br />
+								Thorns Damage: {damageThorns().toFixed(2)} <br />
 								Increasing target Damage:{" "}
-								{damageIncreasingTargetCount()}{" "} <br />
-								Max Mana Gain: {manaGainFromTechniques()} <br />
+								{damageIncreasingTargetCount().toFixed(2)}{" "} <br />
+								Max Mana Gain: {manaGainFromTechniques().toFixed(2)} <br />
 								<button
 									class={utils.btn}
 									onClick={() => {
