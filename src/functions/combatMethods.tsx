@@ -24,6 +24,7 @@ import {
 } from "../state/store";
 import toast from "solid-toast";
 import { actionChoice, combatLog, setCombatLog } from "../components/Combat";
+import { perCombatRound } from "./tickMethods";
 
 export const effectMultiplier = (mult: number) => {
 	return Math.pow(mult, 2);
@@ -178,7 +179,9 @@ export const enemyTurn = () => {
 	combatState.opponents.forEach((enemy, ei) => {
 		setCombatState("opponents", ei, "health", (hp) => hp - damageThorns());
 		setState("health", (hp) => hp - enemy.damage);
+		combatLog().push(`${enemy.name} dealt ${enemy.damage} damage.`)
 	});
+	perCombatRound();
 	setState("combat", "turn", 0);
 };
 

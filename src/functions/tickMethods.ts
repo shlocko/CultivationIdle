@@ -7,27 +7,27 @@ import {
 import {
 	setState,
 	state,
-	opponent,
-	setOpponent,
 	canAdvance,
 	advance,
 	maxHealth,
 	setAction,
 	getLocation,
+	getPassiveManaRegen,
+	getPassiveHealthRegen,
 } from "../state/store";
 import { meditationTechniqueEffect } from "./techniqueMethods";
 import { VerdantFields } from "../areas/VerdantFields";
 import { createMemo } from "solid-js";
 import { areas } from "../areas/area";
+import { combatLog } from "../components/Combat";
 
 // Happens every tick
 export const perTick = () => {
-	setState("mana", (m) => m + state.passiveManaRegen);
+	console.log(getPassiveManaRegen())
+	setState("mana", (m) => m + getPassiveManaRegen());
+	setState("health", (h) => h + getPassiveHealthRegen())
 	if (state.health > maxHealth()) {
 		setState("health", maxHealth());
-	}
-	if (opponent.health <= 0) {
-		setOpponent("health", 0);
 	}
 
 	// Check for advancement
@@ -37,10 +37,10 @@ export const perTick = () => {
 };
 
 export const trainTick = () => {
-	if (state.mana >= 3) {
+	if (state.mana >= getPassiveManaRegen() * 3) {
 		const num: number = state.trainingTechnique;
-		setState("mana", (mana) => mana - 3);
-		setState("maxMana", (max) => max + 0.5);
+		setState("mana", (mana) => mana - getPassiveManaRegen() * 3);
+		setState("maxMana", (max) => max + getPassiveManaRegen() / 2);
 		if (
 			state.trainingTechnique >= 0 &&
 			state.techniques[num].mastery < 10000
@@ -61,11 +61,6 @@ export const meditateTick = () => {
 			state.meditationTechniques[state.activeMeditationTechnique]
 				.id as keyof typeof meditationTechniqueEffect
 		](state.meditationTechniques[state.activeMeditationTechnique].level);
-	} else if (state.mana < state.maxMana) {
-		setState("mana", (mana) => mana + 1);
-	}
-	if (state.health < maxHealth()) {
-		setState("health", (h) => h + 1);
 	}
 	if (state.health >= maxHealth() && state.mana >= state.maxMana && state.train.active === true) {
 		setAction("Train")
@@ -134,3 +129,16 @@ export const adventureTick = () => {
 		}
 	}
 };
+
+export const perCombatRound = () => {
+
+	setState("mana", (m) => m + getPassiveManaRegen());
+	setState("health", (h) => h + getPassiveHealthRegen())
+	if (state.health > maxHealth()) {
+		setState("health", maxHealth());
+	}
+	if (state.mana > state.maxMana) {
+		setState("mana", state.maxMana);
+	}
+	combatLog().push(`You regained ${getPassiveManaRegen()} mana and ${getPassiveHealthRegen()} health between rounds.`)
+}

@@ -11,7 +11,6 @@ import {
 	damageToTarget,
 	hasItem,
 	manaGainFromTechniques,
-	opponent,
 	setAction,
 	setCombatState,
 	setState,

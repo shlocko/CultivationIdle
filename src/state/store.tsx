@@ -9,7 +9,7 @@ import toast from "solid-toast";
 import { ModalMessageType, sendAspectChoice, sendMeditationTechniqueChoice, sendModal, sendTechniqueChoice } from "./modalMessages";
 import {
 	EffectType,
-	techniqueCustomEffect,
+	techniqueCustomEffect
 } from "../functions/techniqueMethods";
 import { Enemy, enemyList } from "./enemies";
 import { cloneDeep } from "lodash";
@@ -181,7 +181,6 @@ export type LootCollection = {
 
 export type State = "Modal" | "Tick" | "Combat";
 export const [pause, setPause] = createSignal(false);
-export const [opponent, setOpponent] = createStore(cloneDeep(enemyList.bandit));
 
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
@@ -634,4 +633,34 @@ export const setArea = (area: AreaNames) => {
 
 export const getLocation = () => {
 	return state.adventure.subLocation || state.adventure.location
+}
+
+export const getPassiveManaRegen = () => {
+	let count = 0
+	let manaRegenLevel = state.meditationTechniques.find((item) => item.id === "manaregen")?.level
+	let mixedRegenLevel = state.meditationTechniques.find((item) => item.id === "mixedregen")?.level
+
+	if (manaRegenLevel) {
+		count += manaRegenLevel * 2
+	}
+	if (mixedRegenLevel) {
+		count += mixedRegenLevel
+	}
+
+	return count + 1
+}
+
+export const getPassiveHealthRegen = () => {
+	let count = 0
+	let healthRegenLevel = state.meditationTechniques.find((item) => item.id === "healthregen")?.level
+	let mixedRegenLevel = state.meditationTechniques.find((item) => item.id === "mixedregen")?.level
+
+	if (healthRegenLevel) {
+		count += healthRegenLevel
+	}
+	if (mixedRegenLevel) {
+		count += mixedRegenLevel * 0.5
+	}
+
+	return count + 1
 }
