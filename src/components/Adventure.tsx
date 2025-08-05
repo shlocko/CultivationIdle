@@ -5,6 +5,7 @@ import { Combat } from "./Combat";
 import { initCombat } from "../functions/combatMethods";
 import { getItem } from "../state/items";
 import { VerdantFields } from "../areas/VerdantFields";
+import { areas } from "../areas/area";
 
 export const Adventure: Component = () => {
 	let testTable: LootTable = [
@@ -22,7 +23,7 @@ export const Adventure: Component = () => {
 					"flex": "0 0 15rem",
 				}}
 			>
-				<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked)}>
+				<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && !areas[key].subArea)}>
 					{(item, i) => (
 						<button classList={{
 							[utils.btn]: true,
@@ -48,11 +49,10 @@ export const Adventure: Component = () => {
 					<Combat />
 				</Show>
 				<Show when={state.state !== "Combat"}>
-					<h2> Adventure </h2>
+					<h2> {state.adventure.subLocation || state.adventure.location} </h2>
 					<p>
 						{" "}
-						Progress: {state.adventure.areas[state.adventure.location].tickCount}
-						/500
+						Progress: {state.adventure.areas[state.adventure.subLocation || state.adventure.location].tickCount}
 					</p>
 					<button
 						class={`${utils.btn} ${utils.wide_top_auto}`}
@@ -93,6 +93,20 @@ export const Adventure: Component = () => {
 					}}
 				>
 					<p>Area Info</p>
+					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location)}>
+						{(item, i) => (
+							<button classList={{
+								[utils.btn]: true,
+								[utils.btn_active]: state.adventure.subLocation === item
+							}}
+								onClick={() => {
+									setArea(item)
+								}}
+							>
+								{item}
+							</button>
+						)}
+					</For>
 				</div>
 			</Show>
 		</div>

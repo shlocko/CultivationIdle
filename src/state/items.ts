@@ -6,6 +6,10 @@ export const items: Record<string, Item> = {
 		name: "Herb",
 		type: "material",
 	},
+	Goo: {
+		name: "Goo",
+		type: "material"
+	},
 	Berry: {
 		name: "Berry",
 		type: "material",

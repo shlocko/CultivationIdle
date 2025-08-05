@@ -31,12 +31,6 @@ export const perTick = () => {
 
 	// Check for advancement
 	if (canAdvance()) {
-		sendModal("You advance");
-		if (state.aspect === undefined) {
-			sendAspectChoice();
-		}
-		sendTechniqueChoice();
-		sendMeditationTechniqueChoice();
 		advance();
 	}
 };
@@ -78,44 +72,60 @@ export const meditateTick = () => {
 };
 
 export const adventureTick = () => {
+	let location = state.adventure.location
+	if (state.adventure.subLocation) {
+		location = state.adventure.subLocation
+	}
 	console.log("adventure");
 	const eventRoll = Math.random() * 100 + 1;
 	console.log(eventRoll);
-	setState("adventure", "areas", state.adventure.location, "tickCount", (tc) => tc + 1);
+	setState("adventure", "areas", location, "tickCount", (tc) => tc + 1);
 	if (eventRoll >= 99) {
-	} else if (eventRoll >= 95) {
+		// Epic Event
 		const pick = Math.floor(
-			Math.random() * areas[state.adventure.location].rareEvents.length,
+			Math.random() * areas[location].epicEvents.length,
 		);
-		if (areas[state.adventure.location].rareEvents[pick].isUnlocked()) {
-			sendModal(
+		if (areas[location].epicEvents[pick].isUnlocked()) {
+			/*sendModal(
 				`You encounter ${areas[state.adventure.location].rareEvents[pick].name}!`,
-			);
-			areas[state.adventure.location].rareEvents[pick].activation();
+			);*/
+			areas[location].epicEvents[pick].activation();
+		}
+	} else if (eventRoll >= 95) {
+		// Rare Event
+		const pick = Math.floor(
+			Math.random() * areas[location].rareEvents.length,
+		);
+		if (areas[location].rareEvents[pick].isUnlocked()) {
+			/*sendModal(
+				`You encounter ${areas[state.adventure.location].rareEvents[pick].name}!`,
+			);*/
+			areas[location].rareEvents[pick].activation();
 		}
 	} else if (eventRoll >= 80) {
+		// Uncommon Event
 		const pick = Math.floor(
-			Math.random() * areas[state.adventure.location].uncommonEvents.length,
+			Math.random() * areas[location].uncommonEvents.length,
 		);
 		console.log(pick);
-		if (areas[state.adventure.location].uncommonEvents[pick].isUnlocked()) {
-			sendModal(
+		if (areas[location].uncommonEvents[pick].isUnlocked()) {
+			/*sendModal(
 				`You encounter ${areas[state.adventure.location].uncommonEvents[pick].name}!`,
-			);
-			areas[state.adventure.location].uncommonEvents[pick].activation();
+			);*/
+			areas[location].uncommonEvents[pick].activation();
 		}
-	} else if (eventRoll >= 0) {
+	} else if (eventRoll >= 30) {
+		// Common Event
 		console.log("roll");
 		let pick = Math.floor(
-			Math.random() * areas[state.adventure.location].commonEvents.length,
+			Math.random() * areas[location].commonEvents.length,
 		);
-		//pick = 1;
 		console.log(pick);
-		if (areas[state.adventure.location].commonEvents[pick].isUnlocked()) {
-			sendModal(
+		if (areas[location].commonEvents[pick].isUnlocked()) {
+			/*sendModal(
 				`You encounter ${areas[state.adventure.location].commonEvents[pick].name}!`,
-			);
-			areas[state.adventure.location].commonEvents[pick].activation();
+			);*/
+			areas[location].commonEvents[pick].activation();
 		}
 	}
 };

@@ -6,7 +6,7 @@ import {
 	trainTick,
 } from "../functions/tickMethods";
 import toast from "solid-toast";
-import { ModalMessageType, sendModal } from "./modalMessages";
+import { ModalMessageType, sendAspectChoice, sendMeditationTechniqueChoice, sendModal, sendTechniqueChoice } from "./modalMessages";
 import {
 	EffectType,
 	techniqueCustomEffect,
@@ -18,6 +18,7 @@ import { actionChoice } from "../components/Combat";
 import { ItemNames, items } from "./items";
 import { intro } from "../functions/sequenceMethods";
 import { AreaNames, AreaState, areas } from "../areas/area";
+import { QiBearDen } from "../areas/QiBearDen";
 
 type Action = "Meditate" | "Train" | "Adventure";
 
@@ -205,23 +206,26 @@ export const [state, setState] = createStore({
 	adventure: {
 		tickSpeed: 1,
 		location: "VerdantFields" as AreaNames,
+		subLocation: undefined as AreaNames | undefined,
 		areas: {
 			"VerdantFields": {
 				name: "VerdantFields",
 				unlocked: true,
 				tickCount: 0,
-				unlocks: {
-					bossBeaten: false,
-				}
-			} as AreaState,
+				unlocks: {}
+			},
 			"HollowWoods": {
 				name: "HollowWoods",
 				unlocked: false,
 				tickCount: 0,
-				unlocks: {
-
-				}
-			} as AreaState,
+				unlocks: {}
+			},
+			"QiBearDen": {
+				name: "QiBearDen",
+				unlocked: true,
+				tickCount: 0,
+				unlocks: {}
+			}
 		} as Record<AreaNames, AreaState>,
 	},
 	// Player's current mana
@@ -269,6 +273,9 @@ export const [state, setState] = createStore({
 	modalMessages: [] as ModalMessageType[],
 	autoAdventure: false,
 	weaponDamageBuff: 0,
+	unlocks: {
+		adventure: false,
+	}
 });
 
 export const changeState = (newState: State) => {
@@ -512,10 +519,30 @@ export const canAdvance = () => {
 
 export const advance = () => {
 	if (canAdvance()) {
+		sendModal("You feel the Qi in your core begin to condense. You feel your power has taken a quantitative leap forwards.")
+		if (state.aspect === undefined) {
+			sendAspectChoice();
+		}
+		sendTechniqueChoice();
+		sendMeditationTechniqueChoice();
 		setState("rank", (rank) => rank + 1)
 		setState("train", "active", false)
-	}
-};
+		setState("health", maxHealth())
+		setState("mana", state.maxMana)
+		actionButton("Meditate")
+		// Messages and effects per rank
+		switch (state.rank) {
+			case 1: {
+				setState("unlocks", "adventure", true)
+				sendModal("You have unlocked Adventure mode. Explore new lands in search of glory and discovery!")
+			}
+			case 2: {
+
+			}
+		}
+
+	};
+}
 
 export const setAction = (action: Action) => {
 	setState("previousAction", state.action);
@@ -523,6 +550,7 @@ export const setAction = (action: Action) => {
 	setPause(false);
 };
 
+// Set current action as if button was clicked by user
 export const actionButton = (action: Action) => {
 	setAction(action)
 	if (action === "Train") {
@@ -578,5 +606,11 @@ export const clearNotOngoing = () => {
 };
 
 export const setArea = (area: AreaNames) => {
-	setState("adventure", "location", area)
+	if (areas[area].subArea) {
+		setState("adventure", "location", areas[area].subAreaTo!)
+		setState("adventure", "subLocation", area)
+	} else {
+		setState("adventure", "location", area)
+		setState("adventure", "subLocation", undefined)
+	}
 }

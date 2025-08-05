@@ -53,7 +53,6 @@ export const Template: Component<RouteSectionProps> = (props) => {
 		} else if (state.state === "Modal") {
 			if (state.modalMessages.length === 0) {
 				setState("state", state.previousState);
-				// ignore
 			}
 		} else if (state.state === "Combat") {
 			setCombatState("opponents", (opponents) =>

@@ -3,6 +3,7 @@
 
 import { Event } from "../state/events"
 import { HollowWoods } from "./HollowWoods"
+import { QiBearDen } from "./QiBearDen"
 import { VerdantFields } from "./VerdantFields"
 
 export type AreaState = {
@@ -15,7 +16,7 @@ export type AreaState = {
 export type Area = {
 	unlockThresholds: Record<string, number>,
 	subArea: boolean,
-	subAreaTo: Area | null,
+	subAreaTo: AreaNames | null,
 	commonEvents: Event[],
 	uncommonEvents: Event[],
 	rareEvents: Event[],
@@ -26,6 +27,7 @@ export type Area = {
 export let areas: Record<string, Area> = {
 	"VerdantFields": VerdantFields,
 	"HollowWoods": HollowWoods,
+	"QiBearDen": QiBearDen,
 }
 
 export type AreaNames = keyof typeof areas

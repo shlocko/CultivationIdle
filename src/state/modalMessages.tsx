@@ -266,7 +266,7 @@ export const ModalChooseMeditationTechnique: Component = () => {
 export const ModalChooseAspect: Component = () => {
 	const [choice, setChoice] = createSignal(-1);
 	return (
-		<div class={utils.container}>
+		<>
 			<p> Choose an aspect for your Qi: </p>
 			<For each={aspects}>
 				{(item, i) => (
@@ -303,7 +303,7 @@ export const ModalChooseAspect: Component = () => {
 			>
 				<p>Choose</p>
 			</button>
-		</div>
+		</>
 	);
 };
 
