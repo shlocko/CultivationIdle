@@ -147,6 +147,14 @@ export const ModalChooseTechnique: Component = () => {
 					</>
 				)}
 			</For>
+			<div style={{
+				"min-height": "5rem",
+			}}>
+				<Show when={techniqueList[choice()]}>
+					<p> {techniqueList[choice()].description}</p>
+				</Show>
+				<p></p>
+			</div>
 			<button
 				class={utils.btn}
 				onClick={() => {
@@ -163,14 +171,6 @@ export const ModalChooseTechnique: Component = () => {
 			>
 				<p>Choose</p>
 			</button>
-			<div style={{
-				"min-height": "5rem",
-			}}>
-				<Show when={techniqueList[choice()]}>
-					<p> {techniqueList[choice()].description}</p>
-				</Show>
-				<p></p>
-			</div>
 		</>
 	);
 };
@@ -218,6 +218,14 @@ export const ModalChooseMeditationTechnique: Component = () => {
 				)}
 			</For>
 
+			<div style={{
+				"min-height": "5rem",
+			}}>
+				<Show when={techniqueList[choice()]}>
+					<p> {techniqueList[choice()].description}</p>
+				</Show>
+				<p></p>
+			</div>
 			<button
 				class={utils.btn}
 				onClick={() => {
@@ -251,14 +259,6 @@ export const ModalChooseMeditationTechnique: Component = () => {
 			>
 				<p>Choose</p>
 			</button>
-			<div style={{
-				"min-height": "5rem",
-			}}>
-				<Show when={techniqueList[choice()]}>
-					<p> {techniqueList[choice()].description}</p>
-				</Show>
-				<p></p>
-			</div>
 		</>
 	);
 };
@@ -290,7 +290,7 @@ export const ModalChooseAspect: Component = () => {
 					</>
 				)}
 			</For>
-
+			<p></p>
 			<button
 				class={utils.btn}
 				onClick={() => {
