@@ -2,13 +2,15 @@ import { initCombat, pickLoot } from "../functions/combatMethods";
 import { Enemies } from "../state/enemies";
 import { Event } from "../state/events";
 import { ModalMessage, sendLoot, sendModal } from "../state/modalMessages";
-import { Item, addCoins, combatState, lootEntry, setAction, setState, state } from "../state/store";
+import { Item, addCoins, combatState, lootEntry, setAction, setCombatState, setState, state } from "../state/store";
 import { items } from "../state/items";
 import { cloneDeep, uniq } from "lodash";
 import { beginnerBoss } from "../functions/sequenceMethods";
 import { Area } from "./area";
 
 export const VerdantFields: Area = {
+	name: "Verdant Fields",
+	type: "normal",
 	unlockThresholds: {
 		"HollowWoods": 100,
 	},
@@ -18,6 +20,14 @@ export const VerdantFields: Area = {
 
 	},
 	commonEvents: [
+		{
+			name: "a Small Cave",
+			isUnlocked: () => !state.adventure.areas.SmallCave.unlocked,
+			activation: () => {
+				sendModal("You have found a Small Cave, enter it and conqure the dungoen within!")
+				setState("adventure", "areas", "SmallCave", "unlocked", true)
+			}
+		},
 		{
 			name: "the Hollow Woods",
 			isUnlocked: () => {

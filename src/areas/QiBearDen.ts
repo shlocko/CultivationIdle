@@ -4,6 +4,8 @@ import { VerdantFields } from "./VerdantFields";
 import { Area } from "./area";
 
 export const QiBearDen: Area = {
+	name: "Qi Bear Den",
+	type: "normal",
 	unlockThresholds: {},
 	subArea: true,
 	subAreaTo: "VerdantFields",

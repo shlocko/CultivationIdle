@@ -2,6 +2,8 @@ import { sendModal } from "../state/modalMessages";
 import { Area } from "./area";
 
 export const HollowWoods: Area = {
+	name: "Hollow Woods",
+	type: "normal",
 	unlockThresholds: {
 		"peaksPass": 200,
 	},

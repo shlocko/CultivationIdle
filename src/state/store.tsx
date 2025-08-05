@@ -229,6 +229,15 @@ export const [state, setState] = createStore({
 				tickCount: 0,
 				unlocks: {},
 				longestRun: 0,
+			},
+			"SmallCave": {
+				name: "SmallCave",
+				unlocked: false,
+				tickCount: 0,
+				unlocks: {
+					beaten: false,
+				},
+				longestRun: 0
 			}
 		} as Record<AreaNames, AreaState>,
 	},
@@ -551,6 +560,7 @@ export const advance = () => {
 export const setAction = (action: Action) => {
 	if (state.action === "Adventure") {
 		areas[getLocation()].endExploration()
+		setState("adventure", "currentRun", 0)
 	}
 	setState("previousAction", state.action);
 	setState("action", action);
