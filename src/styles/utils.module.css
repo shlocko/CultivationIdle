@@ -132,6 +132,16 @@ body {
 	/*background-color: rgb(192, 193, 196);*/
 }
 
+.container_no_border {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	align-items: center;
+	width: 100%;
+	padding: 1em;
+	/*background-color: rgb(192, 193, 196);*/
+}
+
 .row_container {
 	/*display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(25em, 100%), 1fr));*/

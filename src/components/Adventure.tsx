@@ -21,6 +21,7 @@ export const Adventure: Component = () => {
 			<div class={(utils.container)}
 				style={{
 					"flex": "0 0 15rem",
+					"overflow-y": "scroll",
 				}}
 			>
 				<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && !areas[key].subArea)}>
@@ -49,22 +50,12 @@ export const Adventure: Component = () => {
 					<Combat />
 				</Show>
 				<Show when={state.state !== "Combat"}>
-					<h2> {getLocation()} </h2>
-					<h4>Sub Locations</h4>
-					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location)}>
-						{(item, i) => (
-							<button classList={{
-								[utils.btn]: true,
-								[utils.btn_active]: state.adventure.subLocation === item
-							}}
-								onClick={() => {
-									setArea(item)
-								}}
-							>
-								{item}
-							</button>
-						)}
-					</For>
+					<h2>{getLocation()}</h2>
+					<h3>Area Info</h3>
+					<p>
+						Progress: {state.adventure.areas[getLocation()].tickCount}
+					</p>
+					<p>Longest run: {state.adventure.areas[getLocation()].longestRun}</p>
 					<button
 						class={`${utils.btn} ${utils.wide_top_auto}`}
 						onClick={() => {
@@ -92,7 +83,7 @@ export const Adventure: Component = () => {
 							actionButton("Adventure");
 						}}
 					>
-						<p> Adventure </p>
+						<p> {areas[getLocation()].type == "dungeon" ? "Delve" : "Explore"} </p>
 					</button>
 				</Show>
 			</div>
@@ -101,16 +92,48 @@ export const Adventure: Component = () => {
 				<div class={(utils.container)}
 					style={{
 						"flex": "0 0 20rem",
+						"overflow-y": "scroll",
 					}}
 				>
-					<h2>{getLocation()}</h2>
-					<h3>Area Info</h3>
-					<p>
-						Progress: {state.adventure.areas[getLocation()].tickCount}
-					</p>
-					<p>Longest run: {state.adventure.areas[getLocation()].longestRun}</p>
+					<h2>Sub Locations</h2>
+					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location && areas[key].type === "normal")}>
+						{(item, i) => (
+							<button classList={{
+								[utils.btn]: true,
+								[utils.btn_active]: state.adventure.subLocation === item
+							}}
+								onClick={() => {
+									setArea(item)
+								}}
+							>
+								{item}
+							</button>
+						)}
+					</For>
+					<h2>Dungeons</h2>
+					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location && areas[key].type === "dungeon")}>
+						{(item, i) => (
+							<div class={utils.container_no_border}
+								style={{
+									"flex-grow": "0",
+									"padding": "0",
+								}}>
+								<button classList={{
+									[utils.btn]: true,
+									[utils.btn_active]: state.adventure.subLocation === item
+								}}
+									onClick={() => {
+										setArea(item)
+									}}
+								>
+									{item}
+								</button>
+								Completed: {state.adventure.areas[item].unlocks.beaten ? "yes" : "no"}
+							</div>
+						)}
+					</For>
 				</div>
-			</Show>
-		</div>
+			</Show >
+		</div >
 	);
 };

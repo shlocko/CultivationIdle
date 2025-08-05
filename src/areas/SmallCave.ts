@@ -1,7 +1,7 @@
 
 import { initCombat } from "../functions/combatMethods";
 import { sendLoot, sendModal } from "../state/modalMessages";
-import { addCoins, lootEntry, state } from "../state/store";
+import { addCoins, lootEntry, setState, state } from "../state/store";
 import { VerdantFields } from "./VerdantFields";
 import { Area } from "./area";
 
@@ -27,6 +27,7 @@ export const SmallCave: Area = {
 				},
 			])
 			addCoins(500, 500)
+			setState("adventure", "areas", "SmallCave", "unlocks", "beaten", true)
 		}
 	},
 	commonEvents: [
