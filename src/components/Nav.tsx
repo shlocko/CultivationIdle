@@ -48,6 +48,7 @@ export const Nav: Component = () => {
 				class={styles.nav_item}
 				onClick={() => {
 					clear();
+					window.location.reload()
 				}}
 			>
 				Clear

@@ -17,7 +17,7 @@ import {
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
 import { Toaster } from "solid-toast";
-import { perTick } from "../functions/tickMethods";
+import { offlineTraining, perTick } from "../functions/tickMethods";
 import { cloneDeep } from "lodash";
 import { pickLoot } from "../functions/combatMethods";
 import { sendLoot, sendModal } from "../state/modalMessages";
@@ -27,9 +27,19 @@ import { TickBar } from "./TickBar";
 export const Template: Component<RouteSectionProps> = (props) => {
 	const [saveTimer, setSaveTimer] = createSignal(0);
 	const timer = setInterval(() => {
+		if (document.hidden) return
+		let timestamp = Date.now()
+		//console.log(timestamp)
+		//console.log(timestamp - state.timeStamp)
+		if ((timestamp - state.timeStamp) / (1000) > 5) {
+			console.log("gap")
+			console.log(timestamp - state.timeStamp)
+			offlineTraining(timestamp - state.timeStamp)
+		}
+		setState("timeStamp", Date.now())
 		// Timer for auto saves
 		setSaveTimer((t) => t + 10);
-		if (saveTimer() >= 9000) {
+		if (saveTimer() >= 1000) {
 			setSaveTimer(0);
 			persist();
 		}

@@ -14,6 +14,7 @@ import {
 	getLocation,
 	getPassiveManaRegen,
 	getPassiveHealthRegen,
+	getOfflineManaGainPerSecond,
 } from "../state/store";
 import { meditationTechniqueEffect } from "./techniqueMethods";
 import { VerdantFields } from "../areas/VerdantFields";
@@ -23,7 +24,7 @@ import { combatLog } from "../components/Combat";
 
 // Happens every tick
 export const perTick = () => {
-	console.log(getPassiveManaRegen())
+	//console.log(getPassiveManaRegen())
 	setState("mana", (m) => m + getPassiveManaRegen());
 	setState("health", (h) => h + getPassiveHealthRegen())
 	if (state.health > maxHealth()) {
@@ -129,6 +130,20 @@ export const adventureTick = () => {
 		}
 	}
 };
+
+
+export const offlineTraining = (ms: number) => {
+	const totalSeconds = Math.min(Math.floor(ms / 1000), 24 * 60 * 60);
+	const days = Math.floor(totalSeconds / (3600 * 24));
+	const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+	const minutes = Math.floor((totalSeconds % 3600) / 60);
+	const seconds = totalSeconds % 60;
+
+	console.log(`Seconds ${seconds} ${getOfflineManaGainPerSecond()}`)
+	const maxManaGained = Number((getOfflineManaGainPerSecond() * totalSeconds).toFixed(2))
+	sendModal(`You were offline for ${days} day${days == 1 ? "" : "s"}, ${hours} hours, ${minutes} minutes, and ${seconds} seconds. You gained ${maxManaGained} Qi training while offline.`)
+	setState("maxMana", m => m + maxManaGained)
+}
 
 export const perCombatRound = () => {
 

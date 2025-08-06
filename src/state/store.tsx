@@ -185,10 +185,12 @@ export const [pause, setPause] = createSignal(false);
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
 	// State version for ensuring compatibility with save data
-	version: 11,
+	version: 13,
 	// State machine state
 	state: "Tick" as State,
 	previousState: "Tick" as State,
+	timeStamp: Date.now(),
+	offlineTrainingEfficiency: 0.01,
 	//Gamedata on the various actions
 	meditate: {
 		tickSpeed: 0.5,
@@ -410,10 +412,30 @@ export const [combatState, setCombatState] = createStore({
 // helper functions
 //********************************************************
 
+export const setAction = (action: Action) => {
+	if (state.action === "Adventure") {
+		areas[getLocation()].endExploration()
+		setState("adventure", "currentRun", 0)
+	}
+	setState("previousAction", state.action);
+	setState("action", action);
+	setPause(false);
+};
+
+// Set current action as if button was clicked by user
+export const actionButton = (action: Action) => {
+	setAction(action)
+	if (action === "Train") {
+		setState("train", "active", true)
+	} else {
+		setState("train", "active", false)
+	}
+};
+
 export const persist = () => {
 	localStorage.setItem("state", JSON.stringify(state));
 
-	toast("Data Saved");
+	//toast("Data Saved");
 };
 
 export const load = () => {
@@ -431,6 +453,7 @@ export const load = () => {
 // Code to check for save data
 if (localStorage.getItem("state")) {
 	load();
+	actionButton("Meditate")
 } else {
 	intro();
 }
@@ -556,25 +579,6 @@ export const advance = () => {
 	};
 }
 
-export const setAction = (action: Action) => {
-	if (state.action === "Adventure") {
-		areas[getLocation()].endExploration()
-		setState("adventure", "currentRun", 0)
-	}
-	setState("previousAction", state.action);
-	setState("action", action);
-	setPause(false);
-};
-
-// Set current action as if button was clicked by user
-export const actionButton = (action: Action) => {
-	setAction(action)
-	if (action === "Train") {
-		setState("train", "active", true)
-	} else {
-		setState("train", "active", false)
-	}
-};
 
 export const resetActiveTechniques = () => {
 	state.techniques.forEach((item, i) => {
@@ -663,4 +667,8 @@ export const getPassiveHealthRegen = () => {
 	}
 
 	return count + 1
+}
+
+export const getOfflineManaGainPerSecond = () => {
+	return (getPassiveManaRegen() / 4 * state.offlineTrainingEfficiency)
 }
