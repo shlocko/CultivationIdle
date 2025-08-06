@@ -417,7 +417,6 @@ export const getLocation = () => {
 
 export const setAction = (action: Action) => {
 	if (state.action === "Adventure") {
-		console.log("End function")
 		areas[getLocation()].endExploration()
 	}
 	if (action === "Adventure") setState("adventure", "currentRun", 0)

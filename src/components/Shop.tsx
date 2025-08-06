@@ -17,7 +17,7 @@ export const Shop: Component = () => {
 							if (state.coins >= item.cost) {
 								setState("coins", (c) => c - item.cost);
 								inventoryAdd(item.item.name, 1);
-								toast(`${item.item} purchased`);
+								toast(`${item.item.name} purchased`);
 							}
 						}}
 					>
