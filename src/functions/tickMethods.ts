@@ -15,6 +15,7 @@ import {
 	getPassiveManaRegen,
 	getPassiveHealthRegen,
 	getOfflineManaGainPerSecond,
+	actionButton,
 } from "../state/store";
 import { meditationTechniqueEffect } from "./techniqueMethods";
 import { VerdantFields } from "../areas/VerdantFields";
@@ -69,13 +70,11 @@ export const meditateTick = () => {
 };
 
 export const adventureTick = () => {
-	let location = state.adventure.location
-	if (state.adventure.subLocation) {
-		location = state.adventure.subLocation
+	let location = getLocation()
+	if (areas[location].type === "dungeon" && state.adventure.currentRun >= areas[location].unlockThresholds.beatDungeon) {
+		actionButton("Meditate")
 	}
-	console.log("adventure");
 	const eventRoll = Math.random() * 100 + 1;
-	console.log(eventRoll);
 	setState("adventure", "areas", location, "tickCount", (tc) => tc + 1);
 	setState("adventure", "currentRun", (cr) => cr + 1)
 	if (state.adventure.currentRun > state.adventure.areas[getLocation()].longestRun) {

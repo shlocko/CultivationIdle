@@ -1,4 +1,4 @@
-import { type Component, JSXElement, onCleanup, createSignal } from "solid-js";
+import { type Component, JSXElement, onCleanup, createSignal, Show } from "solid-js";
 import utils from "../styles/utils.module.css";
 import {
 	state,
@@ -10,9 +10,10 @@ import {
 	combatState,
 	setCombatState,
 	changeState,
-	opponent,
 	addCoins,
 	setAction,
+	setBar,
+	bar,
 } from "../state/store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
@@ -23,6 +24,7 @@ import { pickLoot } from "../functions/combatMethods";
 import { sendLoot, sendModal } from "../state/modalMessages";
 import { RouteSectionProps } from "@solidjs/router";
 import { TickBar } from "./TickBar";
+import { Combat } from "./Combat";
 
 export const Template: Component<RouteSectionProps> = (props) => {
 	const [saveTimer, setSaveTimer] = createSignal(0);
@@ -50,10 +52,10 @@ export const Template: Component<RouteSectionProps> = (props) => {
 		// state machine behavior
 		if (state.state === "Tick") {
 			if (!pause()) {
-				setState("bar", (bar) => bar + 1.0 / tickSpeed());
+				setBar((bar) => bar + 1.0 / tickSpeed());
 			}
-			if (state.bar > 100) {
-				setState("bar", 0.0);
+			if (bar() > 100) {
+				setBar(0.0);
 				perTick();
 				tick[state.action]();
 				if (state.mana > state.maxMana) {
@@ -86,21 +88,36 @@ export const Template: Component<RouteSectionProps> = (props) => {
 		clearInterval(timer);
 	});
 	return (
-		<div class={utils.App}>
-			<Nav />
-			<QuickInfo />
-			<div
-				style={{
-					"flex-grow": 1,
-					"overflow-y": "auto",
-					display: "flex",
-					"flex-direction": "column",
-					"grid-area": "main",
-				}}
-			>
-				{props.children}
-			</div>
-			<TickBar />
+		<div classList={{
+			[utils.App]: state.state !== "Combat",
+			[utils.combat_container]: state.state === "Combat",
+		}}>
+			<Show when={state.state !== "Combat"}>
+				<Nav />
+				<QuickInfo />
+				<div
+					style={{
+						"flex-grow": 1,
+						"overflow-y": "auto",
+						display: "flex",
+						"flex-direction": "column",
+						"grid-area": "main",
+					}}
+				>
+					{props.children}
+				</div>
+				<TickBar />
+			</Show>
+			<Show when={state.state === "Combat"}>
+				<QuickInfo />
+				<div class={utils.container}
+					style={{
+						"width": "100%",
+						"flex-grow": "1",
+					}}>
+					<Combat />
+				</div>
+			</Show>
 		</div>
 	);
 };

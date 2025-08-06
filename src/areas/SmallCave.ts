@@ -9,12 +9,12 @@ export const SmallCave: Area = {
 	name: "Small Cave",
 	type: "dungeon",
 	unlockThresholds: {
-		beatDungeon: 5,
+		beatDungeon: 1,
 	},
 	subArea: true,
 	subAreaTo: "VerdantFields",
 	endExploration: () => {
-		if (state.adventure.currentRun >= SmallCave.unlockThresholds.beatDungeon && !state.adventure.areas.SmallCave.unlocks.beaten) {
+		if (state.adventure.currentRun >= SmallCave.unlockThresholds.beatDungeon) {
 			sendModal("You have beaten the dungeon! Enjoy your prize.")
 			sendLoot([
 				{

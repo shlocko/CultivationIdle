@@ -11,7 +11,7 @@ export const HealthBar: Component = () => {
 				[utils.text_outline]: true,
 			}}
 			style={{
-				"background-image": `url("/CultivationIdle/health${Math.floor(18 - (1 + (state.health / maxHealth()) * 16)) + ".png"}"), url("/CultivationIdle/healthbar.png")`,
+				"background-image": `url("/CultivationIdle/health${Math.floor(18 - (1 + (state.health / Math.max(maxHealth(), 1)) * 16)) + ".png"}"), url("/CultivationIdle/healthbar.png")`,
 				"background-size": "15rem 4rem",
 				"background-repeat": "no-repeat",
 			}}

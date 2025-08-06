@@ -181,6 +181,7 @@ export type LootCollection = {
 
 export type State = "Modal" | "Tick" | "Combat";
 export const [pause, setPause] = createSignal(false);
+export const [bar, setBar] = createSignal(0.0);
 
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
@@ -248,8 +249,6 @@ export const [state, setState] = createStore({
 	maxMana: 19,
 	// Player's passive mana regeneration
 	passiveManaRegen: 1,
-	// Current % of tick bar
-	bar: 0.0,
 	// Player's current action
 	action: "Meditate" as Action,
 	previousAction: "Meditate" as Action,
@@ -412,11 +411,16 @@ export const [combatState, setCombatState] = createStore({
 // helper functions
 //********************************************************
 
+export const getLocation = () => {
+	return state.adventure.subLocation || state.adventure.location
+}
+
 export const setAction = (action: Action) => {
 	if (state.action === "Adventure") {
+		console.log("End function")
 		areas[getLocation()].endExploration()
-		setState("adventure", "currentRun", 0)
 	}
+	if (action === "Adventure") setState("adventure", "currentRun", 0)
 	setState("previousAction", state.action);
 	setState("action", action);
 	setPause(false);
@@ -635,9 +639,6 @@ export const setArea = (area: AreaNames) => {
 	}
 }
 
-export const getLocation = () => {
-	return state.adventure.subLocation || state.adventure.location
-}
 
 export const getPassiveManaRegen = () => {
 	let count = 0

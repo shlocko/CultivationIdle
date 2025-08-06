@@ -1,6 +1,6 @@
 import { type Component } from "solid-js";
 import utils from "../styles/utils.module.css";
-import { setPause, load, persist, clear, state } from "../state/store";
+import { setPause, load, persist, clear, state, bar } from "../state/store";
 
 export const TickBar: Component = () => {
 	return (
@@ -8,7 +8,7 @@ export const TickBar: Component = () => {
 			<progress
 				class={(utils.bar)}
 				max="100"
-				value={state.bar}>
+				value={bar()}>
 			</progress>
 		</div>
 	);

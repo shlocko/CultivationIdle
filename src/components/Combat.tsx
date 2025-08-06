@@ -22,6 +22,7 @@ import styles from "../styles/Combat.module.css";
 import { endTurn, enemyTurn } from "../functions/combatMethods";
 import { CombatEnemyCard } from "./CombatEnemyCard";
 import { CombatActionsCard } from "./CombatActionsCard";
+import { A } from "@solidjs/router";
 
 export const [actionChoice, setActionChoice] = createSignal(-1);
 export const [combatLog, setCombatLog] = createSignal<string[]>([])
@@ -122,15 +123,17 @@ export const Combat: Component = () => {
 								>
 									<p>Continue</p>{" "}
 								</button>
-								<button
+								<A
 									class={utils.btn}
 									onClick={() => {
 										changeState("Tick");
+										setState("adventure", "currentRun", (cr) => cr - 1)
 										setAction("Meditate");
 									}}
+									href="/"
 								>
 									Flee
-								</button>
+								</A>
 							</div>
 						</div>
 					</Match>

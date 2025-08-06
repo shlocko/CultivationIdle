@@ -309,6 +309,11 @@ export const ModalChooseAspect: Component = () => {
 
 export const ModalLoot: Component<{ loot: LootCollection }> = (props) => {
 	const [loot, setLoot] = createStore(props.loot.slice(0));
+	if (loot.length === 0) {
+		const arr = state.modalMessages.slice();
+		arr.shift();
+		setState("modalMessages", arr);
+	}
 	return (
 		<div class={utils.loot_modal}>
 			<p> Loot: </p>
