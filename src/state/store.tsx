@@ -186,7 +186,7 @@ export const [bar, setBar] = createSignal(0.0);
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
 	// State version for ensuring compatibility with save data
-	version: 13,
+	version: 14,
 	// State machine state
 	state: "Tick" as State,
 	previousState: "Tick" as State,
@@ -227,7 +227,7 @@ export const [state, setState] = createStore({
 			},
 			"QiBearDen": {
 				name: "QiBearDen",
-				unlocked: true,
+				unlocked: false,
 				tickCount: 0,
 				unlocks: {},
 				longestRun: 0,
@@ -244,9 +244,9 @@ export const [state, setState] = createStore({
 		} as Record<AreaNames, AreaState>,
 	},
 	// Player's current mana
-	mana: 19,
+	mana: 10,
 	// Player's maximum mana
-	maxMana: 19,
+	maxMana: 10,
 	// Player's passive mana regeneration
 	passiveManaRegen: 1,
 	// Player's current action
