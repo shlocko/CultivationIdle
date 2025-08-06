@@ -9,7 +9,7 @@ export const SmallCave: Area = {
 	name: "Small Cave",
 	type: "dungeon",
 	unlockThresholds: {
-		beatDungeon: 1,
+		beatDungeon: 15,
 	},
 	subArea: true,
 	subAreaTo: "VerdantFields",

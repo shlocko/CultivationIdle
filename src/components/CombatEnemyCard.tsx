@@ -7,9 +7,12 @@ export const CombatEnemyCard: Component<Enemy> = (props) => {
 
 	return (
 		<div class={utils.enemy_card}>
-			<p>{props.name}</p>
-			<p>HP: {props.health}</p>
-			<p>DMG: {props.damage}</p>
+			<div>
+				<p>{props.name}</p>
+				<p>HP: {props.health}</p>
+				<p>DMG: {props.damage}</p>
+			</div>
+			<img src={`/CultivationIdle/${props.sprite}`} class={utils.enemy_sprite} />
 		</div>
 	)
 
