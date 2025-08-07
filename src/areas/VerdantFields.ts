@@ -13,7 +13,9 @@ export const VerdantFields: Area = {
 	type: "normal",
 	unlockThresholds: {
 		"HollowWoods": 100,
+		"town": 20,
 	},
+	travelTo: 5,
 	subArea: false,
 	subAreaTo: null,
 	endExploration: () => {
@@ -89,6 +91,16 @@ export const VerdantFields: Area = {
 		},
 	],
 	uncommonEvents: [
+		{
+			name: "the Town",
+			isUnlocked: () => state.adventure.areas.VerdantFields.tickCount >= VerdantFields.unlockThresholds.town
+				&& state.adventure.currentRun >= 10 && !state.adventure.areas.VerdantFields.unlocks.town,
+			activation: () => {
+				sendModal("You have encountered the town of Greenrest.")
+				sendModal("You set up camp in town, and will use it as a resting point in the future!")
+				setState("adventure", "areas", "VerdantFields", "unlocks", "town", true)
+			}
+		},
 		{
 			name: "a couple Goblins",
 			isUnlocked: () => true,

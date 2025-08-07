@@ -20,3 +20,18 @@ export const basicShop: ShopItem[] = [
 		cost: 10,
 	},
 ];
+
+export const greenrestShop: ShopItem[] = [
+	{
+		item: getItem("Sword"),
+		cost: 350
+	},
+	{
+		item: getItem("Health Potion"),
+		cost: 50
+	},
+	{
+		item: getItem("Mana Potion"),
+		cost: 50
+	}
+]

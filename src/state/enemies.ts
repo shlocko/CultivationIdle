@@ -44,5 +44,12 @@ export const enemyList: Record<string, Enemy> = {
 		alive: true,
 		sprite: "qiBear.png",
 	},
+	wolf: {
+		name: "Wolf",
+		health: 5,
+		damage: 2,
+		alive: true,
+		sprite: "wolf.png",
+	},
 
 };

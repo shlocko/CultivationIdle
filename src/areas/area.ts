@@ -23,8 +23,9 @@ export type Area = {
 	name: string,
 	type: AreaType,
 	unlockThresholds: Record<string, number>,
+	travelTo: number,
 	subArea: boolean,
-	subAreaTo: AreaNames | null,
+	subAreaTo: AreaName | null,
 	endExploration: Function,
 	commonEvents: Event[],
 	uncommonEvents: Event[],
@@ -33,11 +34,18 @@ export type Area = {
 
 }
 
-export let areas: Record<string, Area> = {
+export const areas = {
 	"VerdantFields": VerdantFields,
 	"HollowWoods": HollowWoods,
 	"QiBearDen": QiBearDen,
 	"SmallCave": SmallCave,
-}
+} as const
 
-export type AreaNames = keyof typeof areas
+
+export type AreaName = keyof typeof areas
+
+export type AreaConnection = {
+	area1: AreaName,
+	area2: AreaName,
+	travelTime: number,
+}

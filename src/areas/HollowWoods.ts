@@ -7,6 +7,7 @@ export const HollowWoods: Area = {
 	unlockThresholds: {
 		"peaksPass": 200,
 	},
+	travelTo: 10,
 	subArea: false,
 	subAreaTo: null,
 	endExploration: () => { },

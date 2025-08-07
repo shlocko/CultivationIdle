@@ -2,14 +2,14 @@ import { For, type Component } from "solid-js";
 import { Template } from "./Template";
 import utils from "../styles/utils.module.css";
 import { inventoryAdd, setState, state } from "../state/store";
-import { basicShop } from "../state/shops";
+import { ShopItem, basicShop } from "../state/shops";
 import toast from "solid-toast";
 
-export const Shop: Component = () => {
+export const Shop: Component<ShopItem[]> = (items) => {
 	return (
-		<>
+		<div class={utils.container_no_border}>
 			<h2> Shop </h2>
-			<For each={basicShop}>
+			<For each={items}>
 				{(item, i) => (
 					<button
 						class={utils.btn}
@@ -25,7 +25,6 @@ export const Shop: Component = () => {
 					</button>
 				)}
 			</For>
-			<div class={utils.top_auto} />
-		</>
+		</div>
 	);
 };

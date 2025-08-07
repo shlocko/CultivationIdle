@@ -1,7 +1,11 @@
-import { type Component } from "solid-js";
+import { Switch, type Component, Match } from "solid-js";
 import utils from "../styles/utils.module.css";
 import { Meditate } from "./Meditate";
 import { Train } from "./Train";
+import { getLocation, state } from "../state/store";
+import { VerdantFieldsCamp } from "./VerdantFieldsCamp";
+import { areas } from "../areas/area";
+import { A } from "@solidjs/router";
 
 export const Main: Component = () => {
 	return (
@@ -13,8 +17,37 @@ export const Main: Component = () => {
 					<Meditate />
 					<Train />
 				</div>
-				<div classList={{ [utils.container]: true }}></div>
-			</div>
+				<div
+					style={{
+						"display": "flex",
+						"flex-direction": "column",
+					}}>
+					<div classList={{ [utils.container]: true }}>
+						<h1>{state.adventure.location}</h1>
+						<A classList={{
+							[utils.btn]: true,
+							[utils.wide]: true,
+						}}
+							href="/adventure">
+							<p>Explore</p>
+						</A>
+						<Switch>
+							<Match when={state.adventure.location === "VerdantFields"}>
+								<VerdantFieldsCamp />
+							</Match>
+						</Switch>
+					</div>
+					<A
+						classList={{
+							[utils.wide_top_auto]: true,
+							[utils.btn]: true,
+						}}
+						href="/travel"
+					>
+						Travel
+					</A>
+				</div>
+			</div >
 		</>
 	);
 };

@@ -7,13 +7,8 @@ export const Nav: Component = () => {
 	return (
 		<div class={styles.nav}>
 			<A class={styles.nav_item} href="/">
-				<p>Camp</p>
+				<p>{state.adventure.areas[state.adventure.location].unlocks.town ? "Town" : "Camp"}</p>
 			</A>
-			<Show when={state.unlocks.adventure}>
-				<A class={styles.nav_item} href="/adventure">
-					<p>Adventure</p>
-				</A>
-			</Show>
 			<A class={styles.nav_item} href="/inventory">
 				<p>Inventory</p>
 			</A>

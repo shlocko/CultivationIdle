@@ -7,6 +7,7 @@ export const QiBearDen: Area = {
 	name: "Qi Bear Den",
 	type: "normal",
 	unlockThresholds: {},
+	travelTo: 0,
 	subArea: true,
 	subAreaTo: "VerdantFields",
 	endExploration: () => { },

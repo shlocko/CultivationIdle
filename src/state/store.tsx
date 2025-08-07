@@ -17,7 +17,7 @@ import { effectMultiplier } from "../functions/combatMethods";
 import { actionChoice } from "../components/Combat";
 import { ItemNames, items } from "./items";
 import { intro } from "../functions/sequenceMethods";
-import { AreaNames, AreaState, areas } from "../areas/area";
+import { AreaName, AreaState, areas } from "../areas/area";
 import { QiBearDen } from "../areas/QiBearDen";
 
 type Action = "Meditate" | "Train" | "Adventure";
@@ -128,19 +128,19 @@ export type ItemType = "consumable" | "weapon" | "material";
 export type WeaponType = "Sword" | "Dagger" | "Axe" | "LongSword";
 
 export type Weapon = {
-	name: string;
+	name: ItemNames;
 	type: "weapon";
 	damage: number;
 	weaponType: WeaponType;
 };
 
 export type Consumable = {
-	name: string;
+	name: ItemNames;
 	type: "consumable";
 };
 
 export type Material = {
-	name: string;
+	name: ItemNames;
 	type: "material";
 };
 
@@ -207,22 +207,17 @@ export const [state, setState] = createStore({
 	},
 	adventure: {
 		tickSpeed: 1,
-		location: "VerdantFields" as AreaNames,
-		subLocation: undefined as AreaNames | undefined,
+		location: "VerdantFields" as AreaName,
+		subLocation: undefined as AreaName | undefined,
 		currentRun: 0,
 		areas: {
 			"VerdantFields": {
 				name: "VerdantFields",
 				unlocked: true,
 				tickCount: 0,
-				unlocks: {},
-				longestRun: 0,
-			},
-			"HollowWoods": {
-				name: "HollowWoods",
-				unlocked: false,
-				tickCount: 0,
-				unlocks: {},
+				unlocks: {
+					town: false,
+				},
 				longestRun: 0,
 			},
 			"QiBearDen": {
@@ -240,8 +235,17 @@ export const [state, setState] = createStore({
 					beaten: false,
 				},
 				longestRun: 0
-			}
-		} as Record<AreaNames, AreaState>,
+			},
+			"HollowWoods": {
+				name: "HollowWoods",
+				unlocked: false,
+				tickCount: 0,
+				unlocks: {
+					town: false,
+				},
+				longestRun: 0,
+			},
+		} as Record<AreaName, AreaState>,
 	},
 	// Player's current mana
 	mana: 10,
@@ -287,7 +291,6 @@ export const [state, setState] = createStore({
 	autoAdventure: false,
 	weaponDamageBuff: 0,
 	unlocks: {
-		adventure: false,
 	}
 });
 
@@ -301,6 +304,22 @@ export const changeState = (newState: State) => {
 //********************************************************
 
 export type combatAction = "technique" | "item" | "weapon";
+
+
+// Memo for calculating mana per tick
+export const tickMana = createMemo(() => {
+	let total = 0;
+	state.techniques.forEach((e, i) => {
+		if (e.active || e.onGoing) {
+			const cost =
+				(e.baseCost - (e.mastery / 3000) * (e.baseCost - e.minCost)) *
+				Math.pow(e.multiplier, 3);
+			//setState("techniques", i, "currentCost", cost);
+			total += cost;
+		}
+	});
+	return total;
+});
 
 export const damageFromWeapon = createMemo(() => {
 	let damageCount = 0;
@@ -363,14 +382,7 @@ export const damageThorns = createMemo(() => {
 });
 
 export const manaGainFromTechniques = createMemo(() => {
-	let count = 0;
-	state.techniques.forEach((e, i) => {
-		if (e.active || e.onGoing) {
-			let multiplier = effectMultiplier(e.multiplier);
-			count += 1.2 * multiplier;
-		}
-	});
-	return count;
+	return tickMana() / 4;
 });
 
 export const damageIncreasingTargetCount = () => {
@@ -410,6 +422,7 @@ export const [combatState, setCombatState] = createStore({
 //********************************************************
 // helper functions
 //********************************************************
+
 
 export const getLocation = () => {
 	return state.adventure.subLocation || state.adventure.location
@@ -571,8 +584,6 @@ export const advance = () => {
 		// Messages and effects per rank
 		switch (state.rank) {
 			case 1: {
-				setState("unlocks", "adventure", true)
-				sendModal("You have unlocked Adventure mode. Explore new lands in search of glory and discovery!")
 			}
 			case 2: {
 
@@ -589,20 +600,6 @@ export const resetActiveTechniques = () => {
 	});
 };
 
-// Memo for calculating mana per tick
-export const tickMana = createMemo(() => {
-	let total = 0;
-	state.techniques.forEach((e, i) => {
-		if (e.active || e.onGoing) {
-			const cost =
-				(e.baseCost - (e.mastery / 3000) * (e.baseCost - e.minCost)) *
-				Math.pow(e.multiplier, 3);
-			//setState("techniques", i, "currentCost", cost);
-			total += cost;
-		}
-	});
-	return total;
-});
 
 export const activeTechniqueCount = () => {
 	let count = 0;
@@ -628,7 +625,7 @@ export const clearNotOngoing = () => {
 	});
 };
 
-export const setArea = (area: AreaNames) => {
+export const setArea = (area: AreaName) => {
 	if (areas[area].subArea) {
 		setState("adventure", "location", areas[area].subAreaTo!)
 		setState("adventure", "subLocation", area)

@@ -1,6 +1,6 @@
 import { Item } from "./store";
 
-export const items: Record<string, Item> = {
+export const items = {
 	// Materials
 	Herb: {
 		name: "Herb",
@@ -46,7 +46,7 @@ export const items: Record<string, Item> = {
 		damage: 4,
 		weaponType: "Dagger",
 	},
-};
+} as const;
 
 export type ItemNames = keyof typeof items;
 

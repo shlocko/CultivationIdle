@@ -23,6 +23,8 @@ import { techniques } from "./techniques";
 import toast from "solid-toast";
 import { createStore } from "solid-js/store";
 import { cloneDeep } from "lodash";
+import { ShopItem } from "./shops";
+import { Shop } from "../components/Shop";
 
 export const sendModal = (content: string) => {
 	const msg = {
@@ -85,6 +87,16 @@ export const sendLoot = (loot: LootCollection) => {
 	arr.push(msg);
 	setState("modalMessages", arr);
 };
+
+export const sendShop = (items: ShopItem[]) => {
+	const msg = {
+		type: "Shop",
+		items
+	} as ShopModal;
+	const arr = state.modalMessages.slice();
+	arr.push(msg);
+	setState("modalMessages", arr)
+}
 
 export const testModalList = <T extends { name: string }>(arr: T[]) => {
 	if (arr[0]) {
@@ -375,6 +387,25 @@ export const ModalLoot: Component<{ loot: LootCollection }> = (props) => {
 	);
 };
 
+
+export const ModalShop: Component<ShopItem[]> = (items) => {
+	return (
+		<div>
+			<Shop {...items} />
+			<button
+				class={utils.btn}
+				onClick={() => {
+					const arr = state.modalMessages.slice();
+					arr.shift();
+					setState("modalMessages", arr);
+				}}
+			>
+				<p>Exit</p>
+			</button>
+		</div>
+	);
+};
+
 export const ModalMessage: Component = () => {
 	//let msg = state.modalMessages[0];
 	const [msg, setMsg] = createSignal(state.modalMessages[0]);
@@ -400,6 +431,9 @@ export const ModalMessage: Component = () => {
 			<Match when={msg().type === "Loot"}>
 				<ModalLoot loot={(msg() as LootModal).loot} />
 			</Match>
+			<Match when={msg().type === "Shop"}>
+				<ModalShop {...(msg() as ShopModal).items} />
+			</Match>
 		</Switch>
 	);
 };
@@ -410,6 +444,7 @@ export type ModalMessageType =
 	| ChooseTechniqueModal
 	| ChooseMeditationTechniqueModal
 	| ChooseAspectModal
+	| ShopModal
 	| LootModal;
 
 export interface TextModal {
@@ -438,4 +473,9 @@ export interface ChooseMeditationTechniqueModal {
 export interface LootModal {
 	type: "Loot";
 	loot: LootCollection;
+}
+
+export interface ShopModal {
+	type: "Shop",
+	items: ShopItem[],
 }

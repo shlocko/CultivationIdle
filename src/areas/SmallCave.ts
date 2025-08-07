@@ -11,6 +11,7 @@ export const SmallCave: Area = {
 	unlockThresholds: {
 		beatDungeon: 15,
 	},
+	travelTo: 0,
 	subArea: true,
 	subAreaTo: "VerdantFields",
 	endExploration: () => {

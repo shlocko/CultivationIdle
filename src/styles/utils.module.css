@@ -163,6 +163,10 @@ body {
 	box-sizing: border-box;
 }
 
+.scroll {
+	overflow-y: scroll;
+}
+
 .enemies_container {
 	width: 100%;
 	display: flex;
