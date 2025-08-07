@@ -245,7 +245,7 @@ export const [state, setState] = createStore({
 			},
 			"HollowWoods": {
 				name: "HollowWoods",
-				unlocked: true,
+				unlocked: false,
 				tickCount: 0,
 				unlocks: {
 					town: false,
@@ -437,6 +437,7 @@ export const getLocation = () => {
 
 export const endExploration = () => {
 	areas[getLocation()].endExploration()
+	setState("adventure", "currentRun", 0)
 	setState("adventure", "travel", "active", false)
 }
 

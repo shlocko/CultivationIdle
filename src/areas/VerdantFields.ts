@@ -17,62 +17,108 @@ export const VerdantFields: Area = {
 	},
 	travelTo: 5,
 	subArea: false,
-	subAreaTo: null,
-	endExploration: () => {
+	subAreaTo: undefined,
+	endExploration: () => { },
 
-	},
 	commonEvents: [
 		{
 			name: "a Small Cave",
 			isUnlocked: () => !state.adventure.areas.SmallCave.unlocked,
 			activation: () => {
-				sendModal("You have found a Small Cave, enter it and conqure the dungoen within!")
-				setState("adventure", "areas", "SmallCave", "unlocked", true)
+				sendModal("You have found a Small Cave. Enter it and conquer the dungeon within!");
+				setState("adventure", "areas", "SmallCave", "unlocked", true);
 			}
 		},
 		{
 			name: "the Hollow Woods",
-			isUnlocked: () => {
-				if (state.adventure.areas.VerdantFields.tickCount >=
-					VerdantFields.unlockThresholds.HollowWoods &&
-					state.adventure.areas.HollowWoods.unlocked === false) {
-					return true;
-				} else {
-					return false;
-				}
-			},
+			isUnlocked: () => state.adventure.areas.VerdantFields.tickCount >= VerdantFields.unlockThresholds.HollowWoods
+				&& !state.adventure.areas.HollowWoods.unlocked,
 			activation: () => {
-				sendModal("You approach the edge of a dark forest. The Hollow Woods.")
+				sendModal("You approach the edge of a dark forest: the Hollow Woods.");
 				setState("adventure", "areas", "HollowWoods", "unlocked", true);
 			},
 		},
 		{
-			name: "a Slime",
+			name: "a Wandering Slime",
 			isUnlocked: () => true,
 			activation: () => {
 				initCombat(
 					["slime"],
-					[
-						lootEntry("Goo", 75, 1, 2)
-					],
+					[lootEntry("Goo", 90, 1, 2)],
 					5,
-					15
-				)
+					12
+				);
 			}
 		},
 		{
-			name: "a Goblin",
+			name: "a Bird",
+			isUnlocked: () => true,
+			activation: () => {
+				initCombat(
+					["bird"],
+					[lootEntry("Berry", 100, 1, 2)],
+					5,
+					10
+				);
+			}
+		},
+		{
+			name: "a Goblin Scout",
 			isUnlocked: () => true,
 			activation: () => {
 				initCombat(
 					["goblin"],
 					[
-						lootEntry("Dagger", 50, 1, 1),
-						lootEntry("Health Potion", 10, 1, 3)
+						lootEntry("Dagger", 60, 1, 1),
+						lootEntry("Health Potion", 5, 1, 2)
 					],
 					5,
 					15
-				)
+				);
+			}
+		},
+	],
+
+	uncommonEvents: [
+		{
+			name: "the Town",
+			isUnlocked: () => state.adventure.areas.VerdantFields.tickCount >= VerdantFields.unlockThresholds.town
+				&& state.adventure.currentRun >= 10
+				&& !state.adventure.areas.VerdantFields.unlocks.town,
+			activation: () => {
+				sendModal("You have encountered the town of Greenrest.");
+				sendModal("You set up camp in town, and will use it as a resting point in the future!");
+				setState("adventure", "areas", "VerdantFields", "unlocks", "town", true);
+			}
+		},
+		{
+			name: "a Goblin Ambush",
+			isUnlocked: () => true,
+			activation: () => {
+				initCombat(
+					["goblin", "goblin"],
+					[
+						lootEntry("Dagger", 75, 1, 2),
+						lootEntry("Health Potion", 10, 1, 2)
+					],
+					20,
+					40
+				);
+			}
+		},
+		{
+			name: "a Slime Mound",
+			isUnlocked: () => true,
+			activation: () => {
+				initCombat(
+					["slime", "slime", "slime"],
+					[
+						lootEntry("Goo", 100, 5, 10),
+						lootEntry("Health Potion", 10, 1, 2)
+					],
+					20,
+					40
+				);
 			}
 		},
 		{
@@ -82,95 +128,69 @@ export const VerdantFields: Area = {
 				initCombat(
 					["bear"],
 					[
-						lootEntry("Berry", 90, 1, 1),
+						lootEntry("Berry", 85, 1, 5)
 					],
-					5,
 					20,
+					40
 				);
-			},
-		},
-	],
-	uncommonEvents: [
-		{
-			name: "the Town",
-			isUnlocked: () => state.adventure.areas.VerdantFields.tickCount >= VerdantFields.unlockThresholds.town
-				&& state.adventure.currentRun >= 10 && !state.adventure.areas.VerdantFields.unlocks.town,
-			activation: () => {
-				sendModal("You have encountered the town of Greenrest.")
-				sendModal("You set up camp in town, and will use it as a resting point in the future!")
-				setState("adventure", "areas", "VerdantFields", "unlocks", "town", true)
 			}
 		},
+
+	],
+
+	rareEvents: [
 		{
-			name: "a couple Goblins",
+			name: "a couple Bears",
 			isUnlocked: () => true,
 			activation: () => {
 				initCombat(
-					["goblin", "goblin"],
+					["bear", "bear"],
 					[
-						lootEntry("Health Potion", 15, 1, 3),
-						lootEntry("Mana Potion", 5, 1, 1),
-						lootEntry("Dagger", 75, 1, 2),
+						lootEntry("Berry", 100, 3, 6),
+						lootEntry("Health Potion", 5, 1, 1)
 					],
-					20,
-					45,
+					25,
+					50
 				);
-			},
-		},
-	],
-	rareEvents: [
-		{
-			name: "a small cache of loot",
-			isUnlocked: () => true,
-			activation: () => {
-				addCoins(100, 1000);
-				sendLoot(
-					pickLoot([
-						lootEntry("Health Potion", 70, 1, 3),
-						lootEntry("Mana Potion", 70, 1, 3),
-						lootEntry("Herb", 100, 1, 10),
-					]),
-				);
-			},
+			}
 		},
 		{
 			name: "a Qi Bear",
-			isUnlocked: () => state.adventure.areas.VerdantFields.unlocks.HollowWoods || state.adventure.areas.VerdantFields.unlocks.QiBearDen,
+			isUnlocked: () => state.adventure.areas.HollowWoods.unlocked,
 			activation: () => {
 				initCombat(
 					["qiBear"],
 					[
-						lootEntry("Mana Potion", 85, 1, 5),
-						lootEntry("Berry", 100, 5, 30),
-						lootEntry("Herb", 60, 1, 10)
+						lootEntry("Berry", 100, 5, 12),
+						lootEntry("Herb", 60, 1, 2)
 					],
-					50,
-					100
-				)
+					45,
+					80
+				);
 			}
 		},
 	],
+
 	epicEvents: [
 		{
-			name: "a Qi Bear den",
+			name: "a Qi Bear Den",
 			isUnlocked: () => !state.adventure.areas.QiBearDen.unlocked,
 			activation: () => {
-				sendModal("You stumble upon the den of a Qi Bear. Its protector looks angry.")
-				sendModal("Defend yourself!")
+				sendModal("You have encoutered the den of a Qi Bear. Defeat its defenders to gain access.");
 				initCombat(
-					["qiBear", "bear"],
+					["Qi Bear", "bear", "bear"],
 					[],
 					0,
 					0,
 					() => () => {
 						if (combatState.opponents.length === 0) {
-							sendModal("You have defeated the Qi Bear, and gained access to its den.")
-							setState("adventure", "areas", "QiBearDen", "unlocked", true)
+							sendModal("You've defeated defenders. You have gained access to the Qi Bear Den.");
+							setState("adventure", "areas", "QiBearDen", "unlocked", true);
 						} else {
-							sendModal("The Qi Bear has bested you. Grow your strength and challenge it again.")
+							sendModal("The Bears overpowered you. Train and try again!");
 						}
 					}
-				)
+				);
 			}
 		},
 	],

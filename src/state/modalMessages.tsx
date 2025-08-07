@@ -131,7 +131,7 @@ export const ModalText: Component = () => {
 					setState("modalMessages", arr);
 				}}
 			>
-				Next
+				<p>Next</p>
 			</button>
 		</>
 	);
