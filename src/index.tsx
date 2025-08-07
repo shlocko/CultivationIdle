@@ -43,7 +43,6 @@ render(
 				<Route path="/" component={Main} />
 				<Route path="/adventure" component={Adventure} />
 				<Route path="/inventory" component={Inventory} />
-				<Route path="/shop" component={Shop} />
 			</HashRouter>
 		</div>
 	),

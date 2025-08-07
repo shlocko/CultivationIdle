@@ -7,14 +7,25 @@ import {
 	setState,
 	Weapon,
 	inventoryRemoveQuantity,
+	actionButton,
 } from "../state/store";
 import utils from "../styles/utils.module.css";
 import toast from "solid-toast";
 import { ItemNames } from "../state/items";
+import { A } from "@solidjs/router";
 
 export const Inventory: Component = () => {
 	return (
 		<>
+			<A
+				class={`${utils.btn}`}
+				onClick={() => {
+					actionButton("Meditate");
+				}}
+				href="/"
+			>
+				<p> Back to Camp </p>
+			</A >
 			<h2>Inventory</h2>
 			<For each={state.inventory}>
 				{(item) => (

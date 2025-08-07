@@ -25,6 +25,7 @@ import { createStore } from "solid-js/store";
 import { cloneDeep } from "lodash";
 import { ShopItem } from "./shops";
 import { Shop } from "../components/Shop";
+import { Travel } from "../components/Travel";
 
 export const sendModal = (content: string) => {
 	const msg = {
@@ -93,6 +94,15 @@ export const sendShop = (items: ShopItem[]) => {
 		type: "Shop",
 		items
 	} as ShopModal;
+	const arr = state.modalMessages.slice();
+	arr.push(msg);
+	setState("modalMessages", arr)
+}
+
+export const sendTravel = () => {
+	const msg = {
+		type: "Travel",
+	} as TravelModal;
 	const arr = state.modalMessages.slice();
 	arr.push(msg);
 	setState("modalMessages", arr)
@@ -406,6 +416,25 @@ export const ModalShop: Component<ShopItem[]> = (items) => {
 	);
 };
 
+export const ModalTravel: Component = () => {
+	return (
+		<div style={{
+		}}>
+			<Travel />
+			<button
+				class={utils.btn}
+				onClick={() => {
+					const arr = state.modalMessages.slice();
+					arr.shift();
+					setState("modalMessages", arr);
+				}}
+			>
+				<p>Exit</p>
+			</button>
+		</div>
+	)
+}
+
 export const ModalMessage: Component = () => {
 	//let msg = state.modalMessages[0];
 	const [msg, setMsg] = createSignal(state.modalMessages[0]);
@@ -434,6 +463,9 @@ export const ModalMessage: Component = () => {
 			<Match when={msg().type === "Shop"}>
 				<ModalShop {...(msg() as ShopModal).items} />
 			</Match>
+			<Match when={msg().type === "Travel"}>
+				<ModalTravel />
+			</Match>
 		</Switch>
 	);
 };
@@ -445,6 +477,7 @@ export type ModalMessageType =
 	| ChooseMeditationTechniqueModal
 	| ChooseAspectModal
 	| ShopModal
+	| TravelModal
 	| LootModal;
 
 export interface TextModal {
@@ -478,4 +511,8 @@ export interface LootModal {
 export interface ShopModal {
 	type: "Shop",
 	items: ShopItem[],
+}
+
+export interface TravelModal {
+	type: "Travel",
 }

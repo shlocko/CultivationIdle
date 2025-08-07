@@ -14,6 +14,8 @@ import {
 	setAction,
 	setBar,
 	bar,
+	navigate,
+	setNavigate,
 } from "../state/store";
 import { Nav } from "./Nav";
 import { QuickInfo } from "./QuickInfo";
@@ -22,13 +24,18 @@ import { offlineTraining, perTick } from "../functions/tickMethods";
 import { cloneDeep } from "lodash";
 import { pickLoot } from "../functions/combatMethods";
 import { sendLoot, sendModal } from "../state/modalMessages";
-import { RouteSectionProps } from "@solidjs/router";
+import { RouteSectionProps, useNavigate } from "@solidjs/router";
 import { TickBar } from "./TickBar";
 import { Combat } from "./Combat";
 
 export const Template: Component<RouteSectionProps> = (props) => {
 	const [saveTimer, setSaveTimer] = createSignal(0);
+	const redirect = useNavigate()
 	const timer = setInterval(() => {
+		if (navigate()) {
+			redirect(navigate()!)
+			setNavigate(null)
+		}
 		if (document.hidden) return
 		let timestamp = Date.now()
 		//console.log(timestamp)
@@ -67,6 +74,9 @@ export const Template: Component<RouteSectionProps> = (props) => {
 				setState("state", state.previousState);
 			}
 		} else if (state.state === "Combat") {
+			if (state.mana > state.maxMana) {
+				setState("mana", state.maxMana);
+			}
 			setCombatState("opponents", (opponents) =>
 				opponents.filter((opponent) => opponent.health > 0),
 			);
@@ -93,7 +103,6 @@ export const Template: Component<RouteSectionProps> = (props) => {
 			[utils.combat_container]: state.state === "Combat",
 		}}>
 			<Show when={state.state !== "Combat"}>
-				<Nav />
 				<QuickInfo />
 				<div
 					style={{

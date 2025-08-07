@@ -6,6 +6,7 @@ import { getLocation, state } from "../state/store";
 import { VerdantFieldsCamp } from "./VerdantFieldsCamp";
 import { areas } from "../areas/area";
 import { A } from "@solidjs/router";
+import { sendTravel } from "../state/modalMessages";
 
 export const Main: Component = () => {
 	return (
@@ -37,15 +38,15 @@ export const Main: Component = () => {
 							</Match>
 						</Switch>
 					</div>
-					<A
+					<button
 						classList={{
 							[utils.wide_top_auto]: true,
 							[utils.btn]: true,
 						}}
-						href="/travel"
+						onClick={() => { sendTravel() }}
 					>
 						Travel
-					</A>
+					</button>
 				</div>
 			</div >
 		</>

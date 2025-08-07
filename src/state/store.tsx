@@ -19,6 +19,7 @@ import { ItemNames, items } from "./items";
 import { intro } from "../functions/sequenceMethods";
 import { AreaName, AreaState, areas } from "../areas/area";
 import { QiBearDen } from "../areas/QiBearDen";
+import { redirect, useNavigate } from "@solidjs/router";
 
 type Action = "Meditate" | "Train" | "Adventure";
 
@@ -182,6 +183,7 @@ export type LootCollection = {
 export type State = "Modal" | "Tick" | "Combat";
 export const [pause, setPause] = createSignal(false);
 export const [bar, setBar] = createSignal(0.0);
+export const [navigate, setNavigate] = createSignal<string | null>(null)
 
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
@@ -210,6 +212,11 @@ export const [state, setState] = createStore({
 		location: "VerdantFields" as AreaName,
 		subLocation: undefined as AreaName | undefined,
 		currentRun: 0,
+		travel: {
+			active: false,
+			destination: undefined as AreaName | undefined,
+			ticks: 0,
+		},
 		areas: {
 			"VerdantFields": {
 				name: "VerdantFields",
@@ -238,7 +245,7 @@ export const [state, setState] = createStore({
 			},
 			"HollowWoods": {
 				name: "HollowWoods",
-				unlocked: false,
+				unlocked: true,
 				tickCount: 0,
 				unlocks: {
 					town: false,
@@ -428,9 +435,14 @@ export const getLocation = () => {
 	return state.adventure.subLocation || state.adventure.location
 }
 
+export const endExploration = () => {
+	areas[getLocation()].endExploration()
+	setState("adventure", "travel", "active", false)
+}
+
 export const setAction = (action: Action) => {
 	if (state.action === "Adventure") {
-		areas[getLocation()].endExploration()
+		endExploration()
 	}
 	if (action === "Adventure") setState("adventure", "currentRun", 0)
 	setState("previousAction", state.action);
@@ -668,4 +680,12 @@ export const getPassiveHealthRegen = () => {
 
 export const getOfflineManaGainPerSecond = () => {
 	return (getPassiveManaRegen() / 4 * state.offlineTrainingEfficiency)
+}
+
+export const travel = (destination: AreaName, ticks: number) => {
+	setState("adventure", "travel", "destination", destination)
+	setState("adventure", "travel", "ticks", ticks)
+	setState("adventure", "travel", "active", true)
+	setNavigate("/adventure")
+	setAction("Adventure")
 }

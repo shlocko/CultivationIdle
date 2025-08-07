@@ -1,8 +1,9 @@
 import { type Component } from "solid-js";
 import utils from "../styles/utils.module.css";
-import { state, rankInfo } from "../state/store";
+import { state, rankInfo, clear } from "../state/store";
 import { HealthBar } from "./HealthBar";
 import { ManaBar } from "./ManaBar";
+import { A } from "@solidjs/router";
 
 export const QuickInfo: Component = () => {
 	/*return (
@@ -30,6 +31,18 @@ export const QuickInfo: Component = () => {
 			}}>
 				<HealthBar />
 				<p> Level: {state.rank}</p>
+				<A class={utils.btn} href="/inventory">
+					Inventory
+				</A>
+				<button
+					class={utils.btn}
+					onClick={() => {
+						clear();
+						window.location.reload()
+					}}
+				>
+					Clear Local Data
+				</button>
 			</div>
 			<ManaBar />
 		</div>

@@ -19,13 +19,30 @@ export type AreaType =
 	| "normal"
 	| "dungeon"
 
-export type Area = {
+export type Area = MainArea | SubArea
+
+export type MainArea = {
 	name: string,
 	type: AreaType,
 	unlockThresholds: Record<string, number>,
 	travelTo: number,
-	subArea: boolean,
-	subAreaTo: AreaName | null,
+	subArea: false,
+	subAreaTo: undefined,
+	endExploration: Function,
+	commonEvents: Event[],
+	uncommonEvents: Event[],
+	rareEvents: Event[],
+	epicEvents: Event[],
+
+}
+
+export type SubArea = {
+	name: string,
+	type: AreaType,
+	unlockThresholds: Record<string, number>,
+	travelTo: undefined,
+	subArea: true,
+	subAreaTo: AreaName,
 	endExploration: Function,
 	commonEvents: Event[],
 	uncommonEvents: Event[],

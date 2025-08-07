@@ -5,7 +5,8 @@ import { Combat } from "./Combat";
 import { initCombat } from "../functions/combatMethods";
 import { getItem } from "../state/items";
 import { VerdantFields } from "../areas/VerdantFields";
-import { areas } from "../areas/area";
+import { AreaName, areas } from "../areas/area";
+import { A } from "@solidjs/router";
 
 export const Adventure: Component = () => {
 	let testTable: LootTable = [
@@ -18,27 +19,6 @@ export const Adventure: Component = () => {
 	];
 	return (
 		<div class={(utils.row_container)}>
-			<div class={(utils.container)}
-				style={{
-					"flex": "0 0 15rem",
-					"overflow-y": "scroll",
-				}}
-			>
-				<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && !areas[key].subArea)}>
-					{(item, i) => (
-						<button classList={{
-							[utils.btn]: true,
-							[utils.btn_active]: state.adventure.location === item
-						}}
-							onClick={() => {
-								setArea(item)
-							}}
-						>
-							{item}
-						</button>
-					)}
-				</For>
-			</div>
 			<div classList={{
 				[utils.container]: true,
 			}}
@@ -85,6 +65,15 @@ export const Adventure: Component = () => {
 					>
 						<p> {areas[getLocation()].type == "dungeon" ? "Delve" : "Explore"} </p>
 					</button>
+					<A
+						class={`${utils.btn} ${utils.wide_top_auto}`}
+						onClick={() => {
+							actionButton("Meditate");
+						}}
+						href="/"
+					>
+						<p> Back to Camp </p>
+					</A>
 				</Show>
 			</div>
 
@@ -95,8 +84,19 @@ export const Adventure: Component = () => {
 						"overflow-y": "scroll",
 					}}
 				>
+
+					<button classList={{
+						[utils.btn]: true,
+						[utils.btn_active]: getLocation() === state.adventure.location
+					}}
+						onClick={() => {
+							setArea(state.adventure.location)
+						}}
+					>
+						{state.adventure.location}
+					</button>
 					<h2>Sub Locations</h2>
-					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location && areas[key].type === "normal")}>
+					<For each={(Object.keys(state.adventure.areas) as AreaName[]).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location && areas[key].type === "normal")}>
 						{(item, i) => (
 							<button classList={{
 								[utils.btn]: true,
@@ -111,7 +111,7 @@ export const Adventure: Component = () => {
 						)}
 					</For>
 					<h2>Dungeons</h2>
-					<For each={Object.keys(state.adventure.areas).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location && areas[key].type === "dungeon")}>
+					<For each={(Object.keys(state.adventure.areas) as AreaName[]).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location && areas[key].type === "dungeon")}>
 						{(item, i) => (
 							<div class={utils.container_no_border}
 								style={{
