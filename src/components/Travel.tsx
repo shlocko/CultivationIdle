@@ -23,20 +23,32 @@ export const Travel: Component = () => {
 					</button>
 				)}
 			</For>
-			<button classList={{
-				[utils.btn]: true,
-			}}
-				onClick={() => {
-					travel(selection()!, areas[selection()!].travelTo!)
-
-					const arr = state.modalMessages.slice();
-					arr.shift();
-					setState("modalMessages", arr);
+			<div>
+				<button
+					class={utils.btn}
+					onClick={() => {
+						const arr = state.modalMessages.slice();
+						arr.shift();
+						setState("modalMessages", arr);
+					}}
+				>
+					Exit
+				</button>
+				<button classList={{
+					[utils.btn]: true,
 				}}
-				disabled={selection() === undefined}
-			>
-				Travel
-			</button>
+					onClick={() => {
+						travel(selection()!, areas[selection()!].travelTo!)
+
+						const arr = state.modalMessages.slice();
+						arr.shift();
+						setState("modalMessages", arr);
+					}}
+					disabled={selection() === undefined}
+				>
+					Travel
+				</button>
+			</div>
 		</div>
 	)
 }

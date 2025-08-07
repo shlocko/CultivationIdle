@@ -75,11 +75,6 @@ export const adventureTick = () => {
 	if (areas[location].type === "dungeon" && state.adventure.currentRun >= areas[location].unlockThresholds.beatDungeon) {
 		actionButton("Meditate")
 	}
-	if (state.adventure.travel && state.adventure.currentRun >= state.adventure.travel.ticks) {
-		setArea(state.adventure.travel.destination!)
-		sendModal(`Arrived in ${state.adventure.travel.destination}!`)
-		setAction("Meditate")
-	}
 	const eventRoll = Math.random() * 100 + 1;
 	setState("adventure", "areas", location, "tickCount", (tc) => tc + 1);
 	setState("adventure", "currentRun", (cr) => cr + 1)
@@ -133,6 +128,12 @@ export const adventureTick = () => {
 			);*/
 			areas[location].commonEvents[pick].activation();
 		}
+	}
+	// Check for end of travels
+	if (state.adventure.travel && state.adventure.currentRun >= state.adventure.travel.ticks) {
+		setArea(state.adventure.travel.destination!)
+		sendModal(`Arrived in ${state.adventure.travel.destination}!`)
+		setAction("Meditate")
 	}
 };
 

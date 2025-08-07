@@ -35,25 +35,12 @@ export const Adventure: Component = () => {
 					<p>
 						Progress: {state.adventure.areas[getLocation()].tickCount}
 					</p>
+					<p>Current run: {state.adventure.currentRun}</p>
+					<Show when={state.adventure.travel.active}>
+						<p>Ticks left to travel: {state.adventure.travel.ticks - state.adventure.currentRun}</p>
+					</Show>
 					<p>Longest run: {state.adventure.areas[getLocation()].longestRun}</p>
-					<button
-						class={`${utils.btn} ${utils.wide_top_auto}`}
-						onClick={() => {
-							initCombat(
-								[
-									"wanderingKnight",
-									"wanderingKnight",
-									"wanderingKnight",
-									"wanderingKnight",
-								],
-								testTable,
-								10,
-								100,
-							);
-						}}
-					>
-						<p>test</p>
-					</button>
+
 					<button
 						class={`${utils.btn} ${utils.wide_top_auto}`}
 						classList={{
@@ -66,7 +53,7 @@ export const Adventure: Component = () => {
 						<p> {areas[getLocation()].type == "dungeon" ? "Delve" : "Explore"} </p>
 					</button>
 					<A
-						class={`${utils.btn} ${utils.wide_top_auto}`}
+						class={`${utils.btn} ${utils.wide}`}
 						onClick={() => {
 							actionButton("Meditate");
 						}}
