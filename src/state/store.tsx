@@ -188,7 +188,7 @@ export const [navigate, setNavigate] = createSignal<string | null>(null)
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
 	// State version for ensuring compatibility with save data
-	version: 14,
+	version: 15,
 	// State machine state
 	state: "Tick" as State,
 	previousState: "Tick" as State,
