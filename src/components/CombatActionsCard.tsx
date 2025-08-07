@@ -21,7 +21,7 @@ export const CombatActionsCard: Component = () => {
 					}}
 					onClick={() => setTab("actions")}
 				>
-					Actions
+					<p>Actions</p>
 				</button>
 				<button
 					class={utils.btn}
@@ -30,7 +30,7 @@ export const CombatActionsCard: Component = () => {
 					}}
 					onClick={() => setTab("techniques")}
 				>
-					Techniques
+					<p>Techniques</p>
 				</button>
 				<button
 					class={utils.btn}
@@ -39,7 +39,7 @@ export const CombatActionsCard: Component = () => {
 					}}
 					onClick={() => setTab("items")}
 				>
-					Items
+					<p>Items</p>
 				</button>
 			</div>
 			<div class={utils.container}>
@@ -55,7 +55,7 @@ export const CombatActionsCard: Component = () => {
 								clearNotOngoing();
 							}}
 						>
-							Attack
+							<p>Attack</p>
 						</button>
 					</Match>
 					<Match when={tab() === "techniques"}>
@@ -103,7 +103,7 @@ export const CombatActionsCard: Component = () => {
 											setActionChoice(-1);
 										}}
 									>
-										{item.name}: {item.multiplier}
+										<p>{item.name}: {item.multiplier}</p>
 									</button>
 									<button
 										class={utils.btn}
@@ -117,7 +117,7 @@ export const CombatActionsCard: Component = () => {
 										}}
 									>
 										{" "}
-										+{" "}
+										<p>+</p>{" "}
 									</button>
 									<button
 										class={utils.btn}
@@ -132,7 +132,7 @@ export const CombatActionsCard: Component = () => {
 										disabled={state.techniques[i()].multiplier <= 0}
 									>
 										{" "}
-										-{" "}
+										<p>-</p>{" "}
 									</button>
 								</div>
 							)}
@@ -149,7 +149,7 @@ export const CombatActionsCard: Component = () => {
 								clearNotOngoing();
 							}}
 						>
-							Health Potion
+							<p>Health Potion</p>
 						</button>
 						<button
 							classList={{
@@ -161,7 +161,7 @@ export const CombatActionsCard: Component = () => {
 								clearNotOngoing();
 							}}
 						>
-							Mana Potion
+							<p>Mana Potion</p>
 						</button>
 					</Match>
 

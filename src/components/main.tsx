@@ -30,7 +30,7 @@ export const Main: Component = () => {
 							[utils.wide]: true,
 						}}
 							href="/adventure">
-							<p>Explore</p>
+							<p>Adventure</p>
 						</A>
 						<Switch>
 							<Match when={state.adventure.location === "VerdantFields"}>
@@ -45,7 +45,7 @@ export const Main: Component = () => {
 						}}
 						onClick={() => { sendTravel() }}
 					>
-						Travel
+						<p>Travel</p>
 					</button>
 				</div>
 			</div >

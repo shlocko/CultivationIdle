@@ -32,7 +32,7 @@ export const QuickInfo: Component = () => {
 				<HealthBar />
 				<p> Level: {state.rank}</p>
 				<A class={utils.btn} href="/inventory">
-					Inventory
+					<p>Inventory</p>
 				</A>
 				<button
 					class={utils.btn}
@@ -41,7 +41,7 @@ export const QuickInfo: Component = () => {
 						window.location.reload()
 					}}
 				>
-					Clear Local Data
+					<p>Clear Local Data</p>
 				</button>
 			</div>
 			<ManaBar />

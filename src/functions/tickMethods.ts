@@ -71,6 +71,9 @@ export const meditateTick = () => {
 };
 
 export const adventureTick = () => {
+	if (state.mana > state.maxMana) {
+		setState("mana", state.maxMana);
+	}
 	let location = getLocation()
 	if (areas[location].type === "dungeon" && state.adventure.currentRun >= areas[location].unlockThresholds.beatDungeon) {
 		actionButton("Meditate")
@@ -130,7 +133,8 @@ export const adventureTick = () => {
 		}
 	}
 	// Check for end of travels
-	if (state.adventure.travel && state.adventure.currentRun >= state.adventure.travel.ticks) {
+	if (state.adventure.travel.active && state.adventure.currentRun >= state.adventure.travel.ticks) {
+		console.log(state.adventure.travel.destination)
 		setArea(state.adventure.travel.destination!)
 		sendModal(`Arrived in ${state.adventure.travel.destination}!`)
 		setAction("Meditate")

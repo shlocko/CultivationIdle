@@ -7,7 +7,7 @@ export const Travel: Component = () => {
 	const [selection, setSelection] = createSignal<AreaName | undefined>()
 	return (
 		<div classList={{
-			[utils.container]: true,
+			[utils.container_no_border]: true,
 			[utils.wide]: true,
 		}}>
 			<h2>Choose a destination:</h2>

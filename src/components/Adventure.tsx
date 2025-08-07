@@ -26,9 +26,6 @@ export const Adventure: Component = () => {
 					"--flex": "0 0 15rem",
 				}}
 			>
-				<Show when={state.state === "Combat"}>
-					<Combat />
-				</Show>
 				<Show when={state.state !== "Combat"}>
 					<h2>{getLocation()}</h2>
 					<h3>Area Info</h3>
@@ -59,7 +56,7 @@ export const Adventure: Component = () => {
 						}}
 						href="/"
 					>
-						<p> Back to Camp </p>
+						<p> Back to {state.adventure.areas[state.adventure.location].unlocks.town ? "Town" : "Camp"} </p>
 					</A>
 				</Show>
 			</div>
@@ -80,7 +77,7 @@ export const Adventure: Component = () => {
 							setArea(state.adventure.location)
 						}}
 					>
-						{state.adventure.location}
+						<p>{state.adventure.location}</p>
 					</button>
 					<h2>Sub Locations</h2>
 					<For each={(Object.keys(state.adventure.areas) as AreaName[]).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location && areas[key].type === "normal")}>
@@ -93,7 +90,7 @@ export const Adventure: Component = () => {
 									setArea(item)
 								}}
 							>
-								{item}
+								<p>{item}</p>
 							</button>
 						)}
 					</For>
@@ -113,7 +110,7 @@ export const Adventure: Component = () => {
 										setArea(item)
 									}}
 								>
-									{item}
+									<p>{item}</p>
 								</button>
 								Completed: {state.adventure.areas[item].unlocks.beaten ? "yes" : "no"}
 							</div>

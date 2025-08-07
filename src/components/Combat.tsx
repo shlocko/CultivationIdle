@@ -35,8 +35,8 @@ export const Combat: Component = () => {
 						<>
 							<button
 								classList={{
-									[utils.btn]: true,
-									[utils.btn_active]:
+									[utils.enemy_btn]: true,
+									[utils.enemy_active]:
 										combatState.activeEnemy === i(),
 								}}
 								onClick={() => {
@@ -132,7 +132,7 @@ export const Combat: Component = () => {
 									}}
 									href="/"
 								>
-									Flee
+									<p>Flee</p>
 								</A>
 							</div>
 						</div>

@@ -421,16 +421,6 @@ export const ModalTravel: Component = () => {
 		<div style={{
 		}}>
 			<Travel />
-			<button
-				class={utils.btn}
-				onClick={() => {
-					const arr = state.modalMessages.slice();
-					arr.shift();
-					setState("modalMessages", arr);
-				}}
-			>
-				<p>Exit</p>
-			</button>
 		</div>
 	)
 }
