@@ -1,13 +1,53 @@
-@font-face {
-	font-family: "CultivationIdle";
-	src: url("/CultivationIdle/Cultivationidlefont-Regular.ttf") format("truetype-variations");
+/* @font-face { */
+	/* font-family: "CultivationIdle"; */
+	/* src: url("/CultivationIdle/Cultivationidlefont-Regular.ttf") format("truetype-variations"); */
 	/* Adjust path and format as needed */
-	font-style: normal;
+	/* font-style: normal; */
+/* } */
+
+:root {
+  --color-purple: #6c5ce7;   
+  --color-indigo: #5a67d8;   
+  --color-blue:   #4c6ef5;   
+  --color-sky:    #5c92e7;   
+  --color-cyan:   #3da9fc;   
+  --color-violet:  #8e7dff;  
+  --color-lavender:#a29bfe;  
+  --color-deep-blue:#3b5bdb; 
+  --color-ink:     #364fc7;  
+
+  --color-magenta: #d16ba5;
+  --color-rose:    #e667a3;
+  --color-pink:    #f06595;
+
+  --color-green: #40c057;   
+  --color-mint:  #63e6be;   
+  --color-teal:  #2ec4b6;   
+
+  --color-yellow: #f1c40f;
+  --color-amber:  #f59f00;
+  --color-gold:   #e0a800;
+
+  --color-red:   #e03131;   
+  --color-coral: #ff6b6b;   
+  --color-warm:  #f06595;   
+
+  --color-bg:        #0f172a; 
+  --color-surface:   #1e293b; 
+  --color-surface-2: #334155; 
+
+  --color-border: #475569;
+  --color-muted:  #64748b;
+
+  --color-text:     #e2e8f0;
+  --color-text-dim: #94a3b8;
+	
 }
+
 
 body {
 	margin: 0;
-	font-family: "CultivationIdle", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+	font-family: "Caveat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
 		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
 		"Helvetica Neue", sans-serif;
 	font-size: 1.4em;
@@ -16,7 +56,7 @@ body {
 }
 
 code {
-	font-family: "CultivationIdle", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+	font-family: "Caveat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
 		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
 		"Helvetica Neue", sans-serif;
 }

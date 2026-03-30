@@ -27,7 +27,6 @@ import { combatLog } from "../components/Combat";
 // Happens every tick
 export const perTick = () => {
 	//console.log(getPassiveManaRegen())
-	setState("mana", (m) => m + getPassiveManaRegen());
 	setState("health", (h) => h + getPassiveHealthRegen())
 	if (state.health > maxHealth()) {
 		setState("health", maxHealth());
@@ -42,8 +41,8 @@ export const perTick = () => {
 export const trainTick = () => {
 	if (state.mana >= getPassiveManaRegen() * 3) {
 		const num: number = state.trainingTechnique;
-		setState("mana", (mana) => mana - getPassiveManaRegen() * 3);
-		setState("maxMana", (max) => max + getPassiveManaRegen() / 2);
+		setState("mana", (mana) => mana - getPassiveManaRegen() * 0.5);
+		setState("maxMana", (max) => max + 1);
 		if (
 			state.trainingTechnique >= 0 &&
 			state.techniques[num].mastery < 10000
@@ -56,6 +55,7 @@ export const trainTick = () => {
 };
 
 export const meditateTick = () => {
+	setState("mana", (m) => m + getPassiveManaRegen());
 	if (
 		state.meditationTechniques.length > 0 &&
 		state.activeMeditationTechnique >= 0
@@ -71,6 +71,7 @@ export const meditateTick = () => {
 };
 
 export const adventureTick = () => {
+	setState("mana", (m) => m + getPassiveManaRegen());
 	if (state.mana > state.maxMana) {
 		setState("mana", state.maxMana);
 	}

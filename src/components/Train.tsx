@@ -1,11 +1,11 @@
 import { createSignal, type Component, For, Show } from "solid-js";
-import { state, setState, setAction, actionButton } from "../state/store";
+import { state, setState, setAction, actionButton, maxMastery } from "../state/store";
 import utils from "../styles/utils.module.css";
 import { Template } from "./Template";
 
 export const Train: Component = () => {
 	return (
-		<div class={utils.train}>
+		<div class={`${utils.train}`}>
 			<Show when={state.techniques.length > 0}>
 				<select value={state.trainingTechnique} onChange={(e) => setState("trainingTechnique", Number(e.target.value))} style={{
 					"line-height": "4rem",
@@ -17,7 +17,7 @@ export const Train: Component = () => {
 				>
 					<For each={state.techniques}>
 						{(item, i) => (
-							<option value={i()}>{item.name}: {item.mastery}/3000</option>
+							<option value={i()}>{item.name}: {item.mastery}/{maxMastery}</option>
 						)}
 					</For>
 				</select >

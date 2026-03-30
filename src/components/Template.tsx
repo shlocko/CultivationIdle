@@ -27,6 +27,7 @@ import { sendLoot, sendModal } from "../state/modalMessages";
 import { RouteSectionProps, useNavigate } from "@solidjs/router";
 import { TickBar } from "./TickBar";
 import { Combat } from "./Combat";
+import { Header } from "./Header";
 
 export const Template: Component<RouteSectionProps> = (props) => {
 	const [saveTimer, setSaveTimer] = createSignal(0);
@@ -43,7 +44,7 @@ export const Template: Component<RouteSectionProps> = (props) => {
 		if ((timestamp - state.timeStamp) / (1000) > 5) {
 			console.log("gap")
 			console.log(timestamp - state.timeStamp)
-			offlineTraining(timestamp - state.timeStamp)
+			//offlineTraining(timestamp - state.timeStamp)
 		}
 		setState("timeStamp", Date.now())
 		// Timer for auto saves
@@ -98,35 +99,50 @@ export const Template: Component<RouteSectionProps> = (props) => {
 		clearInterval(timer);
 	});
 	return (
-		<div classList={{
-			[utils.App]: state.state !== "Combat",
-			[utils.combat_container]: state.state === "Combat",
-		}}>
-			<Show when={state.state !== "Combat"}>
-				<QuickInfo />
+		<div
+			style={{
+				"height": "100%",
+				"display": "flex",
+				"flex-direction": "column",
+			}}>
+			<div classList={{
+				[utils.App]: state.state !== "Combat",
+				[utils.combat_container]: state.state === "Combat",
+			}}
+				style={{
+					"padding": "1.5rem 1.5rem 0 1.5rem",
+					"display": "flex",
+					"flex-direction": "column",
+					"gap": "1rem",
+				}}
+			>
+				<Header />
 				<div
 					style={{
-						"flex-grow": 1,
-						"overflow-y": "auto",
-						display: "flex",
-						"flex-direction": "column",
-						"grid-area": "main",
-					}}
-				>
-					{props.children}
-				</div>
-				<TickBar />
-			</Show>
-			<Show when={state.state === "Combat"}>
-				<QuickInfo />
-				<div class={utils.container}
-					style={{
-						"width": "100%",
-						"flex-grow": "1",
+						"display": "flex",
+						"flex-direction": "row",
+						"gap": "1rem",
+						"height": "100%",
+						"margin-bottom": "1rem",
 					}}>
-					<Combat />
+					<QuickInfo />
+					<Show when={state.state !== "Combat"}>
+
+						{props.children}
+					</Show>
+					<Show when={state.state === "Combat"}>
+						<QuickInfo />
+						<div class={utils.container}
+							style={{
+								"width": "100%",
+								"flex-grow": "1",
+							}}>
+							<Combat />
+						</div>
+					</Show>
 				</div>
-			</Show>
+			</div>
+			<TickBar />
 		</div>
 	);
 };

@@ -46,9 +46,13 @@ export const rankInfo = [
 	{ name: "RedCore", advMana: 250 },
 	{ name: "GreenCore", advMana: 750 },
 	{ name: "GoldCore", advMana: 2000 },
-	{ name: "SilverCore", advMana: 6500 },
-	{ name: "WhiteCore", advMana: 20000 },
-	{ name: "Enlightened", advMana: 60000 },
+	{ name: "WhiteCore", advMana: 6500 },
+	{ name: "CoreExpansion", advMana: 20000 },
+	{ name: "SoulRebirth", advMana: 80000 },
+	{ name: "SoulTempering", advMana: 250000 },
+	{ name: "Immortal", advMana: 1000000 },
+	{ name: "High Immortal", advMana: 10000000 },
+	{ name: "True Immortal", advMana: 100000000 },
 ];
 
 // Available aspects at CoreFormation rank
@@ -87,6 +91,8 @@ export interface Technique {
 	mastery: number;
 	multiplier: number;
 }
+
+export const maxMastery = 10000;
 
 //********************************************************
 // Meditation Tecniques
@@ -319,7 +325,7 @@ export const tickMana = createMemo(() => {
 	state.techniques.forEach((e, i) => {
 		if (e.active || e.onGoing) {
 			const cost =
-				(e.baseCost - (e.mastery / 3000) * (e.baseCost - e.minCost)) *
+				(e.baseCost - (e.mastery / maxMastery) * (e.baseCost - e.minCost)) *
 				Math.pow(e.multiplier, 3);
 			//setState("techniques", i, "currentCost", cost);
 			total += cost;

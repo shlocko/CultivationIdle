@@ -178,7 +178,7 @@ export const VerdantFields: Area = {
 			activation: () => {
 				sendModal("You have encoutered the den of a Qi Bear. Defeat its defenders to gain access.");
 				initCombat(
-					["Qi Bear", "bear", "bear"],
+					["qiBear", "bear", "bear"],
 					[],
 					0,
 					0,

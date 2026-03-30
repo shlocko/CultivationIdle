@@ -1,0 +1,58 @@
+.statBar{
+  height: 0.8rem;
+  width: 100%;
+  position: relative;
+  background: var(--scratch);
+  border: 2px solid var(--ink);
+  border-radius: 1px;
+  overflow: hidden;
+  color: blue;
+}
+
+.hpBar {
+	width: 100%;
+	position: relative;
+	background: var(--hp-bar);
+
+}
+
+.qiBar {
+	width: 100%;
+	position: relative;
+	background: var(--qi-max-bar);
+
+}
+
+
+.qiBarInner {
+	width: 100%;
+	position: relative;
+	background: var(--qi-bar);
+
+}
+
+.manabar * {
+	border-radius: 0.2rem;
+}
+
+.statBarFillNoShading{
+  height: 100%;
+}
+
+.statBarFill {
+  height: 100%;
+}
+.statBarFill::after {
+  content: '';
+  display: block;
+  height: 30%;
+  background: rgba(255,255,255,0.25);
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.statBarInner{
+  
+}

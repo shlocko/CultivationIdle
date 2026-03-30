@@ -7,48 +7,45 @@ import { VerdantFieldsCamp } from "./VerdantFieldsCamp";
 import { areas } from "../areas/area";
 import { A } from "@solidjs/router";
 import { sendTravel } from "../state/modalMessages";
+import { QuickInfo } from "./QuickInfo";
 
 export const Main: Component = () => {
 	return (
-		<>
-			<div classList={{
-				[utils.row_container]: true
-			}}>
-				<div classList={{ [utils.container]: true }}>
-					<Meditate />
-					<Train />
+		<div classList={{
+			[utils.wrapperMain]: true
+		}}>
+			<div class={`${utils.container} ${utils.border} ${utils.innerBackground}`}>
+				<Meditate />
+				<Train />
+			</div>
+			<div
+				style={{
+					"display": "flex",
+					"flex-direction": "column",
+					"gap": "1rem",
+				}}>
+				<div class={`${utils.container} ${utils.border} ${utils.innerBackground}`}>
+					<h1>{state.adventure.location}</h1>
+					<A classList={{
+						[utils.btn]: true,
+						[utils.wide]: true,
+					}}
+						href="/adventure">
+						<p>Adventure</p>
+					</A>
+					<Switch>
+						<Match when={state.adventure.location === "VerdantFields"}>
+							<VerdantFieldsCamp />
+						</Match>
+					</Switch>
 				</div>
-				<div
-					style={{
-						"display": "flex",
-						"flex-direction": "column",
-					}}>
-					<div classList={{ [utils.container]: true }}>
-						<h1>{state.adventure.location}</h1>
-						<A classList={{
-							[utils.btn]: true,
-							[utils.wide]: true,
-						}}
-							href="/adventure">
-							<p>Adventure</p>
-						</A>
-						<Switch>
-							<Match when={state.adventure.location === "VerdantFields"}>
-								<VerdantFieldsCamp />
-							</Match>
-						</Switch>
-					</div>
-					<button
-						classList={{
-							[utils.wide_top_auto]: true,
-							[utils.btn]: true,
-						}}
-						onClick={() => { sendTravel() }}
-					>
-						<p>Travel</p>
-					</button>
-				</div>
-			</div >
-		</>
+				<button
+					class={`${utils.wide_top_auto} ${utils.btn} ${utils.bg}`}
+					onClick={() => { sendTravel() }}
+				>
+					<p>Travel</p>
+				</button>
+			</div>
+		</div >
 	);
 };

@@ -1,0 +1,6 @@
+.header {
+	height: 5rem;
+	width: 100%;
+	display: flex;
+	background: var(--panel-bg);
+}

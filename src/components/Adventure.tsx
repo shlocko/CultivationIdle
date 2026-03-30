@@ -19,9 +19,8 @@ export const Adventure: Component = () => {
 	];
 	return (
 		<div class={(utils.row_container)}>
-			<div classList={{
-				[utils.container]: true,
-			}}
+			<div
+				class={`${utils.container} ${utils.border}`}
 				style={{
 					"--flex": "0 0 15rem",
 				}}
@@ -62,7 +61,8 @@ export const Adventure: Component = () => {
 			</div>
 
 			<Show when={state.state !== "Combat"}>
-				<div class={(utils.container)}
+				<div 
+				class={`${utils.container} ${utils.border}`}
 					style={{
 						"flex": "0 0 20rem",
 						"overflow-y": "scroll",

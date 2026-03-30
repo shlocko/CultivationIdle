@@ -1,0 +1,7 @@
+.statLabel {
+	display: flex;
+	justify-content: space-between;
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--ink-light);
+}
