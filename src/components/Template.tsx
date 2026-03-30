@@ -131,7 +131,6 @@ export const Template: Component<RouteSectionProps> = (props) => {
 						{props.children}
 					</Show>
 					<Show when={state.state === "Combat"}>
-						<QuickInfo />
 						<div class={utils.container}
 							style={{
 								"width": "100%",

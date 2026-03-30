@@ -73,23 +73,23 @@ export const Combat: Component = () => {
 						<div class={utils.combat_card}>
 							<CombatActionsCard />
 						</div>
-						<div classList={{
-							[utils.container]: true,
-							[utils.combat_card]: true,
-						}}>
+						<div
+							class={`${utils.container} ${utils.combat_card} ${utils.innerBackground} ${utils.border}`}
+						>
 							<div
-								class={utils.container}
+								class={`${utils.container} ${utils.innerBackground} ${utils.border}`}
 								style={{
 									"flex-grow": "1",
 									"overflow-y": "scroll",
 									"height": "10rem",
 									"display": "flex",
 									"flex-direction": "column-reverse",
+									"overflow-x": "hidden",
 								}}>
 								<For each={combatLog()}>
-									{(item, i) => (
+									{(item, _) => (
 										<>
-											{item}
+											{`> `} {item}
 											<br />
 										</>
 

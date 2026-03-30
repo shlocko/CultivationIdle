@@ -16,7 +16,7 @@ import { A } from "@solidjs/router";
 
 export const Inventory: Component = () => {
 	return (
-		<>
+		<div class={`${utils.container} ${utils.border}`}>
 			<A
 				class={`${utils.btn}`}
 				onClick={() => {
@@ -30,10 +30,10 @@ export const Inventory: Component = () => {
 			<For each={state.inventory}>
 				{(item) => (
 					<>
-						<p>
+						<span>
 							{" "}
 							{item.item.name} x {item.quantity}
-						</p>
+						</span>
 						<button
 							class={utils.btn}
 							onClick={() => {
@@ -96,7 +96,7 @@ export const Inventory: Component = () => {
 			>
 				Add Sword
 			</button>
-			<div class={utils.top_auto} />
-		</>
+			<div class={utils.top_auto}></div>
+		</div >
 	);
 };

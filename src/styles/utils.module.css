@@ -157,6 +157,12 @@ body {
 	/* background: var(--panel-bg); */
 }
 
+.hline {
+	width: 100%;
+	border: 1px solid gray;
+	height: 0;
+}
+
 .innerBorder {
 	position: relative;
 }
@@ -283,7 +289,6 @@ body {
 	flex-direction: column;
 	gap: 1ch;
 	padding: 1rem;
-	background: var(--panel-bg);
 }
 
 .train {

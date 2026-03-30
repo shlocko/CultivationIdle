@@ -61,8 +61,8 @@ export const Adventure: Component = () => {
 			</div>
 
 			<Show when={state.state !== "Combat"}>
-				<div 
-				class={`${utils.container} ${utils.border}`}
+				<div
+					class={`${utils.container} ${utils.border}`}
 					style={{
 						"flex": "0 0 20rem",
 						"overflow-y": "scroll",
@@ -79,7 +79,8 @@ export const Adventure: Component = () => {
 					>
 						<p>{state.adventure.location}</p>
 					</button>
-					<h2>Sub Locations</h2>
+					<h2>Points of Interest</h2>
+					<div class={`${utils.hline}`}> </div>
 					<For each={(Object.keys(state.adventure.areas) as AreaName[]).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location && areas[key].type === "normal")}>
 						{(item, i) => (
 							<button classList={{
@@ -95,6 +96,7 @@ export const Adventure: Component = () => {
 						)}
 					</For>
 					<h2>Dungeons</h2>
+					<div class={`${utils.hline}`}> </div>
 					<For each={(Object.keys(state.adventure.areas) as AreaName[]).filter(key => state.adventure.areas[key].unlocked && areas[key].subArea && areas[key].subAreaTo === state.adventure.location && areas[key].type === "dungeon")}>
 						{(item, i) => (
 							<div class={utils.container_no_border}
