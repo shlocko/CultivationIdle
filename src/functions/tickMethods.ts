@@ -44,8 +44,7 @@ export const trainTick = () => {
 		setState("mana", (mana) => mana - getPassiveManaRegen() * 0.5);
 		setState("maxMana", (max) => max + 1);
 		if (
-			state.trainingTechnique >= 0 &&
-			state.techniques[num].mastery < 10000
+			state.trainingTechnique >= 0
 		) {
 			setState("techniques", num, "mastery", (x) => x + 1);
 		}

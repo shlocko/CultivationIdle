@@ -25,7 +25,7 @@ export const enemyList: Record<string, Enemy> = {
 	snake: { name: "Snake", health: 5, damage: 10, alive: true, sprite: "snake.png" },
 	Cobra: { name: "Cobra", health: 18, damage: 22, alive: true, sprite: "cobra.png" },
 	eyeBlue: { name: "Blue Eye", health: 20, damage: 15, alive: true, sprite: "eye-blue.png" },
-	eyeGreen: { name: "Green Eye", health: 20, damage: 15, alive: true, sprite: "eye-green.png" },
+	eyeGreen: { name: "Green Eye", health: 40, damage: 15, alive: true, sprite: "eye-green.png" },
 	eyeRed: { name: "Red Eye", health: 70, damage: 35, alive: true, sprite: "eye-red.png" },
 	mouse: { name: "Mouse", health: 6, damage: 2, alive: true, sprite: "mouse.png" },
 	heart: { name: "Heart", health: 1, damage: -5, alive: true, sprite: "heart.png" },

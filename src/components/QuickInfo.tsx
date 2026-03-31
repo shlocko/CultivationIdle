@@ -10,20 +10,8 @@ export const QuickInfo: Component = () => {
 	return (
 		<div class={`${utils.quickinfo} ${utils.border} ${utils.innerBackground}`}>
 
-			<div>
-				<div class={quickInfo.statLabel}>
-					<span>HP:</span><span> {state.health}/{maxHealth()}</span>
-				</div>
-				<HealthBar />
-			</div>
-			<div>
-				<div class={quickInfo.statLabel}><span>Qi:</span> <span>{state.mana.toFixed(1)}/{state.maxMana.toFixed(1)}
-				</span>
-				</div>
-				<ManaBar />
-			</div>
 
-			<span> Level: {state.rank}</span>
+			<span> Rank: {rankInfo[state.rank].name}</span>
 			<span> Next rank: {rankInfo[state.rank].advMana} </span>
 			<A class={utils.btn} href="/inventory">
 				<p>Inventory</p>

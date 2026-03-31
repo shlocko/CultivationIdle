@@ -3,4 +3,12 @@
 	width: 100%;
 	display: flex;
 	background: var(--panel-bg);
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+}
+
+.statContainer {
+	min-width: 10rem;
+	padding: 0 1rem;
 }

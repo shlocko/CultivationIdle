@@ -17,7 +17,7 @@ export const Train: Component = () => {
 				>
 					<For each={state.techniques}>
 						{(item, i) => (
-							<option value={i()}>{item.name}: {item.mastery}/{maxMastery}</option>
+							<option value={i()}>{item.name}: {item.mastery}</option>
 						)}
 					</For>
 				</select >

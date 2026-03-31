@@ -27,8 +27,11 @@ import { actionChoice, combatLog, setCombatLog } from "../components/Combat";
 import { perCombatRound } from "./tickMethods";
 
 export const effectMultiplier = (mult: number) => {
-	return Math.pow(mult, 2);
+	// return Math.pow(mult, 2);
+	// return Math.pow(mult, 0.9) * (1 + Math.log10(mult));
+	return mult * (1 + 2 * Math.log10(mult));
 };
+
 
 const dealTargetDamage = () => {
 	setCombatState(

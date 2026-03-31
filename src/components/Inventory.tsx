@@ -19,9 +19,9 @@ export const Inventory: Component = () => {
 		<div class={`${utils.container} ${utils.border}`}>
 			<A
 				class={`${utils.btn}`}
-				onClick={() => {
-					actionButton("Meditate");
-				}}
+				// onClick={() => {
+				// 	actionButton("Meditate");
+				// }}
 				href="/"
 			>
 				<p> Back to Camp </p>
