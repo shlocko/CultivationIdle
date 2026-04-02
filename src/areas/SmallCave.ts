@@ -3,7 +3,7 @@ import { initCombat } from "../functions/combatMethods";
 import { sendLoot, sendModal } from "../state/modalMessages";
 import { addCoins, lootEntry, setState, state } from "../state/store";
 import { VerdantFields } from "./VerdantFields";
-import { Area } from "./area";
+import { Area, AreaName } from "./area";
 
 export const SmallCave: Area = {
 	name: "Small Cave",
@@ -11,7 +11,7 @@ export const SmallCave: Area = {
 	unlockThresholds: {
 		beatDungeon: 15,
 	},
-	travelTo: 0,
+	travelTo: undefined,
 	subArea: true,
 	subAreaTo: "VerdantFields",
 	endExploration: () => {
