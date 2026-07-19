@@ -13,6 +13,8 @@ export const QuickInfo: Component = () => {
 
 			<span> Rank: {rankInfo[state.rank].name}</span>
 			<span> Next rank: {rankInfo[state.rank].advMana} </span>
+			<span> Age: {state.years} years, {state.days} days,</span>
+			<span>  {state.hours} hours </span>
 			<A class={utils.btn} href="/inventory">
 				<p>Inventory</p>
 			</A>

@@ -21,7 +21,7 @@ import { AreaName, AreaState, areas } from "../areas/area";
 import { QiBearDen } from "../areas/QiBearDen";
 import { redirect, useNavigate } from "@solidjs/router";
 
-type Action = "Meditate" | "Train" | "Adventure";
+type Action = "None" | "Meditate" | "Train" | "Adventure";
 
 // Old, here for reference to rank names until I finish rankInfo
 type Rank =
@@ -57,7 +57,7 @@ export const rankInfo = [
 
 // Available aspects at CoreFormation rank
 
-export type Aspect = (typeof aspects)[number];
+export type Aspect = typeof aspects[number];
 
 export const aspects = [
 	"Fire",
@@ -67,7 +67,7 @@ export const aspects = [
 	"Sword",
 	"Pure",
 	"Shadow",
-];
+] as const;
 
 //********************************************************
 // techniques
@@ -185,6 +185,9 @@ export type LootCollection = {
 // state
 //********************************************************
 
+export const HoursPerDay = 10;
+export const DaysPerYear = 400;
+
 export type State = "Modal" | "Tick" | "Combat";
 export const [pause, setPause] = createSignal(false);
 export const [bar, setBar] = createSignal(0.0);
@@ -193,8 +196,11 @@ export const [navigate, setNavigate] = createSignal<string | null>(null)
 // Gamestate intended for persistence
 export const [state, setState] = createStore({
 	// State version for ensuring compatibility with save data
-	version: 15,
+	version: 16,
 	// State machine state
+	hours: 0,
+	days: 398,
+	years: 18,
 	state: "Tick" as State,
 	previousState: "Tick" as State,
 	timeStamp: Date.now(),
@@ -260,9 +266,9 @@ export const [state, setState] = createStore({
 		} as Record<AreaName, AreaState>,
 	},
 	// Player's current mana
-	mana: 10,
+	mana: 4,
 	// Player's maximum mana
-	maxMana: 10,
+	maxMana: 4,
 	// Player's passive mana regeneration
 	passiveManaRegen: 1,
 	// Player's current action
@@ -310,6 +316,19 @@ export const changeState = (newState: State) => {
 	setState("previousState", state.state);
 	setState("state", newState);
 };
+
+export const progressDays = (numDays: number) => {
+	setState("days", t => t + numDays);
+	setState("hours", 0);
+}
+
+export const progressHours = (numHours: number) => {
+	setState("hours", t => t + numHours)
+}
+
+export const progressYears = (numYears: number) => {
+	setState("years", t => t + numYears)
+}
 
 //********************************************************
 // Combat State
@@ -462,7 +481,12 @@ export const setAction = (action: Action) => {
 
 // Set current action as if button was clicked by user
 export const actionButton = (action: Action) => {
-	setAction(action)
+	if (state.action == action) {
+		setAction("None")
+		action = "None"
+	} else {
+		setAction(action)
+	}
 	if (action === "Train") {
 		setState("train", "active", true)
 	} else {
@@ -502,7 +526,7 @@ export const clear = () => {
 };
 
 export const maxHealth = () => {
-	return state.rank * 10;
+	return state.rank * 100;
 };
 
 export const hasItem = (item: ItemNames) => {
@@ -564,6 +588,8 @@ export const inventoryAdd = (item: ItemNames, quantity: number) => {
 // Helper function for finding the current action's tickSpeed
 export const tickSpeed = () => {
 	switch (state.action) {
+		case "None":
+			return 0;
 		case "Meditate":
 			return state.meditate.tickSpeed;
 		case "Train":
@@ -575,6 +601,7 @@ export const tickSpeed = () => {
 
 // Helper Function to call the tick method for the current action
 export const tick = {
+	None: () => { },
 	Train: () => {
 		trainTick();
 	},
@@ -597,7 +624,7 @@ export const advance = () => {
 			sendAspectChoice();
 		}
 		sendTechniqueChoice();
-		sendMeditationTechniqueChoice();
+		//sendMeditationTechniqueChoice();
 		setState("rank", (rank) => rank + 1)
 		setState("train", "active", false)
 		setState("health", maxHealth())
@@ -670,7 +697,7 @@ export const getPassiveManaRegen = () => {
 		count += mixedRegenLevel
 	}
 
-	return count + 1
+	return 1
 }
 
 export const getPassiveHealthRegen = () => {

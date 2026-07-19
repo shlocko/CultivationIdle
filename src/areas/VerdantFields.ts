@@ -18,6 +18,12 @@ export const VerdantFields: Area = {
 	travelTo: 5,
 	subArea: false,
 	subAreaTo: undefined,
+	qiDensity: [
+		{
+			"aspect": "Fire",
+			"density": 5
+		}
+	],
 	endExploration: () => { },
 
 	commonEvents: [

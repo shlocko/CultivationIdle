@@ -73,6 +73,7 @@ body {
 	--paper-color-dark: #000000;
 	--ink: #2a2016;
 	--panel-bg: rgba(245, 240, 232, 0.8);
+	--panel-bg-opaque: rgb(245, 240, 232);
 
 	background-color: var(--paper-color-2);
 	--background-size: var(--grid-size, --grid-size);
@@ -334,6 +335,12 @@ body {
 	transition: all 0.1s;
 	text-align: center;
 	/* line-height: 1.2; */
+}
+
+.btn:disabled {
+	--background-color: red;
+	color: gray;
+	pointer-events: none;
 }
 
 .btn:hover {

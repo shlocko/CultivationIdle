@@ -17,6 +17,10 @@ import {
 	getOfflineManaGainPerSecond,
 	actionButton,
 	setArea,
+	HoursPerDay,
+	DaysPerYear,
+	progressDays,
+	progressHours,
 } from "../state/store";
 import { meditationTechniqueEffect } from "./techniqueMethods";
 import { VerdantFields } from "../areas/VerdantFields";
@@ -27,9 +31,23 @@ import { combatLog } from "../components/Combat";
 // Happens every tick
 export const perTick = () => {
 	//console.log(getPassiveManaRegen())
-	setState("health", (h) => h + getPassiveHealthRegen())
+	setState("health", (h) => h + getPassiveHealthRegen());
 	if (state.health > maxHealth()) {
 		setState("health", maxHealth());
+	}
+
+	// Normalize time
+	if (Math.trunc(state.hours / HoursPerDay) > 0) {
+		let newDays = Math.trunc(state.hours / HoursPerDay);
+		let remainingHours = state.hours % HoursPerDay;
+		setState("hours", remainingHours);
+		setState("days", d => d + newDays);
+	}
+	if (Math.trunc(state.days / DaysPerYear) > 0) {
+		let newYears = Math.trunc(state.days / DaysPerYear);
+		let remainingDays = state.days % DaysPerYear;
+		setState("days", d => remainingDays);
+		setState("years", y => y + newYears);
 	}
 
 	// Check for advancement
@@ -39,10 +57,11 @@ export const perTick = () => {
 };
 
 export const trainTick = () => {
-	if (state.mana >= getPassiveManaRegen() * 3) {
+	if (state.mana >= getPassiveManaRegen() * 2) {
 		const num: number = state.trainingTechnique;
-		setState("mana", (mana) => mana - getPassiveManaRegen() * 0.5);
+		setState("mana", (mana) => mana - getPassiveManaRegen() * 2);
 		setState("maxMana", (max) => max + 1);
+		progressDays(1)
 		if (
 			state.trainingTechnique >= 0
 		) {
@@ -55,6 +74,7 @@ export const trainTick = () => {
 
 export const meditateTick = () => {
 	setState("mana", (m) => m + getPassiveManaRegen());
+	progressHours(1)
 	if (
 		state.meditationTechniques.length > 0 &&
 		state.activeMeditationTechnique >= 0

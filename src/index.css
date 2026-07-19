@@ -1,64 +1,82 @@
 /* @font-face { */
-	/* font-family: "CultivationIdle"; */
-	/* src: url("/CultivationIdle/Cultivationidlefont-Regular.ttf") format("truetype-variations"); */
-	/* Adjust path and format as needed */
-	/* font-style: normal; */
+/* font-family: "CultivationIdle"; */
+/* src: url("/CultivationIdle/Cultivationidlefont-Regular.ttf") format("truetype-variations"); */
+/* Adjust path and format as needed */
+/* font-style: normal; */
 /* } */
 
 :root {
-  --color-purple: #6c5ce7;   
-  --color-indigo: #5a67d8;   
-  --color-blue:   #4c6ef5;   
-  --color-sky:    #5c92e7;   
-  --color-cyan:   #3da9fc;   
-  --color-violet:  #8e7dff;  
-  --color-lavender:#a29bfe;  
-  --color-deep-blue:#3b5bdb; 
-  --color-ink:     #364fc7;  
+	--color-purple: #6c5ce7;
+	--color-indigo: #5a67d8;
+	--color-blue: #4c6ef5;
+	--color-sky: #5c92e7;
+	--color-cyan: #3da9fc;
+	--color-violet: #8e7dff;
+	--color-lavender: #a29bfe;
+	--color-deep-blue: #3b5bdb;
+	--color-ink: #364fc7;
 
-  --color-magenta: #d16ba5;
-  --color-rose:    #e667a3;
-  --color-pink:    #f06595;
+	--color-magenta: #d16ba5;
+	--color-rose: #e667a3;
+	--color-pink: #f06595;
 
-  --color-green: #40c057;   
-  --color-mint:  #63e6be;   
-  --color-teal:  #2ec4b6;   
+	--color-green: #40c057;
+	--color-mint: #63e6be;
+	--color-teal: #2ec4b6;
 
-  --color-yellow: #f1c40f;
-  --color-amber:  #f59f00;
-  --color-gold:   #e0a800;
+	--color-yellow: #f1c40f;
+	--color-amber: #f59f00;
+	--color-gold: #e0a800;
 
-  --color-red:   #e03131;   
-  --color-coral: #ff6b6b;   
-  --color-warm:  #f06595;   
+	--color-red: #e03131;
+	--color-coral: #ff6b6b;
+	--color-warm: #f06595;
 
-  --color-bg:        #0f172a; 
-  --color-surface:   #1e293b; 
-  --color-surface-2: #334155; 
+	--color-bg: #0f172a;
+	--color-surface: #1e293b;
+	--color-surface-2: #334155;
 
-  --color-border: #475569;
-  --color-muted:  #64748b;
+	--color-border: #475569;
+	--color-muted: #64748b;
 
-  --color-text:     #e2e8f0;
-  --color-text-dim: #94a3b8;
-	
+	--color-text: #e2e8f0;
+	--color-text-dim: #94a3b8;
 }
-
 
 body {
 	margin: 0;
-	font-family: "Caveat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-		"Helvetica Neue", sans-serif;
+	font-family:
+		"Caveat",
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		"Roboto",
+		"Oxygen",
+		"Ubuntu",
+		"Cantarell",
+		"Fira Sans",
+		"Droid Sans",
+		"Helvetica Neue",
+		sans-serif;
 	font-size: 1.4em;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-	font-family: "Caveat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-		"Helvetica Neue", sans-serif;
+	font-family:
+		"Caveat",
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		"Roboto",
+		"Oxygen",
+		"Ubuntu",
+		"Cantarell",
+		"Fira Sans",
+		"Droid Sans",
+		"Helvetica Neue",
+		sans-serif;
 }
 
 button {
@@ -73,10 +91,29 @@ button {
 	transform: translate(-50%, -50%);
 
 	padding: 1rem;
-	background-color: white;
+	--background-color: white;
+	background-color: var(--panel-bg-opaque);
 	overflow: auto;
-	max-height: 90%;
-	max-width: 90%;
-	border: 10px solid transparent;
-	border-image: url(/CultivationIdle/box1.png) 150 stretch;
+	max-height: 95%;
+	height: 50rem;
+	max-width: 95%;
+	width: 30rem;
+	border: 1px solid darkgray;
+	border-radius: 0.2em;
+	text-wrap: auto;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.modal::before {
+	content: "";
+	position: absolute;
+	top: 3px;
+	bottom: 3px;
+	left: 3px;
+	right: 3px;
+	border: 1px solid rgb(0 0 0 / 0.15);
+	pointer-events: none;
+	z-index: -1;
 }

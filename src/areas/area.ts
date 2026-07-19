@@ -2,10 +2,16 @@
 //export type Area = "VerdantFields" | "SecondArea";
 
 import { Event } from "../state/events"
+import { Aspect } from "../state/store"
 import { HollowWoods } from "./HollowWoods"
 import { QiBearDen } from "./QiBearDen"
 import { SmallCave } from "./SmallCave"
 import { VerdantFields } from "./VerdantFields"
+
+export type QiDensity = {
+	aspect: Aspect,
+	density: number,
+}
 
 export type AreaState = {
 	name: string,
@@ -28,6 +34,7 @@ export type MainArea = {
 	travelTo: number,
 	subArea: false,
 	subAreaTo: undefined,
+	qiDensity: QiDensity[],
 	endExploration: Function,
 	commonEvents: Event[],
 	uncommonEvents: Event[],
@@ -43,6 +50,7 @@ export type SubArea = {
 	travelTo: undefined,
 	subArea: true,
 	subAreaTo: AreaName,
+	qiDensity: QiDensity[],
 	endExploration: Function,
 	commonEvents: Event[],
 	uncommonEvents: Event[],

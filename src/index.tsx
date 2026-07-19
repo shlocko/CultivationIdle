@@ -29,7 +29,7 @@ render(
 		<div class={utils.max}>
 			<Toaster
 				position="bottom-right"
-				/>
+			/>
 			<Modal
 				isOpen={
 					state.state === "Modal" && state.modalMessages.length > 0

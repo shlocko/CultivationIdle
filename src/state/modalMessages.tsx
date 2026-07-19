@@ -143,32 +143,34 @@ export const ModalChooseTechnique: Component = () => {
 	return (
 		<>
 			<p> Choose a technique: </p>
-			<For each={techniqueList}>
-				{(item, i) => (
-					<>
-						<Show
-							when={
-								state.techniques.find(
-									(e) => e.name === item.name,
-								) === undefined
-							}
-						>
-							<button
-								classList={{
-									[utils.btn]: true,
-									[modalStyles.btn_choice]: true,
-									[utils.btn_active]: choice() === i(),
-								}}
-								onClick={() => {
-									setChoice(i());
-								}}
+			<div class={`${utils.container} ${utils.scroll}`}>
+				<For each={techniqueList}>
+					{(item, i) => (
+						<>
+							<Show
+								when={
+									state.techniques.find(
+										(e) => e.name === item.name,
+									) === undefined
+								}
 							>
-								<p>{item.name}</p>
-							</button>
-						</Show>
-					</>
-				)}
-			</For>
+								<button
+									classList={{
+										[utils.btn]: true,
+										[modalStyles.btn_choice]: true,
+										[utils.btn_active]: choice() === i(),
+									}}
+									onClick={() => {
+										setChoice(i());
+									}}
+								>
+									<p>{item.name}</p>
+								</button>
+							</Show>
+						</>
+					)}
+				</For>
+			</div>
 			<div style={{
 				"min-height": "5rem",
 			}}>
@@ -203,42 +205,44 @@ export const ModalChooseMeditationTechnique: Component = () => {
 	return (
 		<>
 			<p> Choose a meditation technique:</p>
-			<For each={techniqueList}>
-				{(item, i) => (
-					<>
-						<button
-							classList={{
-								[utils.btn]: true,
-								[modalStyles.btn_choice]: true,
-								[utils.btn_active]: choice() === i(),
-							}}
-							onClick={() => {
-								setChoice(i());
-							}}
-						>
-							<Show
-								when={state.meditationTechniques.find(
-									(e) => e.name === item.name,
-								)}
+			<div class={`${utils.container} ${utils.scroll}`}>
+				<For each={techniqueList}>
+					{(item, i) => (
+						<>
+							<button
+								classList={{
+									[utils.btn]: true,
+									[modalStyles.btn_choice]: true,
+									[utils.btn_active]: choice() === i(),
+								}}
+								onClick={() => {
+									setChoice(i());
+								}}
 							>
-								<p>
-									Upgrade:{" "}
-									{
-										state.meditationTechniques.find(
-											(e) => e.name === item.name,
-										)!.level
-									}{" "}
-									=&gt
-									{state.meditationTechniques.find(
+								<Show
+									when={state.meditationTechniques.find(
 										(e) => e.name === item.name,
-									)!.level + 1}{" "}
-								</p>
-							</Show>
-							<p>{item.name}</p>
-						</button>
-					</>
-				)}
-			</For>
+									)}
+								>
+									<p>
+										Upgrade:{" "}
+										{
+											state.meditationTechniques.find(
+												(e) => e.name === item.name,
+											)!.level
+										}{" "}
+										=&gt
+										{state.meditationTechniques.find(
+											(e) => e.name === item.name,
+										)!.level + 1}{" "}
+									</p>
+								</Show>
+								<p>{item.name}</p>
+							</button>
+						</>
+					)}
+				</For>
+			</div>
 
 			<div style={{
 				"min-height": "5rem",
@@ -290,28 +294,30 @@ export const ModalChooseAspect: Component = () => {
 	return (
 		<>
 			<p> Choose an aspect for your Qi: </p>
-			<For each={aspects}>
-				{(item, i) => (
-					<>
-						<Show
-							when={techniques[item as keyof typeof techniques]}
-						>
-							<button
-								classList={{
-									[utils.btn]: true,
-									[modalStyles.btn_choice]: true,
-									[utils.btn_active]: choice() === i(),
-								}}
-								onClick={() => {
-									setChoice(i());
-								}}
+			<div class={`${utils.container} ${utils.scroll}`}>
+				<For each={aspects}>
+					{(item, i) => (
+						<>
+							<Show
+								when={techniques[item as keyof typeof techniques]}
 							>
-								<p>{item}</p>
-							</button>
-						</Show>
-					</>
-				)}
-			</For>
+								<button
+									classList={{
+										[utils.btn]: true,
+										[modalStyles.btn_choice]: true,
+										[utils.btn_active]: choice() === i(),
+									}}
+									onClick={() => {
+										setChoice(i());
+									}}
+								>
+									<p>{item}</p>
+								</button>
+							</Show>
+						</>
+					)}
+				</For>
+			</div>
 			<p></p>
 			<button
 				class={utils.btn}
