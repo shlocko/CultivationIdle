@@ -24,6 +24,7 @@ export const VerdantFields: Area = {
 			"density": 5
 		}
 	],
+	hoursPerAdventureTick: 20,
 	endExploration: () => { },
 
 	commonEvents: [

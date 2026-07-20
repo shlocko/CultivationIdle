@@ -320,14 +320,33 @@ export const changeState = (newState: State) => {
 export const progressDays = (numDays: number) => {
 	setState("days", t => t + numDays);
 	setState("hours", 0);
+	normalizeTime()
 }
 
 export const progressHours = (numHours: number) => {
 	setState("hours", t => t + numHours)
+	normalizeTime()
 }
 
 export const progressYears = (numYears: number) => {
 	setState("years", t => t + numYears)
+	normalizeTime()
+}
+
+export const normalizeTime = () => {
+
+	if (Math.trunc(state.hours / HoursPerDay) > 0) {
+		let newDays = Math.trunc(state.hours / HoursPerDay);
+		let remainingHours = state.hours % HoursPerDay;
+		setState("hours", newDays > 0 ? 0 : remainingHours);
+		setState("days", d => d + newDays);
+	}
+	if (Math.trunc(state.days / DaysPerYear) > 0) {
+		let newYears = Math.trunc(state.days / DaysPerYear);
+		let remainingDays = state.days % DaysPerYear;
+		setState("days", d => remainingDays);
+		setState("years", y => y + newYears);
+	}
 }
 
 //********************************************************
@@ -697,7 +716,7 @@ export const getPassiveManaRegen = () => {
 		count += mixedRegenLevel
 	}
 
-	return 1
+	return Math.max(state.rank, 1)
 }
 
 export const getPassiveHealthRegen = () => {

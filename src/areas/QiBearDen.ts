@@ -1,15 +1,15 @@
 import { initCombat } from "../functions/combatMethods";
 import { lootEntry, state } from "../state/store";
-import { VerdantFields } from "./VerdantFields";
-import { Area } from "./area";
+import { Area, AreaName } from "./area";
 
 export const QiBearDen: Area = {
 	name: "Qi Bear Den",
 	type: "normal",
 	unlockThresholds: {},
-	travelTo: 0,
+	travelTo: undefined,
 	subArea: true,
 	subAreaTo: "VerdantFields",
+	qiDensity: [],
 	endExploration: () => { },
 	commonEvents: [
 		{

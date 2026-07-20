@@ -21,6 +21,7 @@ import {
 	DaysPerYear,
 	progressDays,
 	progressHours,
+	normalizeTime,
 } from "../state/store";
 import { meditationTechniqueEffect } from "./techniqueMethods";
 import { VerdantFields } from "../areas/VerdantFields";
@@ -37,18 +38,7 @@ export const perTick = () => {
 	}
 
 	// Normalize time
-	if (Math.trunc(state.hours / HoursPerDay) > 0) {
-		let newDays = Math.trunc(state.hours / HoursPerDay);
-		let remainingHours = state.hours % HoursPerDay;
-		setState("hours", remainingHours);
-		setState("days", d => d + newDays);
-	}
-	if (Math.trunc(state.days / DaysPerYear) > 0) {
-		let newYears = Math.trunc(state.days / DaysPerYear);
-		let remainingDays = state.days % DaysPerYear;
-		setState("days", d => remainingDays);
-		setState("years", y => y + newYears);
-	}
+	normalizeTime()
 
 	// Check for advancement
 	if (canAdvance()) {
@@ -56,11 +46,12 @@ export const perTick = () => {
 	}
 };
 
+
 export const trainTick = () => {
 	if (state.mana >= getPassiveManaRegen() * 2) {
 		const num: number = state.trainingTechnique;
 		setState("mana", (mana) => mana - getPassiveManaRegen() * 2);
-		setState("maxMana", (max) => max + 1);
+		setState("maxMana", (max) => max + getPassiveManaRegen());
 		progressDays(1)
 		if (
 			state.trainingTechnique >= 0
@@ -94,6 +85,7 @@ export const adventureTick = () => {
 	if (state.mana > state.maxMana) {
 		setState("mana", state.maxMana);
 	}
+	progressHours(areas[state.adventure.location].hoursPerAdventureTick)
 	let location = getLocation()
 	if (areas[location].type === "dungeon" && state.adventure.currentRun >= areas[location].unlockThresholds.beatDungeon) {
 		actionButton("Meditate")
