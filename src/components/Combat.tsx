@@ -32,7 +32,7 @@ export const Combat: Component = () => {
 			<div class={utils.enemies_container}>
 				<For each={combatState.opponents}>
 					{(item, i) => (
-						<>
+						<div>
 							<button
 								classList={{
 									[utils.enemy_btn]: true,
@@ -45,7 +45,8 @@ export const Combat: Component = () => {
 							>
 								<CombatEnemyCard {...item} />
 							</button>
-						</>
+							<div>12</div>
+						</div>
 					)}
 				</For>
 			</div>
@@ -98,15 +99,15 @@ export const Combat: Component = () => {
 							</div>
 							<div
 								style={{
-									"flex-grow": "1",
+									"flex-grow": "0",
 								}}>
-								Mana per turn: {tickMana().toFixed(2)} <br />
+								{/*Mana per turn: {tickMana().toFixed(2)} <br />
 								Damage to target: {damageToTarget().toFixed(2)} <br />
 								Damage to area: {damageToArea().toFixed(2)} <br />
 								Thorns Damage: {damageThorns().toFixed(2)} <br />
 								Increasing target Damage:{" "}
 								{damageIncreasingTargetCount().toFixed(2)}{" "} <br />
-								Max Mana Gain: {manaGainFromTechniques().toFixed(2)} <br />
+								Max Mana Gain: {manaGainFromTechniques().toFixed(2)} <br /> */}
 								<button
 									class={utils.btn}
 									onClick={() => {

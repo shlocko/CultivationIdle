@@ -463,6 +463,11 @@ body {
 	overflow: hidden;
 }
 
+.techniqueCard {
+	width: 100%;
+	display: flex;
+}
+
 .enemy_active {
 	position: relative;
 	display: inline-block;

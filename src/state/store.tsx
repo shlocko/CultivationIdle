@@ -219,7 +219,7 @@ export const [state, setState] = createStore({
 		dodgeChance: 0,
 	},
 	adventure: {
-		tickSpeed: 1,
+		tickSpeed: 2,
 		location: "VerdantFields" as AreaName,
 		subLocation: undefined as AreaName | undefined,
 		currentRun: 0,

@@ -12,6 +12,8 @@ export const CombatActionsCard: Component = () => {
 		<div classList={{
 			[utils.combat_card]: true,
 			[utils.container]: true,
+			[utils.border]: true,
+			[utils.innerBackground]: true,
 		}}>
 			<div>
 				<button
@@ -42,7 +44,7 @@ export const CombatActionsCard: Component = () => {
 					<p>Items</p>
 				</button>
 			</div>
-			<div class={utils.container}>
+			<div class={`${utils.container}`}>
 				<Switch>
 					<Match when={tab() === "actions"}>
 						<button
@@ -61,8 +63,10 @@ export const CombatActionsCard: Component = () => {
 					<Match when={tab() === "techniques"}>
 						<For each={state.techniques}>
 							{(item, i) => (
-								<div>
+								// <div style="width: 100%; display: flex;">
+								<div class={`${utils.techniqueCard}`}>
 									<button
+										style="flex-grow: 1;"
 										classList={{
 											[utils.btn]: true,
 											[utils.btn_active]: item.active,
