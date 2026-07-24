@@ -35,7 +35,7 @@ export const Combat: Component = () => {
 						<div>
 							<button
 								classList={{
-									[utils.enemy_btn]: true,
+									[utils.enemy_btn]: combatState.activeEnemy !== i(),
 									[utils.enemy_active]:
 										combatState.activeEnemy === i(),
 								}}

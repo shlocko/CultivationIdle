@@ -411,13 +411,32 @@ body {
 	filter: opacity(0.6) invert(84%) sepia(50%) saturate(497%)
 		hue-rotate(347deg) brightness(96%) contrast(98%);
 	color: red;
-	z-index: 0;
+	z-index: 1;
 	pointer-events: none;
 }
 
 .btn_active > * {
 	position: relative;
 	z-index: 1;
+}
+
+.btn_active:hover::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	height: 100%;
+	width: 100%;
+	max-width: 15ch;
+	margin: auto;
+	background-image: url("/CultivationIdle/button-scribble1.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
+	filter: opacity(0.6) invert(84%) sepia(50%) saturate(297%)
+		hue-rotate(347deg) brightness(96%) contrast(98%);
+	color: red;
+	z-index: 1;
+	pointer-events: none;
 }
 
 .btn_ongoing {
@@ -439,6 +458,23 @@ body {
 	background-position: center;
 	background-size: 100% 100%;
 	filter: opacity(0.6) sepia(100) saturate(3) hue-rotate(180deg);
+	z-index: 0;
+	pointer-events: none;
+}
+
+.btn_ongoing:hover::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	height: 100%;
+	width: 100%;
+	max-width: 15ch;
+	margin: auto;
+	background-image: url("/CultivationIdle/button-scribble1.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
+	filter: opacity(0.6) sepia(100) saturate(1) hue-rotate(180deg);
 	z-index: 0;
 	pointer-events: none;
 }
@@ -472,6 +508,19 @@ body {
 	position: relative;
 	display: inline-block;
 	text-shadow: var(--text-shadow);
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	padding: 0.375rem 0.75rem;
+	line-height: 1.5;
+	color: black;
+	border: 15px solid transparent;
+	border-image: url(/box-button1.png) 90 stretch;
+	background: inherit;
+}
+
+.enemy_active:hover {
+	cursor: pointer;
 }
 
 .enemy_active::before {
@@ -495,6 +544,24 @@ body {
 .enemy_active > * {
 	position: relative;
 	z-index: 1;
+}
+
+.enemy_active:hover::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -1ch;
+	height: 100%;
+	width: 100%;
+	max-width: 10ch;
+	background-image: url("/CultivationIdle/button-scribble-tall1.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
+	filter: opacity(0.6) invert(84%) sepia(50%) saturate(297%)
+		hue-rotate(347deg) brightness(96%) contrast(98%);
+	z-index: 0;
+	pointer-events: none;
 }
 
 .enemy_btn {

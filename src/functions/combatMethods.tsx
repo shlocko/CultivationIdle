@@ -25,6 +25,29 @@ import {
 import toast from "solid-toast";
 import { actionChoice, combatLog, setCombatLog } from "../components/Combat";
 import { perCombatRound } from "./tickMethods";
+import { StatusEffect } from "../state/statusEffects";
+
+type CombatEventDamage = {
+	target: number,
+	kind: "damage",
+	value: number
+}
+
+type CombatEventHeal = {
+	target: number,
+	kind: "heal",
+	value: number
+}
+
+type CombatEventApplyStatus = {
+	target: number,
+	kind: "applyStatus",
+	status: StatusEffect
+}
+
+export type CombatEvent = CombatEventDamage | CombatEventHeal | CombatEventApplyStatus;
+
+export type CombatQueue = CombatEvent[];
 
 export const effectMultiplier = (mult: number) => {
 	// return Math.pow(mult, 2);
@@ -32,6 +55,10 @@ export const effectMultiplier = (mult: number) => {
 	return mult * (1 + 2 * Math.log10(mult));
 };
 
+
+const getCombatQueue = (): CombatQueue => {
+	let queue: CombatQueue = [];
+}
 
 const dealTargetDamage = () => {
 	setCombatState(
@@ -196,6 +223,6 @@ const logDamageToEnemies = () => {
 		combatLog().push(`You dealt ${damageToArea()} damage to all targets`)
 	}
 	if (damageIncreasingTargetCount() > 0) {
-		combatLog().push(`You dealth ${damageIncreasingTargetCount()} damage to multiple targets`)
+		combatLog().push(`You dealt ${damageIncreasingTargetCount()} damage to multiple targets`)
 	}
 }

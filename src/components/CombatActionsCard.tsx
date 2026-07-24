@@ -3,10 +3,10 @@ import utils from "../styles/utils.module.css";
 import { activeTechniqueCount, clearNotOngoing, combatState, setState, state } from "../state/store"
 import { actionChoice, setActionChoice } from "./Combat";
 
-type tabs = "techniques" | "items" | "actions"
+type tabs = "techniques" | "items" | "actions";
+const [tab, setTab] = createSignal<tabs>("actions");
 
 export const CombatActionsCard: Component = () => {
-	const [tab, setTab] = createSignal<tabs>("actions")
 
 	return (
 		<div classList={{
